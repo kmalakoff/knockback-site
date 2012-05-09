@@ -1,22 +1,20 @@
-extends layout
+extends _jade_includes/layout
 
 block title
   title= "Knockback.js Home"
 
+block header
+  include _jade_includes/layout_components/knockback_logo
+
 block navbar
-  div.navbar
-    div.navbar-inner
-      div.container
-        ul.nav
-          li.active
-            a(href='index.html') Home
-          li
-            a(href='docs.html') Docs
-          li
-            a(href='tutorials.html') Tutorials
+  include _jade_includes/layout_components/page_navbar
+  mixin pageNavbar('Home')
 
 block content
-  section#content
+  div.page.github_fork_me
+    include _jade_includes/layout_components/github_fork_me
+
+  section#content.animated.fadeIn
 
     .cols.wrapped
       .col: div.content
@@ -215,3 +213,6 @@ block content
           };
           // Cool, isn't it?
         p Contenuto
+
+block footer
+  include _jade_includes/layout_components/knockback_credits

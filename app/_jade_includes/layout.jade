@@ -1,0 +1,36 @@
+- var numb = function(n) { return '&#' + (10101+n) + ';' };
+- var ref = function(d,m,n) { return '<a title="'+d+'" href="#'+m+n+'">'+n+'</a>' };
+!!! 5
+html
+  head
+    meta(http-equiv="Content-Type",content="text/html;charset=utf-8")
+    block title
+    link(rel="stylesheet",href="vendor/stylesheets/bootstrap.min.css")
+    link(rel="stylesheet",href="stylesheets/layout.css")
+    link(rel="stylesheet",href="stylesheets/layout_components.css")
+    script(type="application/javascript",src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js")
+    block includes
+    link(rel="stylesheet",href="vendor/lib/highlight/highlightjs/stylesheets/dark.css")
+    script(type="application/javascript",src="vendor/lib/highlight/highlightjs/highlight.js")
+    script(type="application/javascript",src="vendor/lib/highlight/highlightjs/languages/javascript.js")
+    script(type="application/javascript",src="vendor/lib/highlight/highlight-coffee.js")
+    script(type="application/javascript",src="vendor/javascripts/bootstrap-dropdown.js")
+    script(type="application/javascript",src="javascripts/interface.js")
+    script(type="application/javascript").
+      hljs.tabReplace = '  ';
+      hljs.initHighlightingOnLoad();
+  body
+    div#wrap
+      div.page.navbar
+        block navbar
+
+    div#wrap
+      div.page.container
+        header.page
+          block header
+
+        content.page
+          block content
+
+        footer.page
+          block footer

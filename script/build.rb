@@ -15,6 +15,7 @@ def recursiveFilteredCopy(path, filename, dest)
   pathed_file = "#{path}/#{filename}"
   return if SKIPPED_ENDINGS.index{|ending| pathed_file.end_with?(ending)}
   if File.directory?(pathed_file)
+    return if filename.start_with?('_')
     filename = 'stylesheets' if filename == 'styles'
     filename = 'javascripts' if filename == 'scripts'
     Dir.entries(pathed_file).each{|child_filename| recursiveFilteredCopy(pathed_file, child_filename, "#{dest}/#{filename}")}

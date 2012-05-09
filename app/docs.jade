@@ -1,29 +1,250 @@
-extends layout
+extends _jade_includes/layout
 
 block title
   title= "Knockback.js Docs"
 
+block includes
+  link(rel="stylesheet",href="stylesheets/docs.css")
+
 block navbar
-  div.navbar
-    div.navbar-inner
-      div.container
-        ul.nav
-          li
-            a(href='index.html') Home
-          li.active
-            a(href='docs.html') Docs
-          li
-            a(href='tutorials.html') Tutorials
-        div#script_language
-          .separator
-            .selection.codestyle
-              .option
-                input.auto#cs-cs(type="radio",name="codestyle",value="cs")
-                label(for="cs-cs") CoffeeScript
-              .option
-                input#cs-js(type="radio",name="codestyle",value="js")
-                label(for="cs-js") Javascript
+  include _jade_includes/layout_components/page_navbar
+  mixin pageNavbar('Docs')
+  include _jade_includes/layout_components/radio_coffee_or_java
+
+block api_index
+  div.content
+    ul
+
+      // kb.ViewModel
+      li.type
+        a(href='#view_model') kb.ViewModel
+        li='- '
+          a(href='#view_model_factory') kb.viewModel / constructor
+
+      // kb.Observable
+      li.type
+        a(href='#observable') kb.Observable
+        li='- '
+          a(href='#observable_factory') kb.observable / constructor
+
+      // kb.Observables
+      li.type
+        a(href='#observables') kb.Observables
+        li='- '
+          a(href='#observables_factory') kb.observables / constructor
+
+      // kb.CollectionObservable
+      li.type
+        a(href='#collection_observable') kb.CollectionObservable
+        li='- '
+          a(href='#collection_observable_factory') kb.collectionObservable / constructor
+        li='- '
+          a(href='#collection_observable_collection') collection
+        li='- '
+          a(href='#collection_observable_sorted_index') sortedIndex
+
+      // kb.LocalizedObservable
+      li.type
+        a(href='#localized_observable') kb.LocalizedObservable
+        li='- '
+          a(href='#localized_observable_constructor') constructor
+
+      // kb.FormattedObservable
+      li.type
+        a(href='#formatted_observable') kb.FormattedObservable
+        li='- '
+          a(href='#formatted_observable_factory') kb.FormattedObservable / constructor
+
+      // kb.DefaultWrapper
+      li.type
+        a(href='#default_wrapper') kb.DefaultWrapper
+        li='- '
+          a(href='#default_wrapper_factory') kb.defaultWrapper / constructor
+
+      // kb.TriggeredObservable
+      li.type
+        a(href='#triggered_observable') kb.TriggeredObservable
+        li='- '
+          a(href='#triggered_observable_factory') kb.triggeredObservable / constructor
+
+      // kb.utils
+      li.type
+        a(href='#utils') kb.utils
+        li='- '
+          a(href='#utils_wrapped_model') kb.utils.wrappedModel
+        li='- '
+          a(href='#utils_wrapped_observable') kb.utils.wrappedObservable
+
+      // kb.RefCountable
+      li.type
+        a(href='#ref_countable') kb.RefCountable
+        li='- '
+          a(href='#ref_countable_constructor') constructor
+        li='- '
+          a(href='#ref_countable_retain') retain
+        li='- '
+          a(href='#ref_countable_ref_count') refCount
+        li='- '
+          a(href='#ref_countable_release') release
+        li='- '
+          a(href='#ref_countable___destroy') __destroy
+
+      // kb.Store
+      li.type
+        a(href='#store') kb.Store
+        li='- '
+          a(href='#store_constructor') constructor
+        li='- '
+          a(href='#store_destroy') destroy
+
+block api_descriptions
+  div.content
+    // kb.ViewModel
+    h2#view_model='kb.ViewModel'
+      div="This is a long explanation"
+      pre(data-for='cs')="x = 0"
+      pre(data-for='js')="var x = 0;"
+      h3#view_model_factory='kb.viewModel(model, options) / constructor(model, options)'
+        div="This is a long explanation"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
+
+    // kb.Observable
+    h2#observable='kb.Observable'
+      div="This is a long explanation"
+      pre(data-for='cs')="x = 0"
+      pre(data-for='js')="var x = 0;"
+      h3#observable_factory='kb.observable(model, options) / constructor(model, options)'
+        div="This is a long explanation"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
+
+    // kb.Observables
+    h2#observables='kb.Observables'
+      div="This is a long explanation"
+      pre(data-for='cs')="x = 0"
+      pre(data-for='js')="var x = 0;"
+      h3#observables_factory='kb.observables(model, mapping_info, view_model, options) / constructor(model, mapping_info, view_model, options)'
+        div="This is a long explanation"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
+
+    // kb.CollectionObservable
+    h2#collection_observable='kb.CollectionObservable'
+      div="This is a long explanation"
+      pre(data-for='cs')="x = 0"
+      pre(data-for='js')="var x = 0;"
+      h3#collection_observable_factory='kb.collectionObservable / constructor'
+        div="This is a long explanation"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
+      h3#collection_observable_collection='kb.CollectionObservable::collection() *set'
+        div="This is a long explanation"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
+      h3#collection_observable_sorted_index='sortedIndex'
+        div="This is a long explanation"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
+
+    // kb.LocalizedObservable
+    h2#localized_observable='kb.LocalizedObservable'
+      div="This is a long explanation"
+      pre(data-for='cs')="x = 0"
+      pre(data-for='js')="var x = 0;"
+      h3#localized_observable_constructor='constructor'
+        div="This is a long explanation"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
+
+    // kb.FormattedObservable
+    h2#formatted_observable='kb.FormattedObservable'
+      div="This is a long explanation"
+      pre(data-for='cs')="x = 0"
+      pre(data-for='js')="var x = 0;"
+      h3#formatted_observable_factory='kb.FormattedObservable / constructor'
+        div="This is a long explanation"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
+
+    // kb.DefaultWrapper
+    h2#default_wrapper='kb.DefaultWrapper'
+      div="This is a long explanation"
+      pre(data-for='cs')="x = 0"
+      pre(data-for='js')="var x = 0;"
+      h3#default_wrapper_factory='kb.defaultWrapper / constructor'
+        div="This is a long explanation"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
+
+    // kb.TriggeredObservable
+    h2#triggered_observable='kb.TriggeredObservable'
+      div="This is a long explanation"
+      pre(data-for='cs')="x = 0"
+      pre(data-for='js')="var x = 0;"
+      h3#triggered_observable_factory='kb.triggeredObservable / constructor'
+        div="This is a long explanation"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
+
+    // kb.utils
+    h2#utils='kb.utils'
+      div="This is a long explanation"
+      h3#utils_wrapped_model='kb.utils.wrappedModel'
+        div="This is a long explanation"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
+      h3#utils_wrapped_observable='kb.utils.wrappedObservable'
+        div="This is a long explanation"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
+
+    // kb.RefCountable
+    h2#ref_countable='kb.RefCountable'
+      div="This is a long explanation"
+      pre(data-for='cs')="x = 0"
+      pre(data-for='js')="var x = 0;"
+      h3#ref_countable_constructor='constructor'
+        div="This is a long explanation"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
+      h3#ref_countable_retain='kb.RefCountable::retain()'
+        div="This is a long explanation"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
+      h3#ref_countable_ref_count='kb.RefCountable::refCount()'
+        div="This is a long explanation"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
+      h3#ref_countable_release='kb.RefCountable::release()'
+        div="This is a long explanation"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
+      h3#ref_countable___destroy='kb.RefCountable::__destroy() *abstract'
+        div="This is a long explanation"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
+
+    // kb.Store
+    h2#store='kb.Store'
+      div="This is a long explanation"
+      pre(data-for='cs')="x = 0"
+      pre(data-for='js')="var x = 0;"
+      h3#store_constructor='constructor'
+        div="This is a long explanation"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
+      h3#store_destroy='destroy'
+        div="This is a long explanation"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
 
 block content
-  section
-    div= "Docs"
+  div.api.container
+    h1="Knockback.js API and Usage Examples"
+    div.container-fluid
+      div.row-fluid
+        div.span4.api.index
+          block api_index
+        div.span8.api.descriptions
+          block api_descriptions

@@ -1,0 +1,18 @@
+extends _jade_includes/layout
+
+block title
+  title= "Knockback.js Tutorial: Todos"
+
+block includes
+
+block navbar
+  include _jade_includes/layout_components/page_navbar
+  mixin pageNavbar('Tutorials')
+  include _jade_includes/layout_components/radio_coffee_or_java
+
+block content
+  section
+    h1="Knockback.js Tutorial: Todos"
+
+    pre(data-for='cs')="x = 0"
+    pre(data-for='js')="var x = 0;"

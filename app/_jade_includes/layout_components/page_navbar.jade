@@ -1,0 +1,28 @@
+mixin pageNavbarWriteItem(item, active_label)
+  if (item.label == 'Tutorials')
+    li.dropdown
+      a(href="#", data-toggle="dropdown").dropdown-toggle #{item.label}
+        b.caret
+      ul.dropdown-menu
+        li
+          a(href="tutorial_todos.html")="Todos"
+          a(href="tutorial_inspector.html")="Inspector"
+
+  else if (item.label == active_label)
+    li.active
+      a(href='#{item.url}') #{item.label}
+
+  else
+    li
+      a(href='#{item.url}') #{item.label}
+
+mixin pageNavbar(active_label)
+  - var ITEMS = [{label: 'Home', url: 'index.html'}, {label: 'Docs', url: 'docs.html'}, {label:'Tutorials', url: 'tutorials.html'}]
+
+  div.navbar.top
+    div.navbar-inner
+      div.container
+        a.brand Knockback.js
+        ul.nav
+          each item in ITEMS
+            mixin pageNavbarWriteItem(item, active_label)
