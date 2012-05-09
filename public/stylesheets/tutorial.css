@@ -1,0 +1,8 @@
+@import url("http://fonts.googleapis.com/css?family=Numans");
+@import url("http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic,700italic");
+header.page {
+  padding: 0;
+}
+h1 {
+  font-size: 1.5em;
+}

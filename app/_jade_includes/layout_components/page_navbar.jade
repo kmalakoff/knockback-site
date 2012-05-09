@@ -1,23 +1,24 @@
-mixin pageNavbarWriteItem(item, active_label)
-  if (item.label == 'Tutorials')
+mixin pageNavbarWriteItem(label, url, active_label)
+  if (url instanceof Array)
     li.dropdown
-      a(href="#", data-toggle="dropdown").dropdown-toggle #{item.label}
+      a(href="#", data-toggle="dropdown").dropdown-toggle #{label}
         b.caret
       ul.dropdown-menu
         li
-          a(href="tutorial_todos.html")="Todos"
-          a(href="tutorial_inspector.html")="Inspector"
+        each dropdown_item in url
+          each dropdown_url, dropdown_label in dropdown_item
+            a(href='#{dropdown_url}') #{dropdown_label}
 
-  else if (item.label == active_label)
+  else if (label == active_label)
     li.active
-      a(href='#{item.url}') #{item.label}
+      a(href='#{url}') #{label}
 
   else
     li
-      a(href='#{item.url}') #{item.label}
+      a(href='#{url}') #{label}
 
 mixin pageNavbar(active_label)
-  - var ITEMS = [{label: 'Home', url: 'index.html'}, {label: 'Docs', url: 'docs.html'}, {label:'Tutorials', url: 'tutorials.html'}]
+  - var ITEMS = [{Home: 'index.html'}, {Docs: 'docs.html'}, {Tutorials: [{Todos: 'tutorial_todos.html'}, {Inspector: 'tutorial_inspector.html'}]}]
 
   div.navbar.top
     div.navbar-inner
@@ -25,4 +26,5 @@ mixin pageNavbar(active_label)
         a.brand Knockback.js
         ul.nav
           each item in ITEMS
-            mixin pageNavbarWriteItem(item, active_label)
+            each url, label in item
+              mixin pageNavbarWriteItem(label, url, active_label)
