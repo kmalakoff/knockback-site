@@ -36,6 +36,7 @@ block content
         ul
           li <a href="https://raw.github.com/kmalakoff/knockback/0.15.0/knockback.js">Development</a> <small>45 KB</small>
           li <a href="https://raw.github.com/kmalakoff/knockback/0.15.0/knockback.min.js">Production</a> <small>28 KB</small>
+        a(href='release_notes.html') Release and Upgrade Notes
         h2 Source
         :markdown
           You can find the source on [Github][0]. To provide feedback leave a message
@@ -188,31 +189,6 @@ block content
 
             If you consider localized labels as observed properties, then you can understand
             how Knockback provides internationalization to your applications.
-
-    //
-      .content
-        h2 An example
-
-        pre.hl(data-for="cs"): code.coffee.
-          ContactViewModel = (model) ->
-            kb.observables(model, {
-              name:  {key:'name'}
-              email: {key:'email', write: true, default: 'your.name@yourplace.com'}
-              date:  {key:'date', write: true, localizer: LongDateLocalizer}
-            }, this)
-            return @
-          # Cool, isn't it?
-        pre.hl(data-for="js"): code.javascript.
-          var ContactViewModel = function (model) {
-            kb.observables(model, {
-              name:  {key:'name'},
-              email: {key:'email', write: true, default: 'your.name@yourplace.com'},
-              date:  {key:'date', write: true, localizer: LongDateLocalizer } },
-            }, this);
-            return this;
-          };
-          // Cool, isn't it?
-        p Contenuto
 
 block footer
   include _jade_includes/layout_components/knockback_credits

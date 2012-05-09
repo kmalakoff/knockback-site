@@ -190,12 +190,17 @@ block api_descriptions
     // kb.utils
     h2#utils='kb.utils'
       div="This is a long explanation"
-      h3#utils_wrapped_model='kb.utils.wrappedModel'
+      h3#utils_wrapped_model='Knockback.utils.wrappedModel(view_model {, model})'
         div="This is a long explanation"
         pre(data-for='cs')="x = 0"
         pre(data-for='js')="var x = 0;"
-      h3#utils_wrapped_observable='kb.utils.wrappedObservable'
-        div="This is a long explanation"
+      h3#utils_wrapped_observable='wrappedObservable(instance {, observable})'
+        div="Getter/setter used to access the underlying model on a view_model created by a kb.CollectionObservable or kb.ViewModel"
+        pre(data-for='cs')="x = 0"
+        pre(data-for='js')="var x = 0;"
+      h3#utils_observable_instance_of='kb.utils.observableInstanceOf(observable, class)'
+        div="Checks the class type of the underlying class on a Knockback observable"
+        div="Please note: classes start with a capital letter (eg. kb.CollectionObservable) whereas factory methods start with a lower case letter (eg. kb.collectionObservable)"
         pre(data-for='cs')="x = 0"
         pre(data-for='js')="var x = 0;"
 

@@ -18,7 +18,7 @@ mixin pageNavbarWriteItem(label, url, active_label)
       a(href='#{url}') #{label}
 
 mixin pageNavbar(active_label)
-  - var ITEMS = [{Home: 'index.html'}, {Docs: 'docs.html'}, {Tutorials: [{Todos: 'tutorial_todos.html'}, {Inspector: 'tutorial_inspector.html'}]}]
+  - var ITEMS = [{Home: 'index.html'}, {Docs: 'docs.html'}, {Tutorials: [{Todos: 'tutorial_todos.html'}, {Inspector: 'tutorial_inspector.html'}]}, {'Release Notes': 'release_notes.html'}]
 
   div.navbar.top
     div.navbar-inner
