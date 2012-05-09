@@ -1,0 +1,45 @@
+- var numb = function(n) { return '&#' + (10101+n) + ';' };
+- var ref = function(d,m,n) { return '<a title="'+d+'" href="#'+m+n+'">'+n+'</a>' };
+!!! 5
+html
+  head
+    meta(http-equiv="Content-Type",content="text/html;charset=utf-8")
+    block title
+    link(rel="stylesheet",href="vendor/stylesheets/bootstrap.min.css")
+    link(rel="stylesheet",href="stylesheets/template.css")
+    script(type="application/javascript",src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js")
+    link(rel="stylesheet",href="vendor/lib/highlight/highlightjs/stylesheets/dark.css")
+    script(type="application/javascript",src="vendor/lib/highlight/highlightjs/highlight.js")
+    script(type="application/javascript",src="vendor/lib/highlight/highlightjs/languages/javascript.js")
+    script(type="application/javascript",src="vendor/lib/highlight/highlight-coffee.js")
+    script(type="application/javascript",src="javascripts/interface.js")
+    script(type="application/javascript").
+      hljs.tabReplace = '  ';
+      hljs.initHighlightingOnLoad();
+  body
+    #wrap
+      block navbar
+
+      header#header
+        .lock
+          .logo
+            .part.left.animated.fadeInRight: img(src="images/left.svg")
+            .part.right.animated.fadeInLeft: img(src="images/right.svg")
+          h1
+            span.knock.animated.fadeInRight Knock
+            span.back.animated.fadeInLeft back.js
+
+        h2
+          span.knock.animated.fadeIn= "brings Knockout.js "
+          span.magic.animated.fadeIn= "magic "
+          span.back.animated.fadeIn= "to Backbone.js"
+
+      block content
+      footer
+        :markdown
+          *Knockback* is brought you by [Kevin Malakoff](https://github.com/kmalakoff)
+
+          Designed by [Pier Paolo Ramon](https://github.com/yuchi)
+
+  a(href="https://github.com/kmalakoff/knockback")
+    img(style="position:absolute; top:0; right:0; border:0; z-index:9999;",src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png",alt="Fork me on GitHub")

@@ -1,0 +1,17 @@
+{
+  "author": "Pier Paolo Ramon <https://github.com/yuchi> and Kevin Malakoff <https://github.com/kmalakoff>",
+  "name": "knockback-site",
+  "description": "Home site for Knockback.js",
+  "version": "0.0.1",
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/yuchi/knockback-site.git"
+  },
+  "dependencies": {
+    "jade": ">=0.26.0",
+    "stylus": ">=0.26.0",
+    "markdown": ">=0.3.0",
+    "nib": ">=0.4.1"
+  }
+}
