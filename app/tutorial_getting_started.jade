@@ -1,4 +1,4 @@
-extends _jade_includes/layout
+extends _jade_includes/_layout
 
 block title
   title= "Knockback.js Tutorial: Todos"
@@ -7,7 +7,7 @@ block includes
   link(rel="stylesheet",href="stylesheets/tutorial.css")
 
 block navbar
-  include _jade_includes/layout_components/page_navbar
+  include _jade_includes/layout_components/_page_navbar
   mixin pageNavbar('Getting Started', true)
 
 block content
