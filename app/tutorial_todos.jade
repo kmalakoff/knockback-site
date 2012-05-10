@@ -95,16 +95,16 @@ block content
 
     ol
       li='Emulate a simplified Backbone.Model through a get method like "get: (string_id) -> ..."'
-      li="Mixin Backbone.Events '_.extend(LocaleManager.prototype, Backbone.Events)' and trigger Backbone.Events 'change' and 'change:#&#123string_id}' like:"
+      li="Mixin Backbone.Events '_.extend(LocaleManager.prototype, Backbone.Events)' and trigger Backbone.Events 'change' and 'change:\#{string_id}' like:"
 
     pre(data-for='cs'): code.coffee.
       @trigger('change', @)
-      @trigger("change:#&#123key}", value) for key, value of @translations_by_locale[@locale_identifier]
+      @trigger("change:\#{key}", value) for key, value of @translations_by_locale[@locale_identifier]
 
     pre(data-for='js'): code.javascript.
       this.trigger('change', @);
       for (var key in this.translations_by_locale[this.locale_identifier]) {
-        this.trigger("change:#&#123key}", this.translations_by_locale[this.locale_identifier][key]);
+        this.trigger("change:\#{key}", this.translations_by_locale[this.locale_identifier][key]);
       }
 
     p='Register your custom locale manager like:'

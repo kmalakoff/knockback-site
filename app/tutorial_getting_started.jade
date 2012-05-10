@@ -59,7 +59,7 @@ block content
       ViewModel = (model) ->
         @first_name = ko.observable(model.first_name)
         @last_name = ko.observable(model.last_name)
-        @full_name = ko.computed(=>return "#&#123@first_name()} #&#123@last_name()}")
+        @full_name = ko.computed(=>return "\#{@first_name()} \#{@last_name()}")
         @
       view_model = new ViewModel(model)
 
@@ -187,7 +187,7 @@ block content
       ViewModel = (model) ->
         @first_name = kb.observable(model, 'first_name')
         @last_name = kb.observable(model, 'first_name')
-        @full_name = ko.computed(=>return "#&#123@first_name()} #&#123@last_name()}")
+        @full_name = ko.computed(=>return "\#{@first_name()} \#{@last_name()}")
         @
       view_model = new ViewModel(model)
 
@@ -232,7 +232,7 @@ block content
 
       # ViewModel
       view_model = kb.viewModel(model)
-      view_model.full_name = ko.computed(->return "#&#123@first_name()} #&#123@last_name()}", view_model)
+      view_model.full_name = ko.computed(->return "\#{@first_name()} \#{@last_name()}", view_model)
 
       # Bind
       ko.applyBindings(view_model)
@@ -339,7 +339,7 @@ block content
       class ViewModel extends kb.ViewModel
         constructor: (model) ->
           super
-          @full_name = ko.computed(=>return "#&#123@first_name()} #&#123@last_name()}")
+          @full_name = ko.computed(=>return "\#{@first_name()} \#{@last_name()}")
       view_model = new ViewModel(model)
 
       # Bind
