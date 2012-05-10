@@ -36,7 +36,8 @@ block content
           a(href='http://channel9.msdn.com/Events/MIX/MIX11/FRM08')='Excellent video walking through Knockback.js'
     span='Also take a look at this '
     a(href='index.html#comparison_table')='comparison table'
-    span=' between the libraries.'
+    span=' between the libraries or this '
+    a(href='http://www.geekdave.com/?p=79')='blog entry'
 
     p
     h2='Minimal Study'
@@ -47,47 +48,43 @@ block content
       span=' design pattern meaning you specify a ViewModel (Controller) in addition to your data (Model) which encapsulates specific data and logic for your HTML/Template (View).'
     pre(data-for='cs'): code.coffee.
       # View
-      &lt;div id='my_view'&gt;&lt/div&gt;
-        &lt;p&gt;First name: &lt;input data-bind="value: firstName" /&gt;&lt;/p&gt;
-        &lt;p&gt;Last name: &lt;input data-bind="value: lastName" /&gt;&lt;/p&gt;
-        &lt;h2&gt;Hello, &lt;span data-bind="text: fullName"&gt; &lt;/span&gt;!&lt;/h2&gt;
-      &lt;div&gt;&lt/div&gt;
+      &lt;p&gt;First name: &lt;input data-bind="value: first_name" /&gt;&lt;/p&gt;
+      &lt;p&gt;Last name: &lt;input data-bind="value: last_name" /&gt;&lt;/p&gt;
+      &lt;h2&gt;Hello, &lt;span data-bind="text: full_name"&gt; &lt;/span&gt;!&lt;/h2&gt;
 
       # Model
-      model = {first: "Planet", last: "Earth"}
+      model = {first_name: "Planet", last_name: "Earth"}
 
       # ViewModel
       ViewModel = (model) ->
-        @firstName = ko.observable(model.first)
-        @lastName = ko.observable(model.last)
-        @fullName = ko.computed(->return "#&#123@firstName()} #&#123@lastName()}")
+        @first_name = ko.observable(model.first_name)
+        @last_name = ko.observable(model.last_name)
+        @full_name = ko.computed(=>return "#&#123@first_name()} #&#123@last_name()}")
         @
       view_model = new ViewModel(model)
 
       # Bind
-      ko.applyBindings(view_model, $('#my_view')[0])
+      ko.applyBindings(view_model)
 
     pre(data-for='js'): code.javascript.
       // View
-      &lt;div id='my_view'&gt;&lt/div&gt;
-        &lt;p&gt;First name: &lt;input data-bind="value: firstName" /&gt;&lt;/p&gt;
-        &lt;p&gt;Last name: &lt;input data-bind="value: lastName" /&gt;&lt;/p&gt;
-        &lt;h2&gt;Hello, &lt;span data-bind="text: fullName"&gt; &lt;/span&gt;!&lt;/h2&gt;
-      &lt;div&gt;&lt/div&gt;
+      &lt;p&gt;First name: &lt;input data-bind="value: first_name" /&gt;&lt;/p&gt;
+      &lt;p&gt;Last name: &lt;input data-bind="value: last_name" /&gt;&lt;/p&gt;
+      &lt;h2&gt;Hello, &lt;span data-bind="text: full_name"&gt; &lt;/span&gt;!&lt;/h2&gt;
 
       // Model
-      var model = {first: "Planet", last: "Earth"};
+      var model = {first_name: "Planet", last_name: "Earth"};
 
       // ViewModel
       var ViewModel = function(model) {
-        this.firstName = ko.observable(model.first);
-        this.lastName = ko.observable(model.last);
-        this.fullName = ko.computed(function() { return this.firstName() + " " + this.lastName(); });
+        this.first_name = ko.observable(model.first_name);
+        this.last_name = ko.observable(model.last_name);
+        this.full_name = ko.computed(function() { return this.first_name() + " " + this.last_name(); }, this);
       };
       var view_model = new ViewModel(model);
 
       // Bind
-      ko.applyBindings(view_model, $('#my_view')[0]);
+      ko.applyBindings(view_model);
 
     strong="Note:"
     span=" ViewModels need to be unique instances so Knockout uses a simple function with new to create an instance. Here are some equivalents:"
@@ -95,25 +92,25 @@ block content
     pre(data-for='cs'): code.coffee.
       # Form 1: Simple function-based class
       ViewModel = (model) ->
-        @firstName = ko.observable(model.first)
+        @first_name = ko.observable(model.first_name)
         @ # note: need to return this/@ since CoffeeScript returns the last argument automatically (which is not what we want)
 
-      view_model = new ViewModel({first: "Hello"})
+      view_model = new ViewModel({first_name: "Hello"})
 
       # Form 2: CoffeeScript class (allows for inheritance)
       class ViewModel
         constructor: (mode) ->
-          @firstName = ko.observable(model.first)
+          @first_name = ko.observable(model.first_name)
 
-      view_model = new ViewModel({first: "Hello"})
+      view_model = new ViewModel({first_name: "Hello"})
 
     pre(data-for='js'): code.javascript.
       # Simple function-based class
       var ViewModel = function(model) {
-        this.firstName = ko.observable(model.first);
+        this.first_name = ko.observable(model.first_name);
       };
 
-      var view_model = new ViewModel({first: "Hello"});
+      var view_model = new ViewModel({first_name: "Hello"});
 
     p
     h3="Backbone.js"
@@ -122,20 +119,22 @@ block content
       a(href='http://en.wikipedia.org/wiki/Model_view_controller')='Model_View_Controller (MVC)'
       span=' - '
       a(href='http://documentcloud.github.com/backbone/#FAQ-mvc')='inspired'
-      span=' library that handles data (Model/Collection) synchronization with a RESTful server, page routing, etc. Unfortunately, their Views becomecomplex to maintain when dynamic Model and View synchronization is required (which is why Knockback exists).'
+      span=' library that handles data (Model/Collection) synchronization with a RESTful server for '
+      a(href='http://en.wikipedia.org/wiki/Object-relational_mapping ')='Object_Relational_Mapping (ORM)'
+      span=', page routing, etc. Unfortunately, their Views becomecomplex to maintain when dynamic Model and View synchronization is required (which is why Knockback exists).'
     div='These are the basic Model components from Backbone used by Knockback:'
     pre(data-for='cs'): code.coffee.
       // Model
-      earth = new Backbone.Model({first: 'Planet', last: 'Earth'})
-      mars = new Backbone.Model({first: 'Planet', last: 'Mars'})
+      earth = new Backbone.Model({first_name: 'Planet', last_name: 'Earth'})
+      mars = new Backbone.Model({first_name: 'Planet', last_name: 'Mars'})
 
       // Collection
       planets = new Backbone.Collection([earth, mars])
 
     pre(data-for='js'): code.javascript.
       // Model
-      var earth = new Backbone.Model({first: 'Planet', last: 'Earth'});
-      var mars = new Backbone.Model({first: 'Planet', last: 'Mars'});
+      var earth = new Backbone.Model({first_name: 'Planet', last_name: 'Earth'});
+      var mars = new Backbone.Model({first_name: 'Planet', last_name: 'Mars'});
 
       // Collection
       var planets = new Backbone.Collection([earth, mars]);
@@ -148,8 +147,8 @@ block content
           "earth":    "switchToEarth"     // #earth
           "mars":     "switchToMars"      // #mars
 
-        switchToEarth: -> ...
-        switchToMars: -> ...
+        switchToEarth: -> # do something
+        switchToMars: -> # do something
 
       # instantiate the router and start listening for URL changes
       page_router = new PageRouter()
@@ -162,8 +161,8 @@ block content
           "mars":     "switchToMars"      // #mars
         },
 
-        switchToEarth: function() { ... },
-        switchToMars: function() { ... }
+        switchToEarth: function() { /* do something */ },
+        switchToMars: function() { /* do something */ }
       });
 
       // instantiate the router and start listening for URL changes
@@ -172,99 +171,147 @@ block content
 
     p
     h3="Knockback.js"
-    div='You can use Knockback to bind Backbone Models/Collections to your HTML/templates (View) using Knockout. This allows server or application changes to Models/Collections to be propagated automatically to your views using `Backbone.sync`'
-    div='Creating a ko.observable() for each model attribute by hand:'
+    p='You can use Knockback to bind Backbone Models/Collections to your HTML/templates (View) using Knockout. This allows server or application changes to Models/Collections to be propagated automatically to your views using `Backbone.sync`'
+    h4="Using with a Backbone.Model"
+    p='Creating a ko.observable() for each model attribute by hand:'
     pre(data-for='cs'): code.coffee.
       # View
-      &lt;div id='my_view'&gt;&lt/div&gt;
-        &lt;p&gt;First name: &lt;input data-bind="value: firstName" /&gt;&lt;/p&gt;
-        &lt;p&gt;Last name: &lt;input data-bind="value: lastName" /&gt;&lt;/p&gt;
-        &lt;h2&gt;Hello, &lt;span data-bind="text: fullName"&gt; &lt;/span&gt;!&lt;/h2&gt;
-      &lt;div&gt;&lt/div&gt;
+      &lt;p&gt;First name: &lt;input data-bind="value: first_name" /&gt;&lt;/p&gt;
+      &lt;p&gt;Last name: &lt;input data-bind="value: last_name" /&gt;&lt;/p&gt;
+      &lt;h2&gt;Hello, &lt;span data-bind="text: full_name"&gt; &lt;/span&gt;!&lt;/h2&gt;
 
       # Model
-      model = new Backbone.Model({first: "Planet", last: "Earth"})
+      model = new Backbone.Model({first_name: "Planet", last_name: "Earth"})
 
       # ViewModel
       ViewModel = (model) ->
-        @firstName = kb.observable(model, 'first')
-        @lastName = kb.observable(model, 'first')
-        @fullName = ko.computed(->return "#&#123@firstName()} #&#123@lastName()}")
+        @first_name = kb.observable(model, 'first_name')
+        @last_name = kb.observable(model, 'first_name')
+        @full_name = ko.computed(=>return "#&#123@first_name()} #&#123@last_name()}")
         @
       view_model = new ViewModel(model)
 
       # Bind
-      ko.applyBindings(view_model, $('#my_view')[0])
-      ...
-      kb.utils.release(view_model); view_model = null
+      ko.applyBindings(view_model)
+
+      # Do something then clean up
+      # kb.utils.release(view_model); view_model = null
 
     pre(data-for='js'): code.javascript.
       // View
-      &lt;div id='my_view'&gt;&lt/div&gt;
-        &lt;p&gt;First name: &lt;input data-bind="value: firstName" /&gt;&lt;/p&gt;
-        &lt;p&gt;Last name: &lt;input data-bind="value: lastName" /&gt;&lt;/p&gt;
-        &lt;h2&gt;Hello, &lt;span data-bind="text: fullName"&gt; &lt;/span&gt;!&lt;/h2&gt;
-      &lt;div&gt;&lt/div&gt;
+      &lt;p&gt;First name: &lt;input data-bind="value: first_name" /&gt;&lt;/p&gt;
+      &lt;p&gt;Last name: &lt;input data-bind="value: last_name" /&gt;&lt;/p&gt;
+      &lt;h2&gt;Hello, &lt;span data-bind="text: full_name"&gt; &lt;/span&gt;!&lt;/h2&gt;
 
       // Model
-      var model = Backbone.Model({first: "Planet", last: "Earth"});
+      var model = new Backbone.Model({first_name: "Planet", last_name: "Earth"});
 
       // ViewModel
       var ViewModel = function(model) {
-        this.firstName = kb.observable(model, 'first');
-        this.lastName = kb.observable(model, 'last');
-        this.fullName = ko.computed(function() { return this.firstName() + " " + this.lastName(); });
+        this.first_name = kb.observable(model, 'first_name');
+        this.last_name = kb.observable(model, 'last_name');
+        this.full_name = ko.computed(function() { return this.first_name() + " " + this.last_name(); }, this);
       };
       var view_model = new ViewModel(model);
 
       // Bind
-      ko.applyBindings(view_model, $('#my_view')[0]);
-      ...
-      kb.utils.release(view_model); view_model = null
+      ko.applyBindings(view_model);
 
-    div='You can use Knockback to bind Backbone Models/Collections to your HTML/templates (View) using Knockout. This allows server or application changes to Models/Collections to be propagated automatically to your views using `Backbone.sync`'
-    div='Creating a ko.observable() automatically for each model attribute:'
+      // Do something then clean up
+      // kb.utils.release(view_model); view_model = null;
+
+    p#view_model_no_inheritance='Creating a ko.observable() automatically for each model attribute:'
     pre(data-for='cs'): code.coffee.
       # View
-      &lt;div id='my_view'&gt;&lt/div&gt;
-        &lt;p&gt;First name: &lt;input data-bind="value: firstName" /&gt;&lt;/p&gt;
-        &lt;p&gt;Last name: &lt;input data-bind="value: lastName" /&gt;&lt;/p&gt;
-        &lt;h2&gt;Hello, &lt;span data-bind="text: fullName"&gt; &lt;/span&gt;!&lt;/h2&gt;
-      &lt;div&gt;&lt/div&gt;
+      &lt;p&gt;First name: &lt;input data-bind="value: first_name" /&gt;&lt;/p&gt;
+      &lt;p&gt;Last name: &lt;input data-bind="value: last_name" /&gt;&lt;/p&gt;
+      &lt;h2&gt;Hello, &lt;span data-bind="text: full_name"&gt; &lt;/span&gt;!&lt;/h2&gt;
 
       # Model
-      model = new Backbone.Model({first: "Planet", last: "Earth"})
+      model = new Backbone.Model({first_name: "Planet", last_name: "Earth"})
 
       # ViewModel
       view_model = kb.viewModel(model)
-      view_model.fullName = ko.computed(->return "#&#123@firstName()} #&#123@lastName()}")
+      view_model.full_name = ko.computed(->return "#&#123@first_name()} #&#123@last_name()}", view_model)
 
       # Bind
-      ko.applyBindings(view_model, $('#my_view')[0])
-      ...
-      # Clean up
-      kb.utils.release(view_model); view_model = null
+      ko.applyBindings(view_model)
+
+      # Do something then clean up
+      # kb.utils.release(view_model); view_model = null
 
     pre(data-for='js'): code.javascript.
       // View
-      &lt;div id='my_view'&gt;&lt/div&gt;
-        &lt;p&gt;First name: &lt;input data-bind="value: firstName" /&gt;&lt;/p&gt;
-        &lt;p&gt;Last name: &lt;input data-bind="value: lastName" /&gt;&lt;/p&gt;
-        &lt;h2&gt;Hello, &lt;span data-bind="text: fullName"&gt; &lt;/span&gt;!&lt;/h2&gt;
-      &lt;div&gt;&lt/div&gt;
+      &lt;p&gt;First name: &lt;input data-bind="value: first_name" /&gt;&lt;/p&gt;
+      &lt;p&gt;Last name: &lt;input data-bind="value: last_name" /&gt;&lt;/p&gt;
+      &lt;h2&gt;Hello, &lt;span&gt; data-bind="text: full_name"&gt; &lt;/span&gt;!&lt;/h2&gt;
 
       // Model
-      var model = Backbone.Model({first: "Planet", last: "Earth"});
+      var model = new Backbone.Model({first_name: "Planet", last_name: "Earth"});
 
-      # ViewModel
+      // ViewModel
       var view_model = kb.viewModel(model);
-      view_model.fullName = ko.computed(function() { return this.firstName() + " " + this.lastName(); });
+      view_model.full_name = ko.computed(function() { return this.first_name() + " " + this.last_name(); }, view_model);
 
       // Bind
-      ko.applyBindings(view_model, $('#my_view')[0]);
-      ...
-      # Clean up
-      kb.utils.release(view_model); view_model = null
+      ko.applyBindings(view_model);
+
+      // Do something then clean up
+      // kb.utils.release(view_model); view_model = null;
+
+    h4="Using with a Backbone.Collection"
+    p='Create a kb.ViewModel automatically for each model in a collection:'
+    pre(data-for='cs'): code.coffee.
+      # View
+      &lt;!-- ko foreach: planets --&gt;
+        &lt;p&gt;First name: &lt;input data-bind="value: first_name" /&gt;&lt;/p&gt;
+        &lt;p&gt;Last name: &lt;input data-bind="value: last_name" /&gt;&lt;/p&gt;
+        &lt;h2&gt;Hello, &lt;span data-bind="text: ko.computed(function(){ return $data.first_name() + ' ' + $data.last_name(); })"&gt; &lt;/span&gt;!&lt;/h2&gt;
+      &lt;!-- /ko --&gt;
+
+      # Models
+      earth = new Backbone.Model({first_name: 'Planet', last_name: 'Earth'})
+      mars = new Backbone.Model({first_name: 'Planet', last_name: 'Mars'})
+
+      # Collection
+      planets = new Backbone.Collection([earth, mars])
+
+      # ViewModel
+      view_model =
+        planets: kb.collectionObservable(planets, {view_model: kb.ViewModel})
+
+      # Bind
+      ko.applyBindings(view_model)
+
+      # Do something then clean up
+      # kb.utils.release(view_model); view_model = null
+
+    pre(data-for='js'): code.javascript.
+      // View
+      &lt;!-- ko foreach: planets --&gt;
+        &lt;p&gt;First name: &lt;input data-bind="value: first_name" /&gt;&lt;/p&gt;
+        &lt;p&gt;Last name: &lt;input data-bind="value: last_name" /&gt;&lt;/p&gt;
+        &lt;h2&gt;Hello, &lt;span data-bind="text: ko.computed(function(){ return $data.first_name() + ' ' + $data.last_name(); })"&gt; &lt;/span&gt;!&lt;/h2&gt;
+      &lt;!-- /ko --&gt;
+
+      // Models
+      var earth = new Backbone.Model({first_name: 'Planet', last_name: 'Earth'});
+      var mars = new Backbone.Model({first_name: 'Planet', last_name: 'Mars'});
+
+      // Collection
+      var planets = new Backbone.Collection([earth, mars]);
+
+      // ViewModel
+      var view_model = {
+        planets: kb.collectionObservable(planets, {view_model: kb.ViewModel})
+      };
+
+      // Bind
+      ko.applyBindings(view_model);
+
+      // Do something then clean up
+      // kb.utils.release(view_model); view_model = null;
+
 
     p
     h2='Inheritance'
@@ -276,56 +323,54 @@ block content
         a(href="docs.html#localized_observable")="kb.LocalizedObservable"
       li
         a(href="docs.html#ref_countable")="kb.RefCountable"
-    div='Re-wrtting the above kv.viewModel example:'
+    span='Re-wrtting the '
+    a(href='#view_model_no_inheritance')='above kb.viewModel example'
+    span=':'
     pre(data-for='cs'): code.coffee.
       # View
-      &lt;div id='my_view'&gt;&lt/div&gt;
-        &lt;p&gt;First name: &lt;input data-bind="value: firstName" /&gt;&lt;/p&gt;
-        &lt;p&gt;Last name: &lt;input data-bind="value: lastName" /&gt;&lt;/p&gt;
-        &lt;h2&gt;Hello, &lt;span data-bind="text: fullName"&gt; &lt;/span&gt;!&lt;/h2&gt;
-      &lt;div&gt;&lt/div&gt;
+      &lt;p&gt;First name: &lt;input data-bind="value: first_name" /&gt;&lt;/p&gt;
+      &lt;p&gt;Last name: &lt;input data-bind="value: last_name" /&gt;&lt;/p&gt;
+      &lt;h2&gt;Hello, &lt;span data-bind="text: full_name"&gt; &lt;/span&gt;!&lt;/h2&gt;
 
       # Model
-      model = new Backbone.Model({first: "Planet", last: "Earth"})
+      model = new Backbone.Model({first_name: "Planet", last_name: "Earth"})
 
       # ViewModel
       class ViewModel extends kb.ViewModel
         constructor: (model) ->
           super
-          @fullName = ko.computed(->return "#&#123@firstName()} #&#123@lastName()}")
+          @full_name = ko.computed(=>return "#&#123@first_name()} #&#123@last_name()}")
       view_model = new ViewModel(model)
 
       # Bind
-      ko.applyBindings(view_model, $('#my_view')[0])
-      ...
-      # Clean up
-      kb.utils.release(view_model); view_model = null
+      ko.applyBindings(view_model)
+
+      # Do something then clean up
+      # kb.utils.release(view_model); view_model = null
 
     pre(data-for='js'): code.javascript.
       // View
-      &lt;div id='my_view'&gt;&lt/div&gt;
-        &lt;p&gt;First name: &lt;input data-bind="value: firstName" /&gt;&lt;/p&gt;
-        &lt;p&gt;Last name: &lt;input data-bind="value: lastName" /&gt;&lt;/p&gt;
-        &lt;h2&gt;Hello, &lt;span data-bind="text: fullName"&gt; &lt;/span&gt;!&lt;/h2&gt;
-      &lt;div&gt;&lt/div&gt;
+      &lt;p&gt;First name: &lt;input data-bind="value: first_name" /&gt;&lt;/p&gt;
+      &lt;p&gt;Last name: &lt;input data-bind="value: last_name" /&gt;&lt;/p&gt;
+      &lt;h2&gt;Hello, &lt;span data-bind="text: full_name"&gt; &lt;/span&gt;!&lt;/h2&gt;
 
       // Model
-      var model = Backbone.Model({first: "Planet", last: "Earth"});
+      var model = new Backbone.Model({first_name: "Planet", last_name: "Earth"});
 
       // ViewModel
-      var ViewModel = extends kb.ViewModel.extend({
+      var ViewModel = kb.ViewModel.extend({
         constructor: function(model){
           kb.ViewModel.prototype.constructor.apply(this, arguments);
-          this.fullName = ko.computed(function() { return this.firstName() + " " + this.lastName(); });
+          this.full_name = ko.computed(function() { return this.first_name() + " " + this.last_name(); }, this);
         }
       });
       var view_model = new ViewModel(model);
 
       // Bind
-      ko.applyBindings(view_model, $('#my_view')[0]);
-      ...
-      # Clean up
-      kb.utils.release(view_model); view_model = null
+      ko.applyBindings(view_model);
+
+      // Do something then clean up
+      // kb.utils.release(view_model); view_model = null
 
     p
     h2='Classes vs Factory Functions'
@@ -341,3 +386,29 @@ block content
       span="Be careful to differentiate the factory from the class when using "
       a(href='docs.htm#utils_observable_instance_of')="kb.utils.observableInstanceOf(observable, class)"
 
+
+    h2='Note on Relationships between Models and ViewModels - Often One-To-Many'
+
+    p='The distinction between Models and ViewModels is important:'
+    p
+      ul
+        li
+          span='Backbone.Models encapsulate the data and operations on the data, are serialized/deserialized from/to the server, and are in short Models.'
+        li
+          span='ViewModels provide the attributes and logic to the templates often interacting with the Model data like Controllers. However, they may have their own data and logic that is purely View-related and that the server should never know about.'
+
+    p='Besides providing a clean separation between data and display, this separation becomes important in a larger application. In a larger application, you often have different ways to present the same Model with different ViewModels. For example, a Model could have the following ViewModels:'
+
+    p
+      ul
+        li
+          strong="Thumbnail View:"
+          span=" the ViewModel could only expose a subset of the Model's attributes, dates/time may be in the shortest format possible, or maybe just an image would be provided to the template."
+        li
+          strong='Cell View:'
+          span=' the ViewModel could again expose a subset of only the most relevant summary attributes, routing information to a detailed summary view, etc.'
+        li
+          strong='Editing View:'
+          span=" the ViewModel could expose almost all of the Model's attributes, localized labels for each, data and functions for the editing controls and functionality, routing information to specialized editing views, etc."
+
+    p='Important to understand that in a larger application the relationship between Models and ViewModels tends to be one-to-many. In this application, there is a one-to-many relationship from the Priority model through the the HeaderViewModel and TodoViewModel ViewModels because each one uses the Priority for rendering their priority colors and providing priority settings data to their tooltip, but the actions on selecting a priority in the tool tip differ.'

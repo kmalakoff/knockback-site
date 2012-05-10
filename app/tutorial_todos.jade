@@ -15,7 +15,214 @@ block content
   section
     h1="Tutorial: Knockback Todos"
 
+    a(href='http://kmalakoff.github.com/knockback-todos/')='Try the demo'
+
+    h2='Todos Architecture'
+
+    h3='Knockback follows the MVVM Pattern'
+
+    p='With the MVVM pattern, instead of Model, View, Controller you use Model, View, ViewModel. As an simple approximation using MVC terminology:'
+
+    ul
+      li='Models are handled by Backbone.Models and Backbone.Collections'
+      li='Views are handled by Templates (inline or jQuery)'
+      li='ViewModels take the place of Controllers'
+
+    h3='MVVM in "Todos - Classic"'
+
+    p='The Classic application is an upgraded port of the Backbone Todos application so it has the same ORM with Todo (Backbone.Model) and TodoCollection (Backbone.Collection), but the two views are replaced by various ViewModels and templates for each section of the screen (SettingsViewModel, HeaderViewModel, TodosViewModel, FooterViewModel).'
+
+    h4='Models (Backbone.Model + Backbone.Collection)'
+
+    ul
+      li
+        strong='Todo:'
+        span=' provides the data and operations for a Todo like setting its complete state and saving changes on the server/local-storage'
+      li
+        strong='TodoCollection:'
+        span=' fetches models from the server and provides summary information on the Todo data like how many are completed, remaining, etc'
+
+    h4='ViewModels'
+
+    ul
+      li
+        strong='SettingsViewModel:'
+        span=' provides properties to select the active filtering for Todos'
+      li
+        strong='HeaderViewModel:'
+        span=' provides properties to configure the new todo input element and provides a hook to the input element in the template so the ViewModel can create a new Todo Model when Enter is pressed'
+      li
+        strong='TodosViewModel:'
+        span=' provides the ViewModels to render each Todo in the collection'
+      li
+        strong='FooterViewModel:'
+        span=' provides and updates the summary stats attributes whenever the Todo list or one of its Todo models changes'
+
+    h3='MVVM in "Todos - Extended"'
+    p='This application extends the "Todos - Classic" by adding settings including todo priorities (display colors and orders), language selection and localized text, adding todos list sorting options (by name, created date, and priority). Along with the following changes:'
+
+    h4='Models (Backbone.Model + Backbone.Collection)'
+
+    ul
+      li
+        strong='Priority:'
+        span=' provides the data for the priority and color information that is saved on the server/local-storage. It could be a generic Backbone.Model but for clarity and consistency with the mock up, it is given a class.'
+      li
+        strong='PriorityCollection:'
+        span=' a very basic collection for fetching all of the priority settings'
+
+    h4='ViewModels'
+
+    ul
+      li
+        strong='PrioritiesViewModel:'
+        span=" provides localized text (that shouldn't be saved to the server) and color properties to the 'priority-setting-template' template"
+      li
+        strong='SettingsViewModel:'
+        span="provides the priority settings globally to the application, the current default priority and color for new tasks, a priority ranking to the TodosViewModel for sorting, the selected and available locales from the locale manager ('en', 'fr-FR', 'it-IT') into display strings ('EN', 'FR', 'IT'), todos sorting radio buttons."
+      li
+        strong='HeaderViewModel:'
+        span=' upgraded to expose properties for rendering the current default Todo priority and a hook to show/hide the tooltip for selecting the default priority'
+      li
+        strong='TodoViewModel:'
+        span=' upgraded to expose properties for rendering its Todo priority and a hook to show/hide the tooltip for selecting the Todo priority'
+
+    h3='Localization'
+
+    p='Localization is key for the global applications we create today. It should not be an afterthought!'
+
+    p='Knockback does not provide a locale manager (although there is a sample implementation with this todos application in: models/locale_manager.coffee) because different applications will retrieve their localized strings in different ways. Instead, Knockback provides a localization pattern by using a simpified Backbone.Model-like signature that hooks into Knockback like any other model:'
+
+    ol
+      li='Emulate a simplified Backbone.Model through a get method like "get: (string_id) -> ..."'
+      li="Mixin Backbone.Events '_.extend(LocaleManager.prototype, Backbone.Events)' and trigger Backbone.Events 'change' and 'change:#&#123string_id}' like:"
+
     pre(data-for='cs'): code.coffee.
-      x = 0
+      @trigger('change', @)
+      @trigger("change:#&#123key}", value) for key, value of @translations_by_locale[@locale_identifier]
+
     pre(data-for='js'): code.javascript.
-      var x = 0;
+      this.trigger('change', @);
+      for (var key in this.translations_by_locale[this.locale_identifier]) {
+        this.trigger("change:#&#123key}", this.translations_by_locale[this.locale_identifier][key]);
+      }
+
+    p='Register your custom locale manager like:'
+
+    pre(data-for='cs'): code.coffee.
+      kb.locale_manager = new MyLocaleManager()
+
+    pre(data-for='js'): code.javascript.
+      kb.locale_manager = new MyLocaleManager();
+
+    p='Also, if you want to perform some specialized formatting above and beyond a string lookup, you can provide custom localizer classes derived from kb.LocalizedObservable:'
+
+    pre(data-for='cs'): code.coffee.
+      class LongDateLocalizer extends kb.LocalizedObservable
+        constructor: -> return super
+        read: (value) ->
+          return Globalize.format(value, Globalize.cultures[kb.locale_manager.getLocale()].calendars.standard.patterns.f, kb.locale_manager.getLocale())
+        write: (localized_string, value, observable) ->
+          new_value = Globalize.parseDate(localized_string, Globalize.cultures[kb.locale_manager.getLocale()].calendars.standard.patterns.d, kb.locale_manager.getLocale())
+          value.setTime(new_value.valueOf())
+
+    pre(data-for='js'): code.javascript.
+      var LongDateLocalizer =  kb.LocalizedObservable.extend({
+        constructor: function LongDateLocalizer() {
+          return LongDateLocalizer.__super__.constructor.apply(this, arguments);
+        },
+
+        read: function(value) {
+          return Globalize.format(value, Globalize.cultures[kb.locale_manager.getLocale()].calendars.standard.patterns.f, kb.locale_manager.getLocale());
+        },
+
+        write: function(localized_string, value, observable) {
+          var new_value;
+          new_value = Globalize.parseDate(localized_string, Globalize.cultures[kb.locale_manager.getLocale()].calendars.standard.patterns.d, kb.locale_manager.getLocale());
+          return value.setTime(new_value.valueOf());
+        }
+      });
+
+    strong='Note:'
+    span=" kb.LocalizedObservable's constructor actually returns a ko.computed (not the instance itself) so you either need to return super result or if you have custom initialization, return the underlying observable using the following helper: 'kb.wrappedObservable(this)'"
+
+    p='As for the "Todos - Knockout Complete" demo...'
+
+    p='You can simply watch an attribute on the locale manager as follows:'
+
+    pre(data-for='cs'): code.coffee.
+      HeaderViewModel = ->
+        ...
+        @input_placeholder_text = kb.observable(kb.locale_manager, {key: 'placeholder_create'})
+
+    pre(data-for='js'): code.javascript.
+      var HeaderViewModel = function() {
+        ...
+        this.input_placeholder_text = kb.observable(kb.locale_manager, {key: 'placeholder_create'});
+      };
+
+    p='Or model attributes can be localized automatically when your locale manager triggers a change:'
+
+    pre(data-for='cs'): code.coffee.
+      TodoViewModel = (model) ->
+        ...
+        @completed = kb.observable(model, {key: 'completed', localizer: LongDateLocalizer})
+
+    pre(data-for='js'): code.javascript.
+      var TodoViewModel = function(model) {
+        ...
+        this.completed = kb.observable(model, {key: 'completed', localizer: LongDateLocalizer});
+      };
+
+    h3='Lazy Loading'
+
+    p='By using Knockback with [Backbone.ModelRef][https://github.com/kmalakoff/backbone-modelref], you can start rendering your views before the models are loaded.'
+
+    p='As demonstration, you can see that the colors arrive a little after the rendering. It is achieved by passing model references instead of models to the settings view model:'
+
+    pre(data-for='cs'): code.coffee.
+      SettingsViewModel = (priorities) ->
+        @priorities = ko.observableArray(_.map(priorities, (model)-> return new PrioritiesViewModel(model)))
+        ...
+      window.app.viewmodels.settings = new SettingsViewModel([
+        new Backbone.ModelRef(priorities, 'high'),
+        new Backbone.ModelRef(priorities, 'medium'),
+        new Backbone.ModelRef(priorities, 'low')
+      ])
+
+    pre(data-for='js'): code.javascript.
+      var SettingsViewModel = function(priorities) {
+        this.priorities = ko.observableArray(_.map(priorities, (model)-> return new PrioritiesViewModel(model)));
+        ...
+      window.app.viewmodels.settings = new SettingsViewModel([
+        new Backbone.ModelRef(priorities, 'high'),
+        new Backbone.ModelRef(priorities, 'medium'),
+        new Backbone.ModelRef(priorities, 'low')
+      ]);
+
+    p="and then lazy fetching them (which creates them if they don't exist):"
+
+    pre(data-for='cs'): code.coffee.
+      # Load the prioties late to show the dynamic nature of Knockback with Backbone.ModelRef
+      _.delay((->
+        priorities.fetch(
+          success: (collection) ->
+            collection.create({id:'high', color:'#c00020'}) if not collection.get('high')
+            collection.create({id:'medium', color:'#c08040'}) if not collection.get('medium')
+            collection.create({id:'low', color:'#00ff60'}) if not collection.get('low')
+        )
+        ...
+      ), 1000)
+
+    pre(data-for='js'): code.javascript.
+      // Load the prioties late to show the dynamic nature of Knockback with Backbone.ModelRef
+      _.delay(function() {
+        priorities.fetch({
+          success: function(collection) {
+            if (!collection.get('high')) { collection.create({id:'high', color:'#c00020'}); }
+            if (!collection.get('medium')) { collection.create({id:'medium', color:'#c08040'}); }
+            if (!collection.get('low')) { collection.create({id:'low', color:'#00ff60'}); }
+          }
+        });
+        ...
+      }), 1000);
