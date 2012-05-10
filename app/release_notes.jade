@@ -8,36 +8,113 @@ block includes
 
 block navbar
   include _jade_includes/layout_components/page_navbar
-  mixin pageNavbar('Release Notes')
-  include _jade_includes/layout_components/radio_coffee_or_java
+  mixin pageNavbar('Release Notes', true)
 
 block content
   section
     h1="Upgrading to 0.15.0"
 
-    h2="Changes"
+    h2="New Stuff"
+      p
+      ol
+        li="kb.CollectionObservable is now a ko.observableArray so you no longer need to supply the second parameter"
+          p
+          pre(data-for="cs"): code.coffee.
+            # WAS:
+            view_model =
+              property: ko.observableArray()
+              collection_observable: kb.collectionObservable(collection, observable_array, options)
+
+            for model_view_model in view_model.property()
+              ...
+
+            # IS NOW:
+            view_model =
+              property: kb.collectionObservable(collection, options)
+
+            for model_view_model in view_model.property()
+              ...
+          pre(data-for="js"): code.javascript.
+            // WAS:
+            var view_model = {
+              property: ko.observableArray()
+              collection_observable: kb.collectionObservable(collection, observable_array, options)
+            };
+
+            var view_model;
+            for (var i = 0, len = view_model.property().length; i < len; i++) {
+              view_model = view_model.property()[i];
+              ...
+            }
+
+            // IS NOW:
+            var view_model = {
+              property: kb.collectionObservable(collection, options)
+            };
+
+            var view_model;
+            for (var i = 0, len = view_model.property().length; i < len; i++) {
+              view_model = view_model.property()[i];
+              ...
+            }
+
+        li="kb.ViewModel now handles nested models (like self-referencing Backbone-Relational.js models)"
+          p
+          pre(data-for="cs"): code.coffee.
+            class Person extends Backbone.RelationalModel
+              relations: [{
+                type: Backbone.HasMany
+                key: 'friends'
+                relatedModel: Person
+              }]
+
+            john = new Person({
+              id: 'person-1'
+              name: 'John'
+              friends: ['person-2']
+            })
+            paul = new Person({
+              id: 'person-2'
+              name: 'Paul'
+              friends: ['person-1']
+            })
+
+            john_view_model = kb.viewModel(john)
+            ...
+            kb.utils.release(john_view_model); john_view_model = null     # release when done
+          pre(data-for="js"): code.javascript.
+            var Person = Backbone.RelationalModel.extend({
+              relations: [{
+                type: Backbone.HasMany,
+                key: 'friends',
+                relatedModel: Person
+              }]
+            });
+
+            var john = new Person({
+              id: 'person-1',
+              name: 'John',
+              friends: ['person-2']
+            });
+            var paul = new Person({
+              id: 'person-2',
+              name: 'Paul',
+              friends: ['person-1']
+            });
+
+            var john_view_model = kb.viewModel(john);
+            ...
+            kb.utils.release(john_view_model); john_view_model = null;     // release when done
+            });
+          div
+            span='See '
+            a(href='tutorial_inspector.html')='the Knockback Inspector tutorial'
+            span=" with 'test' as the url for an example"
+
+    h2="Required Changes"
 
       ol
         li="kb.collectionObservable is now a ko.observableArray so you no longer need to supply the second parameter"
-          p="Was:"
-          pre(data-for="cs"): code.coffee.
-            view_model =
-              property: ko.observableArray()
-              collection_observable: kb.collectionObservable(collection, observable_array, options)
-          pre(data-for="js"): code.javascript.
-            var view_model = {
-              property: ko.observableArray()
-              collection_observable: kb.collectionObservable(collection, observable_array, options)
-            };
-
-          p="Is Now:"
-          pre(data-for="cs"): code.coffee.
-            view_model =
-              property: kb.collectionObservable(collection, options)
-          pre(data-for="js"): code.javascript.
-            var view_model = {
-              property: kb.collectionObservable(collection, options)
-            };
 
           div.alert.alert-info
             p="This means:"
@@ -69,9 +146,9 @@ block content
                     # do something
                 )
                 pre(data-for="js"): code.javascript.
-                  var view_model, array = collection_observable();
-                  for (var i = 0, len = array.length; i < len; i++) {
-                    view_model = array[i];
+                  var view_model;
+                  for (var i = 0, len = collection_observable().length; i < len; i++) {
+                    view_model = collection_observable()[i];
                     // do something
                   }
 
@@ -124,6 +201,4 @@ block content
                       # do something
                     }
                   });
-
-    h2="I hope you enjoy these modifications!"
 

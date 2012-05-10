@@ -8,7 +8,7 @@ block header
 
 block navbar
   include _jade_includes/layout_components/page_navbar
-  mixin pageNavbar('Home')
+  mixin pageNavbar('Home', false)
 
 block content
   div.page.github_fork_me
@@ -51,6 +51,8 @@ block content
         p Both Knockout and Backbone have their strengths and weaknesses, but together they are amazing!
         p At the same time you can have the strong ORM provided by Backbone and the dynamic view-models that Knockout.js offers.
 
+    div#comparison_table
+    p
     .content
       table.comparison
         col

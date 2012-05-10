@@ -10,7 +10,7 @@ div.knockback_logo {
   position: relative;
   z-index: 100;
   font-size: 70px;
-  padding: 20px 0 40px;
+  padding: 20px 0px 0px;
   font-family: Chosen, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 div.knockback_logo .lock {
@@ -65,8 +65,7 @@ div.knockback_logo .back {
   animation-delay: 1s;
 }
 div.knockback_logo h2 {
-  position: absolute;
-  right: 0;
+  clear: both;
   font-size: 20px;
   margin: 1ex 0;
   font-weight: normal;

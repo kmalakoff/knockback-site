@@ -17,10 +17,10 @@ mixin pageNavbarWriteItem(label, url, active_label)
     li
       a(href='#{url}') #{label}
 
-mixin pageNavbar(active_label)
-  - var ITEMS = [{Home: 'index.html'}, {Docs: 'docs.html'}, {Tutorials: [{Todos: 'tutorial_todos.html'}, {Inspector: 'tutorial_inspector.html'}]}, {'Release Notes': 'release_notes.html'}]
+mixin pageNavbar(active_label, include_code_language_selector)
+  - var ITEMS = [{Home: 'index.html'}, {'Getting Started': 'tutorial_getting_started.html'}, {Docs: 'docs.html'}, {Tutorials: [{'Getting Started': 'tutorial_getting_started.html'}, {Todos: 'tutorial_todos.html'}, {Inspector: 'tutorial_inspector.html'}]}, {'Release Notes': 'release_notes.html'}]
 
-  div.navbar.top
+  div.navbar.page
     div.navbar-inner
       div.container
         a.brand Knockback.js
@@ -28,3 +28,6 @@ mixin pageNavbar(active_label)
           each item in ITEMS
             each url, label in item
               mixin pageNavbarWriteItem(label, url, active_label)
+        if (include_code_language_selector)
+          include code_language_selector
+

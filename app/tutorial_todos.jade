@@ -5,15 +5,17 @@ block title
 
 block includes
   link(rel="stylesheet",href="stylesheets/tutorial.css")
+  include _jade_includes/include_knockback_scripts
 
 block navbar
   include _jade_includes/layout_components/page_navbar
-  mixin pageNavbar('Tutorials')
-  include _jade_includes/layout_components/radio_coffee_or_java
+  mixin pageNavbar('Tutorials', true)
 
 block content
   section
-    h1="Knockback.js Tutorial: Todos"
+    h1="Tutorial: Knockback Todos"
 
-    pre(data-for='cs')="x = 0"
-    pre(data-for='js')="var x = 0;"
+    pre(data-for='cs'): code.coffee.
+      x = 0
+    pre(data-for='js'): code.javascript.
+      var x = 0;
