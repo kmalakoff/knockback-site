@@ -57,6 +57,7 @@ div.api.container div.api.descriptions .content {
 div.api.container div.api.descriptions .content h2 {
   font-size: 1.2em;
   border-top: 2px solid #808080;
+  margin-top: 10px;
 }
 div.api.container div.api.descriptions .content h2 div {
   font-weight: normal;
@@ -73,4 +74,15 @@ div.api.container div.api.descriptions .content h3 div {
 div.api.container div.api.descriptions .content h4 {
   font-size: 1.1em;
   border-top: 1px dashed #b0c4de;
+}
+div.api.container div.api.descriptions .content span.type {
+  font-style: italic;
+  font-size: 12px;
+  color: #999;
+}
+div.api.container div.api.descriptions .content h1 li span,
+div.api.container div.api.descriptions .content h2 li span,
+div.api.container div.api.descriptions .content h3 li span,
+div.api.container div.api.descriptions .content h4 li span {
+  font-weight: normal;
 }

@@ -76,15 +76,15 @@ block api_index
         li='- '
           a(href='#utils_wrapped_model') wrappedModel
         li='- '
-          a(href='#utils_set_to_deafult') setToDefault
+          a(href='#utils_set_to_default') setToDefault
         li='- '
           a(href='#utils_observable_instance_of') observableInstanceOf
         li='- '
           a(href='#utils_wrapped_observable') wrappedObservable
-        li='- '
-          a(href='#utils_options_create_clear') optionsCreateClear
-        li='- '
-          a(href='#utils_options_create_override') optionsCreateOverride
+        //li='- '
+        //  a(href='#utils_options_create_clear') optionsCreateClear
+        //li='- '
+        //  a(href='#utils_options_create_override') optionsCreateOverride
 
       //////////////////////////////////
       // kb.LocalizedObservable
@@ -155,22 +155,22 @@ block api_index
       //////////////////////////////////
       // kb.Store
       //////////////////////////////////
-      li.type
-        a(href='#store') kb.Store
-        li='- '
-          a(href='#store_constructor') constructor
-        li='- '
-          a(href='#store_destroy') destroy
-        li='- '
-          a(href='#store_register_value') registerValue
-        li='- '
-          a(href='#store_resolve_value') resolveValue
-        li='- '
-          a(href='#store_release_value') releaseValue
-        li='- '
-          a(href='#store_add_resolver_to_options') addResolverToOptions
-        li='- '
-          a(href='#store_resolve_from_options') resolveFromOptions
+      //li.type
+      //  a(href='#store') kb.Store
+      //  li='- '
+      //    a(href='#store_constructor') constructor
+      //  li='- '
+      //    a(href='#store_destroy') destroy
+      //  li='- '
+      //    a(href='#store_register_value') registerValue
+      //  li='- '
+      //    a(href='#store_resolve_value') resolveValue
+      //  li='- '
+      //    a(href='#store_release_value') releaseValue
+      //  li='- '
+      //    a(href='#store_add_resolver_to_options') addResolverToOptions
+      //  li='- '
+      //    a(href='#store_resolve_from_options') resolveFromOptions
 
 block api_descriptions
   div.content
@@ -215,11 +215,23 @@ block api_descriptions
       ol
         li
           strong='model: '
+          span.type='{ Backbone.Model }: '
           span='the model whose attributes will be synchronized'
         li
           strong='options: '
-          span='TODO '
           span.label.label-inverse='optional'
+          ul
+            li='internals '
+              span.type='{ [strings] }: '
+            li='requires '
+              span.type='{ [strings] }: '
+            li='children '
+              span.type='{ function(model, key, options) | {key: function(model, key, options)} }: '
+            li='create '
+              span.type='{ function(model, key, options) }: '
+            li='read_only '
+              span.type='{ boolean }: '
+
     h4='Example:'
     pre(data-for='cs'): code.coffee.
       # instance
@@ -241,8 +253,9 @@ block api_descriptions
       ol
         li
           strong='model: '
-          span='the model to set on the view model '
+          span.type='{ Backbone.Model }: '
           span.label.label-inverse='optional'
+          span=' the model to set on the view model '
     h4='Example:'
     pre(data-for='cs'): code.coffee.
       view_model = kb.viewModel(new Backbone.Model({name: 'bob'}))
@@ -269,30 +282,62 @@ block api_descriptions
     div="Used to generate a single observable for a model's attribute"
     h4='Example:'
     pre(data-for='cs'): code.coffee.
-      TODO
-    pre(data-for='js'): code.javascript.
-      TODO
+      ContactViewModel = (model) ->
+        @name = kb.observable(model, 'name')
+        @number = kb.observable(model, {key:'number', read_only: true})
+        @
 
-    h3#observable_create='constructor(model, options, [owner]) or kb.observable '
+      model = new Contact({name: 'Ringo', number: '555-555-5556'})
+      view_model = new ContactViewModel(model)
+
+    pre(data-for='js'): code.javascript.
+      var ContactViewModel = function(model) {
+        this.name = kb.observable(model, 'name');
+        this.number = kb.observable(model, { key: 'number', read_only: true });
+      };
+      var model = new Contact({
+        name: 'Ringo',
+        number: '555-555-5556'
+      });
+      var view_model = new ContactViewModel(model);
+
+    h3#observable_create='constructor(model, mapping_info, [owner]) or kb.observable '
       span.label.label-info='factory'
     div="Used to create a new object"
     h4='Parameters'
       ol
         li
           strong='model: '
-          span='TODO '
+          strong='model: '
+          span.type='{ Backbone.Model }: '
+          span='the model whose attributes will be synchronized '
         li
-          strong='options: '
-          span='TODO '
+          strong='mapping_info: '
+          span.label.label-inverse='optional'
+          ul
+            li='read '
+              span.type='{ function() }: '
+            li='write '
+              span.type='{ function(value) }: '
+            li='read_only '
+              span.type='{ boolean }: '
         li
           strong='owner: '
-          span='TODO '
           span.label.label-inverse='optional'
+          span=' required if you need the view model as "this" in your read or write methods '
     h4='Example:'
     pre(data-for='cs'): code.coffee.
-      TODO
+      # instance
+      name1 = new kb.Observable(model, 'name')
+
+      # factory
+      name2 = kb.observable(model, 'name')
     pre(data-for='js'): code.javascript.
-      TODO
+      // instance
+      var name1 = new kb.Observable(model, 'name');
+
+      // factory
+      var name2 = kb.observable(model, 'name');
 
     h3#observable_destroy='destroy()'
     div="Used to release the memory of the object"
@@ -301,9 +346,20 @@ block api_descriptions
     div="Used to return all of the owned observables to their default values (if they exist)"
     h4='Example:'
     pre(data-for='cs'): code.coffee.
-      TODO
+      model = Backbone.Model({name: 'Bob'})
+      name = kb.observable(model, {key:'name', default: '(none)'})
+      # name is Bob
+
+      name.setToDefault()
+      # name is (none)
+
     pre(data-for='js'): code.javascript.
-      TODO
+      var model = Backbone.Model({name: 'Bob'});
+      var name = kb.observable(model, {key:'name', default: '(none)'});
+      // name is Bob
+
+      name.setToDefault();
+      // name is (none)
 
     //////////////////////////////////
     // kb.Observables
@@ -312,9 +368,30 @@ block api_descriptions
     div="Used to generate observables manually for a model's attributes"
     h4='Example:'
     pre(data-for='cs'): code.coffee.
-      TODO
+      ContactViewModel = (model) ->
+        @attribute_observables = kb.observables(model, {
+          name:     {key: 'name', read_only: true}
+          number:   'number'
+          date:     {key:'date', localizer: LongDateLocalizer}
+          name2:    {key: 'name', read_only: true}
+        }, this)
+        @
+
+      model = new Contact({name: 'John', number: '555-555-5558', date: new Date(1940, 10, 9)})
+      view_model = new ContactViewModel(model)
+
     pre(data-for='js'): code.javascript.
-      TODO
+      var ContactViewModel = function(model) {
+        this.attribute_observables = kb.observables(model, {
+          name:     {key: 'name', read_only: true}
+          number:   'number'
+          date:     {key:'date', localizer: LongDateLocalizer}
+          name2:    {key: 'name', read_only: true}
+        }, this);
+      };
+
+      var model = new Contact({name: 'John', number: '555-555-5558', date: new Date(1940, 10, 9)});
+      view_model = new ContactViewModel(model);
 
     h3#observables_create='constructor(model, mappings_info, [view_model], [options]) or kb.observables '
       span.label.label-info='factory'
@@ -323,23 +400,39 @@ block api_descriptions
       ol
         li
           strong='model: '
-          span='TODO '
+          span.type='{ Backbone.Model }: '
+          span='the model whose attributes will be synchronized '
         li
           strong='mappings_info: '
-          span='TODO '
+          span.type=' { [mapping_info as would be passed to each kb.observable | string for an attribute key] + {key: string}}: '
         li
           strong='view_model: '
-          span='TODO '
           span.label.label-inverse='optional'
+          span=' the view model target to set the properties for each mapped attribute (the kb.Observables instance itself will always have the generated observables set in its properties) '
+
         li
           strong='options: '
-          span='TODO '
           span.label.label-inverse='optional'
+          span.type=' { boolean for read_only | {read_only: boolean} }: '
+          span=' the view model target to set the properties for each mapped attribute (the kb.Observables instance itself will always have the generated observables set in its properties) '
     h4='Example:'
     pre(data-for='cs'): code.coffee.
-      TODO
+      # instance
+      view_model1 = {}
+      new kb.Observables(model, {name: 'name', date: 'date'}, view_model1)
+
+      # factory
+      view_model2 = {}
+      new kb.observables(model, {name: 'name', date: 'date'}, view_model1)
+
     pre(data-for='js'): code.javascript.
-      TODO
+      // instance
+      var view_model1 = {}
+      new kb.Observables(model, {name: 'name', date: 'date'}, view_model1)
+
+      // factory
+      var view_model2 = {}
+      new kb.observables(model, {name: 'name', date: 'date'}, view_model1)
 
     h3#observables_destroy='destroy()'
     div="Used to release the memory of the object"
@@ -347,9 +440,40 @@ block api_descriptions
     h3#observables_set_to_default='setToDefault()'
     div="Used to return all of the owned observables to their default values (if they exist)"
     pre(data-for='cs'): code.coffee.
-      TODO
+      ContactViewModel = (model) ->
+        @loading_message = ko.observable('(none)')
+        @attribute_observables = kb.observables(model, {
+          name:     {key:'name', default: @loading_message}
+          number:   {key:'number', default: @loading_message}
+        }, this)
+        @
+
+      view_model = new ContactViewModel(new Backbone.Model({name: 'Bob'}))
+      # name is Bob and number is (none)
+
+      view_model.setToDefault()
+      # name and number are (none)
+
+      view_model.loading_message('(nada)')
+      # name and number are (nada)
+
     pre(data-for='js'): code.javascript.
-      TODO
+      var ContactViewModel = function(model){
+        this.loading_message = ko.observable('(none)');
+        this.attribute_observables = kb.observables(model, {
+          name:     {key:'name', default: @loading_message},
+          number:   {key:'number', default: @loading_message}
+        }, this);
+      };
+
+      var view_model = new ContactViewModel(new Backbone.Model({name: 'Bob'}));
+      // name is Bob and number is (none)
+
+      view_model.attribute_observables.setToDefault()
+      // name and number are (none)
+
+      view_model.loading_message('(nada)')
+      // name and number are (nada)
 
     //////////////////////////////////
     // kb.CollectionObservable
@@ -360,9 +484,13 @@ block api_descriptions
       a(href='#ref_countable')=' kb.RefCountable'
     h4='Example:'
     pre(data-for='cs'): code.coffee.
-      TODO
+      view_model =
+        todos: kb.collectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))
+
     pre(data-for='js'): code.javascript.
-      TODO
+      var view_model = {
+        todos: kb.collectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))
+      };
 
     h3#collection_observable_create='constructor(collection, [options]) or kb.collectionObservable '
       span.label.label-info='factory'
@@ -370,17 +498,43 @@ block api_descriptions
     h4='Parameters'
       ol
         li
-          strong='collection: '
-          span='TODO '
+          strong='model: '
+          strong='model: '
+          span.type='{ Backbone.Collection }: '
+          span='the collection to synchronize with model additions, removals, and resorting '
         li
           strong='options: '
-          span='TODO '
           span.label.label-inverse='optional'
+          ul
+            li='view_model '
+              span.type='{ constructor(model, options) }: '
+            li='view_model_create '
+              span.type='{ function(model, options) }: '
+            li='create '
+              span.type='{ function(model, options) }: '
+            li='sort_attribute '
+              span.type='{ string }: '
+            li='sorted_index '
+              span.type='{ function(models | view_models, model_to_add | view_model_to_add) }: '
+            li='defer '
+              span.type='{ boolean }: '
+            //li='store '
+            //  span.type='{ function(model, options) }: '
+            //li='store_skip_resolve '
+            //  span.type='{ boolean }: '
     h4='Example:'
     pre(data-for='cs'): code.coffee.
-      TODO
+      # instance
+      todos1 = new kb.CollectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))
+
+      # factory
+      todos2 = kb.collectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))
     pre(data-for='js'): code.javascript.
-      TODO
+      // instance
+      var todos1 = new kb.CollectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]));
+
+      // factory
+      var todos2 = kb.collectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]));
 
     h3#collection_observable_collection='collection([collection], [options]) '
       span.label.label-important='dual purpose'
@@ -388,39 +542,82 @@ block api_descriptions
     h4='Parameters'
       ol
         li
-          strong='collection: '
-          span='TODO '
+          strong='collection '
+          span.type='{ Backbone.Collection }: '
           span.label.label-inverse='optional'
+          span=' the collection to synchronize with model additions, removals, and resorting '
         li
           strong='options: '
-          span='TODO '
           span.label.label-inverse='optional'
+          ul
+            li='silent '
+              span.type='{ boolean }: '
     h4='Example:'
     pre(data-for='cs'): code.coffee.
-      TODO
+      todos1 = new kb.CollectionObservable(new Backbone.Collection())
+
+      # get
+      current_collection = todos1.collection()
+
+      # set
+      todos1.collection(new Backbone.Collection([{name: 'name3'}, {name: 'name4'}]))
+
     pre(data-for='js'): code.javascript.
-      TODO
+      var todos1 = new kb.CollectionObservable(new Backbone.Collection();
+
+      # get
+      var current_collection = todos1.collection();
+
+      # set
+      todos1.collection(new Backbone.Collection([{name: 'name3'}, {name: 'name4'}]));
 
     h3#collection_observable_sorted_index='sortedIndex(sorted_index, [sort_attribute], [options])'
-    div="TODO"
+    div="Sets the sorted_index function for sorting Models or ViewModels in the collection observable"
     pre(data-for='cs'): code.coffee.
-      TODO
+      # change the sorting function
+      collection_observable.sortedIndex(
+        ((view_models, vm) -> _.sortedIndex(view_models, vm, (test) -> kb.utils.wrappedModel(test).get('name')))
+      )
+
     pre(data-for='js'): code.javascript.
-      TODO
+      // change the sorting function
+      collection_observable.sortedIndex(
+        function(view_models, vm){
+          return _.sortedIndex(view_models, vm, (test) -> kb.utils.wrappedModel(test).get('name'));
+        }
+      );
 
     h3#collection_observable_sort_attribute='sortAttribute((sort_attribute, [sorted_index], [silent]))'
-    div="TODO"
+    div="Sets the sort attribute name for the collection observable"
     pre(data-for='cs'): code.coffee.
-      TODO
+      todos1 = new kb.CollectionObservable(new Backbone.Collection([{name: 'Zanadu', name: 'Alex'}]))
+      # in order of Zanadu then Alex
+
+      todos1.sortAttribute('name')
+      # in order of Alex then Zanadu
+
     pre(data-for='js'): code.javascript.
-      TODO
+      var todos1 = new kb.CollectionObservable(new Backbone.Collection([{name: 'Zanadu', name: 'Alex'}]));
+      // in order of Zanadu then Alex
+
+      todos1.sortAttribute('name');
+      // in order of Alex then Zanadu
 
     h3#collection_observable_has_view_models='hasViewModels()'
-    div="TODO"
+    div="Returns true if the collection observable was initialized with a view model create option (and hence generates view models for each model)"
     pre(data-for='cs'): code.coffee.
-      TODO
+      todos1 = new kb.CollectionObservable(new Backbone.Collection())
+      todos1.hasViewModels()      # false
+
+      todos2 = new kb.CollectionObservable(new Backbone.Collection(), {view_model: kb.ViewModel})
+      todos2.hasViewModels()      # true
+
     pre(data-for='js'): code.javascript.
-      TODO
+      var todos1 = new kb.CollectionObservable(new Backbone.Collection());
+      todos1.hasViewModels();     // false
+
+      var todos2 = new kb.CollectionObservable(new Backbone.Collection(), {view_model: kb.ViewModel});
+      todos2.hasViewModels();     // true
 
     //////////////////////////////////
     // kb.utils
@@ -429,11 +626,20 @@ block api_descriptions
     div="Library for general-purpose utilities "
 
     h3#utils_release='Knockback.utils.release(obj)'
-    div="TODO"
+    div="Releases any type of view model or observable using the conventions of release(), destroy(), dispose()"
     pre(data-for='cs'): code.coffee.
-      TODO
+      view_model = kb.viewModel(model)
+      kb.utils.release(view_model); view_model = null
+
+      todos = kb.collectionObservable(collection)
+      kb.utils.release(todos); todos = null
+
     pre(data-for='js'): code.javascript.
-      TODO
+      var view_model = kb.viewModel(model);
+      kb.utils.release(view_model); view_model = null;
+
+      var todos = kb.collectionObservable(collection);
+      kb.utils.release(todos); todos = null;
 
     h3#utils_wrapped_model='Knockback.utils.wrappedModel(view_model {, model})'
       span.label.label-important='dual purpose'
@@ -441,28 +647,50 @@ block api_descriptions
     h4='Parameters'
       ol
         li
-          strong='view_model: '
-          span='TODO '
+          strong='view_model '
+          span.type='{ object | kb.ViewModel }: '
+          span=' the ViewModel that owns the Model '
         li
           strong='model: '
-          span='TODO '
+          span.type='{ object | kb.ViewModel }: '
           span.label.label-inverse='optional'
+          span=' the Model to set '
     pre(data-for='cs'): code.coffee.
-      TODO
+      view_model = kb.viewModel(model)
+
+      same_model = kb.utils.wrappedModel(view_model)
+
     pre(data-for='js'): code.javascript.
-      TODO
+      var view_model = kb.viewModel(model);
+
+      var same_model = kb.utils.wrappedModel(view_model);
 
     h3#utils_set_to_default='Knockback.utils.setToDefault(obj)'
     div="Used to return all of the nested observables to their default values (if they exist)"
     h4='Parameters'
       ol
         li
-          strong='obj: '
-          span='TODO'
+          strong='obj '
+          span.type='{ object | Knockback observable with setToDefault() }: '
+          span=' the target for reset '
     pre(data-for='cs'): code.coffee.
-      TODO
+      model = new Backbone.Model({name: 'Bob'})
+      view_model =
+        wrapped_name: kb.defaultWrapper(kb.observable(model, 'name'), "(no name)")
+      # view_model.wrapped name: Bob
+
+      kb.utils.setToDefault(view_model)
+      # view_model.wrapped name: (no name)
+
     pre(data-for='js'): code.javascript.
-      TODO
+      var model = new Backbone.Model({name: 'Bob'});
+      var view_model = {
+        wrapped_name: kb.defaultWrapper(kb.observable(model, 'name'), "(no name)")
+      };
+      // view_model.wrapped name: Bob
+
+      kb.utils.setToDefault(view_model);
+      // view_model.wrapped name: (no name)
 
     h3#utils_observable_instance_of='kb.utils.observableInstanceOf(observable, class)'
     div="Checks the class type of the underlying class on a Knockback observable"
@@ -470,39 +698,54 @@ block api_descriptions
       strong='Please note:'
       span=" classes start with a capital letter (eg. kb.CollectionObservable) whereas factory methods start with a lower case letter (eg. kb.collectionObservable)"
     pre(data-for='cs'): code.coffee.
-      TODO
+      todos = new kb.CollectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))
+
+      kb.utils.observableInstanceOf(todos, kb.CollectionObservable) # true
+      kb.utils.observableInstanceOf(todos, kb.collectionObservable) # false (factory function not class!)
+
     pre(data-for='js'): code.javascript.
-      TODO
+      var todos = new kb.CollectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))'
+
+      kb.utils.observableInstanceOf(todos, kb.CollectionObservable); // true
+      kb.utils.observableInstanceOf(todos, kb.collectionObservable); // false (factory function not class!)
 
     h3#utils_wrapped_observable='wrappedObservable(instance {, observable})'
     div="Used to get/set a observable an owning instance. Mainly used as a helper so you can return a ko.observable function instead of an instance when creating a new Knockback or Knockback-derived instance."
     h4='Parameters'
       ol
         li
-          strong='instance: '
-          span='TODO '
+          strong='instance '
+          span.type='{ any Knockout observable being used by Knockback }: '
         li
           strong='observable: '
-          span='TODO '
+          span.type='{ a Knockback or Knockout-derived class }: '
           span.label.label-inverse='optional'
     pre(data-for='cs'): code.coffee.
-      TODO
-    pre(data-for='js'): code.javascript.
-      TODO
+      class ShortDateLocalizer extends kb.LocalizedObservable
+        constructor: (value, options, view_model) ->
+          super; return kb.utils.wrappedObservable(this)
 
-    h3#utils_options_create_clear='optionsCreateClear(options)'
-    div="TODO"
-    pre(data-for='cs'): code.coffee.
-      TODO
     pre(data-for='js'): code.javascript.
-      TODO
+      var ShortDateLocalizer = kb.LocalizedObservable.extend({
+        constructor: function(value, options, view_model) {
+          kb.LocalizedObservable.prototype.constructor.apply(this, arguments);
+          return kb.utils.wrappedObservable(this);
+        }
+      });
 
-    h3#utils_options_create_override='optionsCreateOverride(options, create_options)'
-    div="TODO"
-    pre(data-for='cs'): code.coffee.
-      TODO
-    pre(data-for='js'): code.javascript.
-      TODO
+    //h3#utils_options_create_clear='optionsCreateClear(options)'
+    //div="TODO"
+    //pre(data-for='cs'): code.coffee.
+    //  TODO
+    //pre(data-for='js'): code.javascript.
+    //  TODO
+
+    //h3#utils_options_create_override='optionsCreateOverride(options, create_options)'
+    //div="TODO"
+    //pre(data-for='cs'): code.coffee.
+    //  TODO
+    //pre(data-for='js'): code.javascript.
+    //  TODO
 
     //////////////////////////////////
     // kb.LocalizedObservable
@@ -565,28 +808,26 @@ block api_descriptions
       });
 
     h3#localized_observable_constructor='constructor([value], [options], [view_model])'
-    div="TODO"
+    div="Used to create a new object. For localized observables, creation is often indirect."
+    h4='Example:'
     pre(data-for='cs'): code.coffee.
-      TODO
+      ContactViewModelDate = (model) ->
+        @date = kb.observable(model, {key:'date', localizer: LongDateLocalizer}, this)
+        @
+
     pre(data-for='js'): code.javascript.
-      TODO
+      var ContactViewModelDate = function(model){
+        @date = kb.observable(model, {key:'date', localizer: LongDateLocalizer}, this)
+      };
 
     h3#localized_observable_destroy='destroy()'
     div="Used to release the memory of the object"
 
     h3#localized_observable_set_to_default='setToDefault()'
     div="Used to return the observable to its default value (if it exists)"
-    pre(data-for='cs'): code.coffee.
-      TODO
-    pre(data-for='js'): code.javascript.
-      TODO
 
     h3#localized_observable_reset_to_current='resetToCurrent()'
-    div="TODO"
-    pre(data-for='cs'): code.coffee.
-      TODO
-    pre(data-for='js'): code.javascript.
-      TODO
+    div="Used to return the observable to the value of its target (for example returning an input field to the last good state)"
 
     h3#localized_observable_observed_value='observedValue([value]) '
       span.label.label-important='dual purpose'
@@ -595,13 +836,9 @@ block api_descriptions
       ol
         li
           strong='value: '
-          span='TODO '
+          span.type='{ a Knockback or Knockout-derived class }: '
           span.label.label-inverse='optional'
-    h4='Example:'
-    pre(data-for='cs'): code.coffee.
-      TODO
-    pre(data-for='js'): code.javascript.
-      TODO
+          span=' the target that the localized observable synchronizes with on kb.LocaleManager changes '
 
     //////////////////////////////////
     // kb.FormattedObservable
@@ -610,9 +847,10 @@ block api_descriptions
     div="Used to reformat a string when an argument changes. The format string can also be an observable."
     h4='Example:'
     pre(data-for='cs'): code.coffee.
-      TODO
+      formatted_name = kb.formattedObservable("{1}...cool!", kb.observable(model, 'name'))
+
     pre(data-for='js'): code.javascript.
-      TODO
+      var formatted_name = kb.formattedObservable("{1}...cool!", kb.observable(model, 'name'));
 
     h3#formatted_observable_create='constructor(format, args...) or kb.formattedObservable '
       span.label.label-info='factory'
@@ -621,15 +859,28 @@ block api_descriptions
       ol
         li
           strong='format: '
-          span='TODO '
+          span=' a format string such as "{0} and {1}" where {0} and {1} would be synchronized with the arguments (eg. "Bob and Carol" where {0} is Bob and {1} is Carol)'
         li
-          strong="args: all arguments to be passed to the kb.LocaleManager's get() method"
-          span='TODO '
+          strong="args: "
+          span=" all arguments to be passed to the kb.LocaleManager's get() method"
     h4='Example:'
     pre(data-for='cs'): code.coffee.
-      TODO
+      name = kb.observable(model, 'name')
+
+      # instance
+      formatted_name1 = new kb.FormattedObservable("{1}...cool!", name)
+
+      # factory
+      formatted_name2 = kb.formattedObservable("{1}...cool!", name)
+
     pre(data-for='js'): code.javascript.
-      TODO
+      var name = kb.observable(model, 'name');
+
+      # instance
+      var formatted_name1 = new kb.FormattedObservable("{1}...cool!", name);
+
+      # factory
+      var formatted_name2 = kb.formattedObservable("{1}...cool!", name);
 
     h3#formatted_observable_destroy='destroy()'
     div="Used to release the memory of the object"
@@ -641,9 +892,10 @@ block api_descriptions
     div="Used to provide a default value if an observable's value is null or undefined"
     h4='Example:'
     pre(data-for='cs'): code.coffee.
-      TODO
+      wrapped_name = kb.defaultWrapper(kb.observable(model, 'name'), "(no name)")
+
     pre(data-for='js'): code.javascript.
-      TODO
+      var wrapped_name = kb.defaultWrapper(kb.observable(model, 'name'), "(no name)");
 
     h3#default_wrapper_create='constructor(target_observable, default_value_observable) or kb.defaultWrapper '
       span.label.label-info='factory'
@@ -651,16 +903,29 @@ block api_descriptions
     h4='Parameters'
       ol
         li
-          strong='target_observable: '
-          span='TODO '
+          strong='target_observable '
+          span.type='{ any observable }: '
         li
-          strong='default_value_observable: '
-          span='TODO '
+          strong='default_value_observable '
+          span.type='{ an observable or constant }: '
     h4='Example:'
     pre(data-for='cs'): code.coffee.
-      TODO
+      name = kb.observable(model, 'name')
+
+      # instance
+      wrapped_name1 = new kb.FormattedObservable(name, "(no name)")
+
+      # factory
+      wrapped_name2 = kb.formattedObservable(name, "(no name)")
+
     pre(data-for='js'): code.javascript.
-      TODO
+      var name = kb.observable(model, 'name');
+
+      # instance
+      var wrapped_name1 = new kb.FormattedObservable(name, "(no name)");
+
+      # factory
+      var wrapped_name2 = kb.formattedObservable(name, "(no name)");
 
     h3#default_wrapper_destroy='destroy()'
     div="Used to release the memory of the object"
@@ -672,9 +937,35 @@ block api_descriptions
     div="Used to recalculate a value when model's attribute changes value"
     h4='Example:'
     pre(data-for='cs'): code.coffee.
-      TODO
+      trigger_count = 0
+      model = new Backbone.Model()
+
+      view_model =
+        triggered_observable: kb.triggeredObservable(model, 'change')
+      view_model.counter = ko.dependentObservable(->
+        view_model.triggered_observable() # add a dependency
+        return trigger_count++
+      )
+
+      model.set(name: 'bob')      # trigger_count: 1
+      model.set(name: 'george')   # trigger_count: 2
+      model.set(last: 'smith')    # trigger_count: 3
+
     pre(data-for='js'): code.javascript.
-      TODO
+      var trigger_count = 0;
+      var model = new Backbone.Model();
+
+      var view_model = {
+        triggered_observable: kb.triggeredObservable(model, 'change')
+      };
+      view_model.counter = ko.dependentObservable(function() {
+        view_model.triggered_observable() // add a dependency
+        return trigger_count++
+      });
+
+      model.set(name: 'bob');       # trigger_count: 1
+      model.set(name: 'george');    # trigger_count: 2
+      model.set(last: 'smith');     # trigger_count: 3
 
     h3#triggered_observable_create='constructor(model, event_name) or kb.triggeredObservable '
       span.label.label-info='factory'
@@ -683,15 +974,26 @@ block api_descriptions
       ol
         li
           strong='model: '
-          span='TODO '
+          span.type='{ Backbone.Model }: '
+          span='the model to bind to'
         li
           strong='event_name: '
-          span='TODO '
+          span.type='{ string }: '
+          span='a key to bind to changes on for Backbone.Events'
     h4='Example:'
     pre(data-for='cs'): code.coffee.
-      TODO
+      # instance
+      triggered_observable1 = new kb.TriggeredObservable(name, 'change')
+
+      # factory
+      triggered_observable2 = kb.triggeredObservable(name, 'change')
+
     pre(data-for='js'): code.javascript.
-      TODO
+      # instance
+      var triggered_observable1 = new kb.TriggeredObservable(name, 'change');
+
+      # factory
+      var triggered_observable2 = kb.triggeredObservable(name, 'change');
 
     h3#triggered_observable_destroy='destroy'
     div="Used to release the memory of the object"
@@ -712,12 +1014,12 @@ block api_descriptions
           # clean up
           super
 
-      my_instance = new MyClass()
+      my_instance = new MyClass()  # ref count: 1
 
-      my_instance.retain()
-      my_instance.release()
+      my_instance.retain()    # ref count: 2
+      my_instance.release()   # ref count: 1
 
-      my_instance.release()
+      my_instance.release()   # ref count: 0 and __destroy() called
 
     pre(data-for='js'): code.javascript.
       var MyClass = kb.RefCountable.extend({
@@ -730,12 +1032,12 @@ block api_descriptions
           kb.RefCountable.prototype.__destroy.apply(this, arguments);
         }
       });
-      var my_instance = new MyClass();
+      var my_instance = new MyClass();  // ref count: 1
 
-      my_instance.retain();
-      my_instance.release();
+      my_instance.retain();   // ref count: 2
+      my_instance.release();  // ref count: 1
 
-      my_instance.release();
+      my_instance.release();  // ref count: 0 and __destroy() called
 
     h3#ref_countable_extend='kb.RefCountable::extend(properties, [classProperties]) '
       span.label.label-success='class'
@@ -750,97 +1052,95 @@ block api_descriptions
       });
 
     h3#ref_countable_constructor='constructor'
-    div="TODO"
-    pre(data-for='cs'): code.coffee.
-      TODO
-    pre(data-for='js'): code.javascript.
-      TODO
+    div="Used to create a new object"
 
     h3#ref_countable_retain='retain()'
-    div="TODO"
+    div="Increases reference count by 1"
     pre(data-for='cs'): code.coffee.
-      TODO
+      my_instance.retain()
     pre(data-for='js'): code.javascript.
-      TODO
+      my_instance.retain();
 
     h3#ref_countable_ref_count='refCount()'
-    div="TODO"
+    div="Returns the current reference count"
     pre(data-for='cs'): code.coffee.
-      TODO
+      my_instance.refCount()
     pre(data-for='js'): code.javascript.
-      TODO
+      my_instance.refCount();
 
     h3#ref_countable_release='release()'
-    div="TODO"
+    div="Decreases reference count by 1 and calls __destroy() when ref_count becomes 0"
     pre(data-for='cs'): code.coffee.
-      TODO
+      my_instance.release()
     pre(data-for='js'): code.javascript.
-      TODO
+      my_instance.release();
 
     h3#ref_countable___destroy='__destroy() '
       span.label='abstract'
-    div="TODO"
+    div="Called when reference count becomes 0"
     pre(data-for='cs'): code.coffee.
-      TODO
+      my_instance = new MyClass()       # ref count: 1
+      my_instance.release()             # ref count: 0 and __destroy() called
     pre(data-for='js'): code.javascript.
-      TODO
+      var my_instance = new MyClass();  // ref count: 1
+      my_instance.release();            // ref count: 0 and __destroy() called
 
     //////////////////////////////////
     // kb.Store
     //////////////////////////////////
-    h2#store='kb.Store'
-    div="Used to manage the persistence and sharing of ViewModels and observables (mainly to break relationship cycles between models)."
-    h4='Example:'
-    pre(data-for='cs'): code.coffee.
-      TODO
-    pre(data-for='js'): code.javascript.
-      TODO
+    //h2#store='kb.Store'
+    //div="Used to manage the persistence and sharing of ViewModels and observables (mainly to break relationship cycles between models)."
+    //h4='Example:'
+    //pre(data-for='cs'): code.coffee.
+    //  TODO
+    //pre(data-for='js'): code.javascript.
+    //  TODO
 
-    h3#store_constructor='constructor()'
-    div="TODO"
-    pre(data-for='cs'): code.coffee.
-      TODO
-    pre(data-for='js'): code.javascript.
-      TODO
+    //h3#store_constructor='constructor()'
+    //div="Used to create a new object"
+    //pre(data-for='cs'): code.coffee.
+    //  TODO
+    //pre(data-for='js'): code.javascript.
+    //  TODO
 
-    h3#store_destroy='destroy()'
-    div="Used to release the memory of the object"
+    //h3#store_destroy='destroy()'
+    //div="Used to release the memory of the object"
 
-    h3#store_register_value='registerValue(key, value)'
-    div="TODO"
-    pre(data-for='cs'): code.coffee.
-      TODO
-    pre(data-for='js'): code.javascript.
-      TODO
+    //h3#store_register_value='registerValue(key, value)'
+    //div="TODO"
+    //pre(data-for='cs'): code.coffee.
+    //  TODO
+    //pre(data-for='js'): code.javascript.
+    //  TODO
 
-    h3#store_resolve_value='resolveValue(key, create_fn, args)'
-    div="TODO"
-    pre(data-for='cs'): code.coffee.
-      TODO
-    pre(data-for='js'): code.javascript.
-      TODO
+    //h3#store_resolve_value='resolveValue(key, create_fn, args)'
+    //div="TODO"
+    //pre(data-for='cs'): code.coffee.
+    //  TODO
+    //pre(data-for='js'): code.javascript.
+    //  TODO
 
-    h3#store_releaseValue='releaseValue(value)'
-    div="TODO"
-    pre(data-for='cs'): code.coffee.
-      TODO
-    pre(data-for='js'): code.javascript.
-      TODO
+    //h3#store_releaseValue='releaseValue(value)'
+    //div="TODO"
+    //pre(data-for='cs'): code.coffee.
+    //  TODO
+    //pre(data-for='js'): code.javascript.
+    //  TODO
 
-    h3#store_add_resolver_to_options='addResolverToOptions(options, key)'
-    div="TODO"
-    pre(data-for='cs'): code.coffee.
-      TODO
-    pre(data-for='js'): code.javascript.
-      TODO
+    //h3#store_add_resolver_to_options='addResolverToOptions(options, key)'
+    //div="TODO"
+    //pre(data-for='cs'): code.coffee.
+    //  TODO
+    //pre(data-for='js'): code.javascript.
+    //  TODO
 
-    h3#store_resolve_from_options='kb.Store::resolveFromOptions(options, value) '
-      span.label.label-success='class'
-    div="TODO"
-    pre(data-for='cs'): code.coffee.
-      TODO
-    pre(data-for='js'): code.javascript.
-      TODO
+    //h3#store_resolve_from_options='kb.Store::resolveFromOptions(options, value) '
+    //  span.label.label-success='class'
+    //div="TODO"
+    //pre(data-for='cs'): code.coffee.
+    //  TODO
+    //pre(data-for='js'): code.javascript.
+    //  TODO
 
 block content
   div.api.container
