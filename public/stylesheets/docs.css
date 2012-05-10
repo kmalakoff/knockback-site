@@ -68,3 +68,15 @@ div.api.container div.api.descriptions .content h3 div {
   font-weight: normal;
   font-size: 0.8em;
 }
+div.api.container .dual_purpose {
+  background-color: #cfc;
+}
+div.api.container .class_and_factory {
+  background-color: #ccf;
+}
+div.api.container .abstract {
+  background-color: #fcc;
+}
+div.api.container .class_function {
+  background-color: #cff;
+}

@@ -14,71 +14,133 @@ block api_index
   div.content
     ul
 
+      //////////////////////////////////
       // kb.ViewModel
+      //////////////////////////////////
       li.type
         a(href='#view_model') kb.ViewModel
         li='- '
+          a(href='#view_model_super') super
+        li='- '
           a(href='#view_model_extend') extend
         li='- '
-          a(href='#view_model_factory') kb.viewModel / constructor
+          a(href='#view_model_create') kb.viewModel / constructor
+        li='- '
+          a(href='#view_model_model') model
 
+      //////////////////////////////////
       // kb.Observable
+      //////////////////////////////////
       li.type
         a(href='#observable') kb.Observable
         li='- '
-          a(href='#observable_factory') kb.observable / constructor
+          a(href='#observable_create') kb.observable / constructor
+        li='- '
+          a(href='#observable_destroy') destroy
+        li='- '
+          a(href='#observable_set_to_default') setToDefault
 
+      //////////////////////////////////
       // kb.Observables
+      //////////////////////////////////
       li.type
         a(href='#observables') kb.Observables
         li='- '
-          a(href='#observables_factory') kb.observables / constructor
+          a(href='#observables_create') kb.observables / constructor
+        li='- '
+          a(href='#observable_destroy') destroy
+        li='- '
+          a(href='#observable_set_to_default') setToDefault
 
+      //////////////////////////////////
       // kb.CollectionObservable
+      //////////////////////////////////
       li.type
         a(href='#collection_observable') kb.CollectionObservable
         li='- '
-          a(href='#collection_observable_factory') kb.collectionObservable / constructor
+          a(href='#collection_observable_super') super
+        li='- '
+          a(href='#collection_observable_create') kb.collectionObservable / constructor
         li='- '
           a(href='#collection_observable_collection') collection
         li='- '
           a(href='#collection_observable_sorted_index') sortedIndex
+        li='- '
+          a(href='#collection_observable_sort_attribute') sortAttribute
+        li='- '
+          a(href='#collection_observable_has_view_models') hasViewModels
 
+      //////////////////////////////////
+      // kb.utils
+      //////////////////////////////////
+      li.type
+        a(href='#utils') kb.utils
+        li='- '
+          a(href='#utils_release') release
+        li='- '
+          a(href='#utils_wrapped_model') wrappedModel
+        li='- '
+          a(href='#utils_set_to_deafult') setToDefault
+        li='- '
+          a(href='#utils_observable_instance_of') observableInstanceOf
+        li='- '
+          a(href='#utils_wrapped_observable') wrappedObservable
+        li='- '
+          a(href='#utils_options_create_clear') optionsCreateClear
+        li='- '
+          a(href='#utils_options_create_override') optionsCreateOverride
+
+      //////////////////////////////////
       // kb.LocalizedObservable
+      //////////////////////////////////
       li.type
         a(href='#localized_observable') kb.LocalizedObservable
         li='- '
           a(href='#localized_observable_extend') extend
         li='- '
           a(href='#localized_observable_constructor') constructor
+        li='- '
+          a(href='#localized_observable_destroy') destroy
+        li='- '
+          a(href='#localized_observable_set_to_default') setToDefault
+        li='- '
+          a(href='#localized_observable_reset_to_current') resetToCurrent
+        li='- '
+          a(href='#localized_observable_observed_value') observedValue
 
+      //////////////////////////////////
       // kb.FormattedObservable
+      //////////////////////////////////
       li.type
         a(href='#formatted_observable') kb.FormattedObservable
         li='- '
-          a(href='#formatted_observable_factory') kb.FormattedObservable / constructor
+          a(href='#formatted_observable_create') kb.FormattedObservable / constructor
+        li='- '
+          a(href='#formatted_observable_destroy') destroy
 
+      //////////////////////////////////
       // kb.DefaultWrapper
+      //////////////////////////////////
       li.type
         a(href='#default_wrapper') kb.DefaultWrapper
         li='- '
-          a(href='#default_wrapper_factory') kb.defaultWrapper / constructor
+          a(href='#default_wrapper_create') kb.defaultWrapper / constructor
+        li='- '
+          a(href='#default_wrapper_destroy') destroy
 
+      //////////////////////////////////
       // kb.TriggeredObservable
+      //////////////////////////////////
       li.type
         a(href='#triggered_observable') kb.TriggeredObservable
         li='- '
-          a(href='#triggered_observable_factory') kb.triggeredObservable / constructor
-
-      // kb.utils
-      li.type
-        a(href='#utils') kb.utils
+          a(href='#triggered_observable_create') kb.triggeredObservable / constructor
         li='- '
-          a(href='#utils_wrapped_model') kb.utils.wrappedModel
-        li='- '
-          a(href='#utils_wrapped_observable') kb.utils.wrappedObservable
+          a(href='#triggered_observable_destroy') destroy
 
+      //////////////////////////////////
       // kb.RefCountable
+      //////////////////////////////////
       li.type
         a(href='#ref_countable') kb.RefCountable
         li='- '
@@ -94,238 +156,471 @@ block api_index
         li='- '
           a(href='#ref_countable___destroy') __destroy
 
+      //////////////////////////////////
       // kb.Store
+      //////////////////////////////////
       li.type
         a(href='#store') kb.Store
         li='- '
           a(href='#store_constructor') constructor
         li='- '
           a(href='#store_destroy') destroy
+        li='- '
+          a(href='#store_register_value') registerValue
+        li='- '
+          a(href='#store_resolve_value') resolveValue
+        li='- '
+          a(href='#store_release_value') releaseValue
+        li='- '
+          a(href='#store_add_resolver_to_options') addResolverToOptions
+        li='- '
+          a(href='#store_resolve_from_options') resolveFromOptions
 
 block api_descriptions
   div.content
+
+    //////////////////////////////////
     // kb.ViewModel
+    //////////////////////////////////
     h2#view_model='kb.ViewModel'
-      div="This is a long explanation"
-      pre(data-for='cs'): code.coffee.
-        x = 0
-      pre(data-for='js'): code.javascript.
-        var x = 0;
-      h3#view_model_extend='kb.ViewModel.extend(properties {, classProperties})'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-          x = 0
-        pre(data-for='js'): code.javascript.
-          var x = 0;
-      h3#view_model_factory='kb.viewModel(model, options) / constructor(model, options)'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-          x = 0
-        pre(data-for='js'): code.javascript.
-          var x = 0;
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
 
+    h3#view_model_super='super'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#view_model_extend.class_function='kb.ViewModel::extend(properties, [classProperties])'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#view_model_create='kb.viewModel(model, options) / constructor(model, options)'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#view_model_model.dual_purpose='model([model])'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    //////////////////////////////////
     // kb.Observable
+    //////////////////////////////////
     h2#observable='kb.Observable'
-      div="This is a long explanation"
-      pre(data-for='cs'): code.coffee.
-      x = 0
-      pre(data-for='js'): code.javascript.
-      var x = 0;
-      h3#observable_factory='kb.observable(model, options) / constructor(model, options)'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-      x = 0
-        pre(data-for='js'): code.javascript.
-      var x = 0;
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
 
+    h3#observable_create.class_and_factory='kb.observable(model, options, [owner]) / constructor(model, options, [owner])'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#observable_destroy='destroy()'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#observable_set_to_default='setToDefault()'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    //////////////////////////////////
     // kb.Observables
+    //////////////////////////////////
     h2#observables='kb.Observables'
-      div="This is a long explanation"
-      pre(data-for='cs'): code.coffee.
-      x = 0
-      pre(data-for='js'): code.javascript.
-      var x = 0;
-      h3#observables_factory='kb.observables(model, mapping_info, view_model, options) / constructor(model, mapping_info, view_model, options)'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-      x = 0
-        pre(data-for='js'): code.javascript.
-      var x = 0;
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
 
+    h3#observables_create.class_and_factory='kb.observables(model, mappings_info, [view_model], [options]) / constructor(model, mappings_info, [view_model], [options])'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#observables_destroy='destroy()'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#observables_set_to_default='setToDefault()'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    //////////////////////////////////
     // kb.CollectionObservable
+    //////////////////////////////////
     h2#collection_observable='kb.CollectionObservable'
-      div="This is a long explanation"
-      pre(data-for='cs'): code.coffee.
-      x = 0
-      pre(data-for='js'): code.javascript.
-      var x = 0;
-      h3#collection_observable_factory='kb.collectionObservable / constructor'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-      x = 0
-        pre(data-for='js'): code.javascript.
-      var x = 0;
-      h3#collection_observable_collection='kb.CollectionObservable::collection() *set'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-      x = 0
-        pre(data-for='js'): code.javascript.
-      var x = 0;
-      h3#collection_observable_sorted_index='sortedIndex'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-      x = 0
-        pre(data-for='js'): code.javascript.
-      var x = 0;
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
 
-    // kb.LocalizedObservable
-    h2#localized_observable='kb.LocalizedObservable'
-      div="This is a long explanation"
-      pre(data-for='cs'): code.coffee.
-      x = 0
-      pre(data-for='js'): code.javascript.
-      var x = 0;
-      h3#localized_observable_extend='kb.LocalizedObservable.extend(properties {, classProperties})'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-          x = 0
-        pre(data-for='js'): code.javascript.
-          var x = 0;
-      h3#localized_observable_constructor='constructor'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-      x = 0
-        pre(data-for='js'): code.javascript.
-      var x = 0;
+    h3#collection_observable_super='super'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
 
-    // kb.FormattedObservable
-    h2#formatted_observable='kb.FormattedObservable'
-      div="This is a long explanation"
-      pre(data-for='cs'): code.coffee.
-      x = 0
-      pre(data-for='js'): code.javascript.
-      var x = 0;
-      h3#formatted_observable_factory='kb.FormattedObservable / constructor'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-      x = 0
-        pre(data-for='js'): code.javascript.
-      var x = 0;
+    h3#collection_observable_create.class_and_factory='kb.collectionObservable(collection, [options]) / constructor(collection, [options])'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
 
-    // kb.DefaultWrapper
-    h2#default_wrapper='kb.DefaultWrapper'
-      div="This is a long explanation"
-      pre(data-for='cs'): code.coffee.
-      x = 0
-      pre(data-for='js'): code.javascript.
-      var x = 0;
-      h3#default_wrapper_factory='kb.defaultWrapper / constructor'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-      x = 0
-        pre(data-for='js'): code.javascript.
-      var x = 0;
+    h3#collection_observable_collection.dual_purpose='collection([collection], [options])'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
 
-    // kb.TriggeredObservable
-    h2#triggered_observable='kb.TriggeredObservable'
-      div="This is a long explanation"
-      pre(data-for='cs'): code.coffee.
-      x = 0
-      pre(data-for='js'): code.javascript.
-      var x = 0;
-      h3#triggered_observable_factory='kb.triggeredObservable / constructor'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-      x = 0
-        pre(data-for='js'): code.javascript.
-      var x = 0;
+    h3#collection_observable_sorted_index='sortedIndex(sorted_index, [sort_attribute], [options])'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
 
+    h3#collection_observable_sort_attribute='sortAttribute((sort_attribute, [sorted_index], [silent]))'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#collection_observable_has_view_models='hasViewModels()'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    //////////////////////////////////
     // kb.utils
+    //////////////////////////////////
     h2#utils='kb.utils'
-      div="This is a long explanation"
-      h3#utils_wrapped_model='Knockback.utils.wrappedModel(view_model {, model})'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-      x = 0
-        pre(data-for='js'): code.javascript.
-      var x = 0;
-      h3#utils_wrapped_observable='wrappedObservable(instance {, observable})'
-        div="Getter/setter used to access the underlying model on a view_model created by a kb.CollectionObservable or kb.ViewModel"
-        pre(data-for='cs'): code.coffee.
-      x = 0
-        pre(data-for='js'): code.javascript.
-      var x = 0;
-      h3#utils_observable_instance_of='kb.utils.observableInstanceOf(observable, class)'
-        div="Checks the class type of the underlying class on a Knockback observable"
-        div="Please note: classes start with a capital letter (eg. kb.CollectionObservable) whereas factory methods start with a lower case letter (eg. kb.collectionObservable)"
-        pre(data-for='cs'): code.coffee.
-      x = 0
-        pre(data-for='js'): code.javascript.
-      var x = 0;
+    div="TODO"
 
+    h3#utils_release='Knockback.utils.release(obj)'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#utils_wrapped_model='Knockback.utils.wrappedModel(view_model {, model})'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#utils_set_to_default='Knockback.utils.setToDefault(obj)'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#utils_observable_instance_of='kb.utils.observableInstanceOf(observable, class)'
+    div="Checks the class type of the underlying class on a Knockback observable"
+    div="Please note: classes start with a capital letter (eg. kb.CollectionObservable) whereas factory methods start with a lower case letter (eg. kb.collectionObservable)"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#utils_wrapped_observable='wrappedObservable(instance {, observable})'
+    div="Getter/setter used to access the underlying model on a view_model created by a kb.CollectionObservable or kb.ViewModel"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#utils_options_create_clear='optionsCreateClear(options)'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#utils_options_create_override='optionsCreateOverride(options, create_options)'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    //////////////////////////////////
+    // kb.LocalizedObservable
+    //////////////////////////////////
+    h2#localized_observable='kb.LocalizedObservable'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#localized_observable_extend.class_function='kb.LocalizedObservable::extend(properties, [classProperties])'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#localized_observable_constructor='constructor([value], [options], [view_model])'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#localized_observable_destroy='destroy()'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#localized_observable_set_to_default='setToDefault()'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#localized_observable_reset_to_current='resetToCurrent()'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#localized_observable_observed_value.dual_purpose='observedValue()'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    //////////////////////////////////
+    // kb.FormattedObservable
+    //////////////////////////////////
+    h2#formatted_observable='kb.FormattedObservable'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#formatted_observable_create.class_and_factory='kb.FormattedObservable(format, args) / constructor(format, args)'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#formatted_observable_destroy='destroy()'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    //////////////////////////////////
+    // kb.DefaultWrapper
+    //////////////////////////////////
+    h2#default_wrapper='kb.DefaultWrapper'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#default_wrapper_create.class_and_factory='kb.defaultWrapper(target_observable, default_value_observable) / constructor(target_observable, default_value_observable)'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#default_wrapper_destroy='destroy()'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    //////////////////////////////////
+    // kb.TriggeredObservable
+    //////////////////////////////////
+    h2#triggered_observable='kb.TriggeredObservable'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#triggered_observable_create.class_and_factory='kb.triggeredObservable(model, event_name) / constructor(model, event_name)'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#triggered_observable_destroy='destroy'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    //////////////////////////////////
     // kb.RefCountable
+    //////////////////////////////////
     h2#ref_countable='kb.RefCountable'
-      div="This is a long explanation"
-      pre(data-for='cs'): code.coffee.
-      x = 0
-      pre(data-for='js'): code.javascript.
-      var x = 0;
-      h3#ref_countable_extend='kb.RefCountable.extend(properties {, classProperties})'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-          x = 0
-        pre(data-for='js'): code.javascript.
-          var x = 0;
-      h3#ref_countable_constructor='constructor'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-      x = 0
-        pre(data-for='js'): code.javascript.
-      var x = 0;
-      h3#ref_countable_retain='kb.RefCountable::retain()'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-      x = 0
-        pre(data-for='js'): code.javascript.
-      var x = 0;
-      h3#ref_countable_ref_count='kb.RefCountable::refCount()'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-      x = 0
-        pre(data-for='js'): code.javascript.
-      var x = 0;
-      h3#ref_countable_release='kb.RefCountable::release()'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-      x = 0
-        pre(data-for='js'): code.javascript.
-      var x = 0;
-      h3#ref_countable___destroy='kb.RefCountable::__destroy() *abstract'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-      x = 0
-        pre(data-for='js'): code.javascript.
-      var x = 0;
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
 
+    h3#ref_countable_extend.class_function='kb.RefCountable::extend(properties, [classProperties])'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#ref_countable_constructor='constructor'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#ref_countable_retain='retain()'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#ref_countable_ref_count='refCount()'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#ref_countable_release='release()'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#ref_countable___destroy.abstract='__destroy()'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    //////////////////////////////////
     // kb.Store
+    //////////////////////////////////
     h2#store='kb.Store'
-      div="This is a long explanation"
-      pre(data-for='cs'): code.coffee.
-      x = 0
-      pre(data-for='js'): code.javascript.
-      var x = 0;
-      h3#store_constructor='constructor'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-      x = 0
-        pre(data-for='js'): code.javascript.
-      var x = 0;
-      h3#store_destroy='destroy'
-        div="This is a long explanation"
-        pre(data-for='cs'): code.coffee.
-      x = 0
-        pre(data-for='js'): code.javascript.
-      var x = 0;
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#store_constructor='constructor()'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#store_destroy='destroy()'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#store_register_value='registerValue(key, value)'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#store_resolve_value='resolveValue(key, create_fn, args)'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#store_releaseValue='releaseValue(value)'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#store_add_resolver_to_options='addResolverToOptions(options, key)'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
+
+    h3#store_resolve_from_options.class_function='kb.Store::resolveFromOptions(options, value)'
+    div="TODO"
+    pre(data-for='cs'): code.coffee.
+      TODO
+    pre(data-for='js'): code.javascript.
+      TODO
 
 block content
   div.api.container
