@@ -1,0 +1,158 @@
+extends ../_layout/_layout_template
+
+block title
+  title= "Knockback.js Docs"
+
+block includes
+  link(rel="stylesheet",href="stylesheets/docs.css")
+
+block navbar
+  include ../_layout/_layout_mixin_page_navbar
+  mixin pageNavbar('Docs', true)
+
+block api_descriptions
+
+  //////////////////////////////////
+  // kb.ViewModel
+  //////////////////////////////////
+  h2='kb.ViewModel'
+  div="Used to generate observables automatically for a model's attributes"
+  h4='Super class:'
+    a(href='#ref_countable')=' kb.RefCountable'
+  h4='Example:'
+  pre(data-for='cs'): code.coffee.
+    view_model = kb.viewModel(new Backbone.Model({first_name: "Planet", last_name: "Earth"}))
+
+    # Do something then clean up
+    # kb.utils.release(view_model); view_model = null
+
+  pre(data-for='js'): code.javascript.
+    var view_model = kb.viewModel(new Backbone.Model({first_name: "Planet", last_name: "Earth"}));
+
+    // Do something then clean up
+    // kb.utils.release(view_model); view_model = null;
+
+  h3#extend='kb.ViewModel::extend(properties, [classProperties]) '
+    span.label.label-success='class'
+  div="Used to derive a class in JavaScript (when CoffeeScript is not used)"
+  h4='Example:'
+  pre(data-for='cs'): code.coffee.
+    ViewModel = kb.ViewModel.extend({
+      constructor: (model) ->
+        kb.ViewModel.prototype.constructor.apply(this, arguments)
+        @full_name = ko.computed(=>{ return @first_name() + " " + @last_name(); })
+
+    var view_model = new ViewModel(model);
+
+  pre(data-for='js'): code.javascript.
+    var ViewModel = kb.ViewModel.extend({
+      constructor: function(model){
+        kb.ViewModel.prototype.constructor.apply(this, arguments);
+        this.full_name = ko.computed(function() { return this.first_name() + " " + this.last_name(); }, this);
+      }
+    });
+    var view_model = new ViewModel(model);
+
+  h3#factory='kb.viewModel(model, [options]) '
+    span.label.label-info='factory'
+  div="Used to derive a class in JavaScript (when CoffeeScript is not used)"
+  h4='Parameters'
+    ol
+      li
+        strong='model: '
+        span.type='{ Backbone.Model }: '
+        span='the model whose attributes will be synchronized'
+      li
+        strong='options: '
+        span.label.label-inverse='optional'
+        ul
+          li='internals '
+            span.type='{ [strings] }: '
+          li='requires '
+            span.type='{ [strings] }: '
+          li='children '
+            span.type='{ function(model, key, options) | {key: function(model, key, options)} }: '
+          li='create '
+            span.type='{ function(model, key, options) }: '
+          li='read_only '
+            span.type='{ boolean }: '
+
+  h4='Example:'
+  pre(data-for='cs'): code.coffee.
+    view_model = kb.viewModel(model)
+
+  pre(data-for='js'): code.javascript.
+    var view_model = kb.viewModel(model);
+
+  h3#constructor='constructor(model, [options])'
+  div="Used to derive a class in JavaScript (when CoffeeScript is not used)"
+  h4='Parameters'
+    ol
+      li
+        strong='model: '
+        span.type='{ Backbone.Model }: '
+        span='the model whose attributes will be synchronized'
+      li
+        strong='options: '
+        span.label.label-inverse='optional'
+        ul
+          li='internals '
+            span.type='{ [strings] }: '
+          li='requires '
+            span.type='{ [strings] }: '
+          li='children '
+            span.type='{ function(model, key, options) | {key: function(model, key, options)} }: '
+          li='create '
+            span.type='{ function(model, key, options) }: '
+          li='read_only '
+            span.type='{ boolean }: '
+
+  h4='Example:'
+  pre(data-for='cs'): code.coffee.
+    view_model = new kb.ViewModel(model)
+
+  pre(data-for='js'): code.javascript.
+    var view_model = new kb.ViewModel(model);
+
+  h3#model='model([model]) '
+    span.label.label-important='dual purpose'
+  div="Used to get/set the model"
+  h4='Parameters'
+    ol
+      li
+        strong='model: '
+        span.type='{ Backbone.Model }: '
+        span.label.label-inverse='optional'
+        span=' the model to set on the view model '
+  h4='Example:'
+  pre(data-for='cs'): code.coffee.
+    view_model = kb.viewModel(new Backbone.Model({name: 'bob'}))
+
+    # get
+    the_model = view_model.model()
+
+    # set
+    view_model.model(new Backbone.Model({name: 'fred'}))
+
+  pre(data-for='js'): code.javascript.
+    var view_model = kb.viewModel(new Backbone.Model({name: 'bob'}));
+
+    // get
+    var the_model = view_model.model();
+
+    // set
+    view_model.model(new Backbone.Model({name: 'fred'}));
+
+block content
+  include _mixin_docs_index
+
+  div.api.container
+    h1="Knockback.js API and Usage Examples"
+    div.container-fluid
+      div.row-fluid
+        div.span3.api.index
+          mixin docsIndex('kb.ViewModel', [{extend: 'extend'}, {factory: 'kb.viewModel'}, {constructor: 'constructor'}, {model: 'model'}])
+        div.span9.api.descriptions
+          div.content
+            div.wrapper
+              block api_descriptions

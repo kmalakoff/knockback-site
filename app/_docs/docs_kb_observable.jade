@@ -1,0 +1,134 @@
+extends ../_layout/_layout_template
+
+block title
+  title= "Knockback.js Docs"
+
+block includes
+  link(rel="stylesheet",href="stylesheets/docs.css")
+
+block navbar
+  include ../_layout/_layout_mixin_page_navbar
+  mixin pageNavbar('Docs', true)
+
+block api_descriptions
+
+  //////////////////////////////////
+  // kb.Observable
+  //////////////////////////////////
+  h2='kb.Observable'
+  div="Used to generate a single observable for a model's attribute"
+  h4='Example:'
+  pre(data-for='cs'): code.coffee.
+    ContactViewModel = (model) ->
+      @name = kb.observable(model, 'name')
+      @number = kb.observable(model, {key:'number', read_only: true})
+      @
+
+    model = new Contact({name: 'Ringo', number: '555-555-5556'})
+    view_model = new ContactViewModel(model)
+
+  pre(data-for='js'): code.javascript.
+    var ContactViewModel = function(model) {
+      this.name = kb.observable(model, 'name');
+      this.number = kb.observable(model, { key: 'number', read_only: true });
+    };
+    var model = new Contact({
+      name: 'Ringo',
+      number: '555-555-5556'
+    });
+    var view_model = new ContactViewModel(model);
+
+  h3#factory='kb.observable(model, mapping_info, [owner]) '
+    span.label.label-info='factory'
+  div="Used to create a new instance"
+  h4='Parameters'
+    ol
+      li
+        strong='model: '
+        strong='model: '
+        span.type='{ Backbone.Model }: '
+        span='the model whose attributes will be synchronized '
+      li
+        strong='mapping_info: '
+        span.label.label-inverse='optional'
+        ul
+          li='read '
+            span.type='{ function() }: '
+          li='write '
+            span.type='{ function(value) }: '
+          li='read_only '
+            span.type='{ boolean }: '
+      li
+        strong='owner: '
+        span.label.label-inverse='optional'
+        span=' required if you need the view model as "this" in your read or write methods '
+  h4='Example:'
+  pre(data-for='cs'): code.coffee.
+    name = kb.observable(model, 'name')
+  pre(data-for='js'): code.javascript.
+    var name = kb.observable(model, 'name');
+
+  h3#constructor='constructor(model, mapping_info, [owner]) '
+  div="Used to create a new instance"
+  h4='Parameters'
+    ol
+      li
+        strong='model: '
+        strong='model: '
+        span.type='{ Backbone.Model }: '
+        span='the model whose attributes will be synchronized '
+      li
+        strong='mapping_info: '
+        span.label.label-inverse='optional'
+        ul
+          li='read '
+            span.type='{ function() }: '
+          li='write '
+            span.type='{ function(value) }: '
+          li='read_only '
+            span.type='{ boolean }: '
+      li
+        strong='owner: '
+        span.label.label-inverse='optional'
+        span=' required if you need the view model as "this" in your read or write methods '
+  h4='Example:'
+  pre(data-for='cs'): code.coffee.
+    name = new kb.Observable(model, 'name')
+  pre(data-for='js'): code.javascript.
+    var name = new kb.Observable(model, 'name');
+
+  h3#destroy='destroy()'
+  div="Used to release the memory of the object"
+
+  h3#set_to_default='setToDefault()'
+  div="Used to return all of the owned observables to their default values (if they exist)"
+  h4='Example:'
+  pre(data-for='cs'): code.coffee.
+    model = Backbone.Model({name: 'Bob'})
+    name = kb.observable(model, {key:'name', default: '(none)'})
+    # name is Bob
+
+    name.setToDefault()
+    # name is (none)
+
+  pre(data-for='js'): code.javascript.
+    var model = Backbone.Model({name: 'Bob'});
+    var name = kb.observable(model, {key:'name', default: '(none)'});
+    // name is Bob
+
+    name.setToDefault();
+    // name is (none)
+
+block content
+  include _mixin_docs_index
+
+  div.api.container
+    h1="Knockback.js API and Usage Examples"
+    div.container-fluid
+      div.row-fluid
+        div.span3.api.index
+          mixin docsIndex('kb.Observable', [{factory: 'kb.observable'}, {constructor: 'constructor'}, {destroy: 'destroy'}, {set_to_default: 'setToDefault'}])
+        div.span9.api.descriptions
+          div.content
+            div.wrapper
+             block api_descriptions

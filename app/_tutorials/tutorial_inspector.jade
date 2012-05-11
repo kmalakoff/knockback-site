@@ -1,14 +1,14 @@
-extends _jade_includes/_layout
+extends ../_layout/_layout_template
 
 block title
   title= "Knockback.js Tutorial: Inspector"
 
 block includes
   link(rel="stylesheet",href="stylesheets/tutorial.css")
-  include _jade_includes/_include_knockback_scripts
+  include ../_demos/_demos_include_knockback_scripts
 
 block navbar
-  include _jade_includes/layout_components/_page_navbar
+  include ../_layout/_layout_mixin_page_navbar
   mixin pageNavbar('Tutorials', false)
 
 block content

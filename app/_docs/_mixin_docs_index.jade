@@ -1,0 +1,23 @@
+mixin docsIndexWriteItem(label, url, active_class, active_functions)
+
+  if (label == active_class)
+    li.type.active
+      a(href='#{url}')#{label}
+      if active_functions
+        each active_function in active_functions
+          each function_label, function_id in active_function
+            li='- '
+              a(href='##{function_id}') #{function_label}
+
+  else
+    li.type
+      a(href='#{url}') #{label}
+
+mixin docsIndex(active_class, active_functions)
+  - var ITEMS = [{'kb.ViewModel': 'docs_kb_view_model.html'}, {'kb.Observable': 'docs_kb_observable.html'}, {'kb.Observables': 'docs_kb_observables.html'}, {'kb.CollectionObservable': 'docs_kb_collection_observable.html'}, {'kb.utils': 'docs_kb_utils.html'}, {'kb.LocalizedObservable': 'docs_kb_localized_observable.html'}, {'kb.FormattedObservable': 'docs_kb_formatted_observable.html'}, {'kb.DefaultWrapper': 'docs_kb_default_wrapper.html'}, {'kb.TriggeredObservable': 'docs_kb_triggered_observable.html'}, {'kb.RefCountable': 'docs_kb_ref_countable.html'}]
+
+  div.content
+    ul
+      each item in ITEMS
+        each url, label in item
+          mixin docsIndexWriteItem(label, url, active_class, active_functions)

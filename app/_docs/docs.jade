@@ -1,0 +1,77 @@
+extends ../_layout/_layout_template
+
+block title
+  title= "Knockback.js Docs"
+
+block includes
+  link(rel="stylesheet",href="stylesheets/docs.css")
+
+block navbar
+  include ../_layout/_layout_mixin_page_navbar
+  mixin pageNavbar('Docs', true)
+
+block docs_overview
+  div.content
+    h2='Welcome to Knockback.js!'
+    p='Please browser the API reference on the left to learn more about the API.'
+    p='Also check out the Tutorials (on the top nav bar) to learn how to solve some common use cases or to learn something new!'
+
+    h3='API Coding Conventions'
+
+    p='Knockback uses the following conventions:'
+
+    ul
+      li ClassName
+      li functionName
+      li property_name
+      li 'constant string'
+      li "dynamic string"
+
+    h3='API Indicators'
+
+    ul
+      li
+        span.label.label-success='class'
+        span=': indicates a class function that needs to be called in the form kb.ClassName.functionName()'
+
+      p
+      li
+        span.label.label-inverse='optional'
+        span=': indicates that function parameters or options can be left out'
+
+      p
+      li
+        span.label.label-info='factory'
+        span=': indicates a factory function is being described. Please note that many of the Knockout classes have corresponding factory functions to reduce verbosity and to improve consistency with Knockout.js'
+        p
+          span='For example, this: '
+          pre: code ko.observable(model, 'name')
+          span='is equivalent to: '
+          pre: code new ko.Observable(model, 'name')
+        p
+          span="Be careful to use the class if you call the "
+          a(href='docs_kb_utils.html#observable_instance_of')='kb.utils.observableInstanceOf'
+          span=" utility function "
+          span.label.label-important='warning'
+
+      p
+      li
+        span.label.label-important='dual purpose'
+        span=': indicates that a function is both a getter and a setter'
+        p
+          span='For example, this one gets the model:'
+          pre: code view_model.model()
+          span='whereas this one sets the model:'
+          pre: code view_model.model(model)
+
+block content
+  include _mixin_docs_index
+
+  div.api.container
+    h1="Knockback.js API and Usage Examples"
+    div.container-fluid
+      div.row-fluid
+        div.span3.api.index
+          mixin docsIndex()
+        div.span9.api.descriptions
+          block docs_overview

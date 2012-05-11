@@ -1,0 +1,106 @@
+extends ../_layout/_layout_template
+
+block title
+  title= "Knockback.js Docs"
+
+block includes
+  link(rel="stylesheet",href="stylesheets/docs.css")
+
+block navbar
+  include ../_layout/_layout_mixin_page_navbar
+  mixin pageNavbar('Docs', true)
+
+block api_descriptions
+
+  //////////////////////////////////
+  // kb.TriggeredObservable
+  //////////////////////////////////
+  h2='kb.TriggeredObservable'
+  div="Used to recalculate a value when model's attribute changes value"
+  h4='Example:'
+  pre(data-for='cs'): code.coffee.
+    trigger_count = 0
+    model = new Backbone.Model()
+
+    view_model =
+      triggered_observable: kb.triggeredObservable(model, 'change')
+    view_model.counter = ko.dependentObservable(->
+      view_model.triggered_observable() # add a dependency
+      return trigger_count++
+    )
+
+    model.set(name: 'bob')      # trigger_count: 1
+    model.set(name: 'george')   # trigger_count: 2
+    model.set(last: 'smith')    # trigger_count: 3
+
+  pre(data-for='js'): code.javascript.
+    var trigger_count = 0;
+    var model = new Backbone.Model();
+
+    var view_model = {
+      triggered_observable: kb.triggeredObservable(model, 'change')
+    };
+    view_model.counter = ko.dependentObservable(function() {
+      view_model.triggered_observable() // add a dependency
+      return trigger_count++
+    });
+
+    model.set(name: 'bob');       # trigger_count: 1
+    model.set(name: 'george');    # trigger_count: 2
+    model.set(last: 'smith');     # trigger_count: 3
+
+  h3#factory='kb.triggeredObservable(model, event_name) '
+    span.label.label-info='factory'
+  div="Used to create a new instance"
+  h4='Parameters'
+    ol
+      li
+        strong='model: '
+        span.type='{ Backbone.Model }: '
+        span='the model to bind to'
+      li
+        strong='event_name: '
+        span.type='{ string }: '
+        span='a key to bind to changes on for Backbone.Events'
+  h4='Example:'
+  pre(data-for='cs'): code.coffee.
+    triggered_observable = kb.triggeredObservable(name, 'change')
+
+  pre(data-for='js'): code.javascript.
+    var triggered_observable = kb.triggeredObservable(name, 'change');
+
+  h3#constructor='constructor(model, event_name) '
+  div="Used to create a new instance"
+  h4='Parameters'
+    ol
+      li
+        strong='model: '
+        span.type='{ Backbone.Model }: '
+        span='the model to bind to'
+      li
+        strong='event_name: '
+        span.type='{ string }: '
+        span='a key to bind to changes on for Backbone.Events'
+  h4='Example:'
+  pre(data-for='cs'): code.coffee.
+    triggered_observable = new kb.TriggeredObservable(name, 'change')
+
+  pre(data-for='js'): code.javascript.
+    var triggered_observable = new kb.TriggeredObservable(name, 'change');
+
+  h3#destroy='destroy'
+  div="Used to release the memory of the object"
+
+block content
+  include _mixin_docs_index
+
+  div.api.container
+    h1="Knockback.js API and Usage Examples"
+    div.container-fluid
+      div.row-fluid
+        div.span3.api.index
+          mixin docsIndex('kb.TriggeredObservable', [{factory: 'kb.triggeredObservable'}, {constructor: 'constructor'}, {destroy: 'destroy'}])
+        div.span9.api.descriptions
+          div.content
+            div.wrapper
+              block api_descriptions

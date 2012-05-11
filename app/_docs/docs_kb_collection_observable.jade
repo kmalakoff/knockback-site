@@ -1,0 +1,200 @@
+extends ../_layout/_layout_template
+
+block title
+  title= "Knockback.js Docs"
+
+block includes
+  link(rel="stylesheet",href="stylesheets/docs.css")
+
+block navbar
+  include ../_layout/_layout_mixin_page_navbar
+  mixin pageNavbar('Docs', true)
+
+block api_descriptions
+
+  //////////////////////////////////
+  // kb.CollectionObservable
+  //////////////////////////////////
+  h2='kb.CollectionObservable'
+  div="Used to generate ViewModels automatically for a collections's models"
+  h4='Super class:'
+    a(href='#ref_countable')=' kb.RefCountable'
+  h4='Example:'
+  pre(data-for='cs'): code.coffee.
+    view_model =
+      todos: kb.collectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))
+
+  pre(data-for='js'): code.javascript.
+    var view_model = {
+      todos: kb.collectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))
+    };
+
+  h3#factory='kb.collectionObservable(collection, [options]) '
+    span.label.label-info='factory'
+  div="Used to create a new instance"
+  h4='Parameters'
+    ol
+      li
+        strong='model: '
+        strong='model: '
+        span.type='{ Backbone.Collection }: '
+        span='the collection to synchronize with model additions, removals, and resorting '
+      li
+        strong='options: '
+        span.label.label-inverse='optional'
+        ul
+          li='view_model '
+            span.type='{ constructor(model, options) }: '
+          li='view_model_create '
+            span.type='{ function(model, options) }: '
+          li='create '
+            span.type='{ function(model, options) }: '
+          li='sort_attribute '
+            span.type='{ string }: '
+          li='sorted_index '
+            span.type='{ function(models | view_models, model_to_add | view_model_to_add) }: '
+          li='defer '
+            span.type='{ boolean }: '
+          //li='store '
+          //  span.type='{ function(model, options) }: '
+          //li='store_skip_resolve '
+          //  span.type='{ boolean }: '
+  h4='Example:'
+  pre(data-for='cs'): code.coffee.
+    todos = kb.collectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))
+
+  pre(data-for='js'): code.javascript.
+    var todos = kb.collectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]));
+
+  h3#constructor='constructor(collection, [options]) '
+  div="Used to create a new instance"
+  h4='Parameters'
+    ol
+      li
+        strong='model: '
+        strong='model: '
+        span.type='{ Backbone.Collection }: '
+        span='the collection to synchronize with model additions, removals, and resorting '
+      li
+        strong='options: '
+        span.label.label-inverse='optional'
+        ul
+          li='view_model '
+            span.type='{ constructor(model, options) }: '
+          li='view_model_create '
+            span.type='{ function(model, options) }: '
+          li='create '
+            span.type='{ function(model, options) }: '
+          li='sort_attribute '
+            span.type='{ string }: '
+          li='sorted_index '
+            span.type='{ function(models | view_models, model_to_add | view_model_to_add) }: '
+          li='defer '
+            span.type='{ boolean }: '
+          //li='store '
+          //  span.type='{ function(model, options) }: '
+          //li='store_skip_resolve '
+          //  span.type='{ boolean }: '
+  h4='Example:'
+  pre(data-for='cs'): code.coffee.
+    todos = new kb.CollectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))
+
+  pre(data-for='js'): code.javascript.
+    var todos = new kb.CollectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]));
+
+  h3#collection='collection([collection], [options]) '
+    span.label.label-important='dual purpose'
+  div="Used to get/set the collection"
+  h4='Parameters'
+    ol
+      li
+        strong='collection '
+        span.type='{ Backbone.Collection }: '
+        span.label.label-inverse='optional'
+        span=' the collection to synchronize with model additions, removals, and resorting '
+      li
+        strong='options: '
+        span.label.label-inverse='optional'
+        ul
+          li='silent '
+            span.type='{ boolean }: '
+  h4='Example:'
+  pre(data-for='cs'): code.coffee.
+    todos = new kb.CollectionObservable(new Backbone.Collection())
+
+    # get
+    current_collection = todos.collection()
+
+    # set
+    todos.collection(new Backbone.Collection([{name: 'name3'}, {name: 'name4'}]))
+
+  pre(data-for='js'): code.javascript.
+    var todos = new kb.CollectionObservable(new Backbone.Collection();
+
+    # get
+    var current_collection = todos.collection();
+
+    # set
+    todos.collection(new Backbone.Collection([{name: 'name3'}, {name: 'name4'}]));
+
+  h3#sorted_index='sortedIndex(sorted_index, [sort_attribute], [options])'
+  div="Sets the sorted_index function for sorting Models or ViewModels in the collection observable"
+  pre(data-for='cs'): code.coffee.
+    # change the sorting function
+    collection_observable.sortedIndex(
+      ((view_models, vm) -> _.sortedIndex(view_models, vm, (test) -> kb.utils.wrappedModel(test).get('name')))
+    )
+
+  pre(data-for='js'): code.javascript.
+    // change the sorting function
+    collection_observable.sortedIndex(
+      function(view_models, vm){
+        return _.sortedIndex(view_models, vm, (test) -> kb.utils.wrappedModel(test).get('name'));
+      }
+    );
+
+  h3#sort_attribute='sortAttribute((sort_attribute, [sorted_index], [silent]))'
+  div="Sets the sort attribute name for the collection observable"
+  pre(data-for='cs'): code.coffee.
+    todos = new kb.CollectionObservable(new Backbone.Collection([{name: 'Zanadu', name: 'Alex'}]))
+    # in order of Zanadu then Alex
+
+    todos.sortAttribute('name')
+    # in order of Alex then Zanadu
+
+  pre(data-for='js'): code.javascript.
+    var todos = new kb.CollectionObservable(new Backbone.Collection([{name: 'Zanadu', name: 'Alex'}]));
+    // in order of Zanadu then Alex
+
+    todos.sortAttribute('name');
+    // in order of Alex then Zanadu
+
+  h3#has_view_models='hasViewModels()'
+  div="Returns true if the collection observable was initialized with a view model create option (and hence generates view models for each model)"
+  pre(data-for='cs'): code.coffee.
+    todos1 = new kb.CollectionObservable(new Backbone.Collection())
+    todos1.hasViewModels()      # false
+
+    todos2 = new kb.CollectionObservable(new Backbone.Collection(), {view_model: kb.ViewModel})
+    todos2.hasViewModels()      # true
+
+  pre(data-for='js'): code.javascript.
+    var todos1 = new kb.CollectionObservable(new Backbone.Collection());
+    todos1.hasViewModels();     // false
+
+    var todos2 = new kb.CollectionObservable(new Backbone.Collection(), {view_model: kb.ViewModel});
+    todos2.hasViewModels();     // true
+
+block content
+  include _mixin_docs_index
+
+  div.api.container
+    h1="Knockback.js API and Usage Examples"
+    div.container-fluid
+      div.row-fluid
+        div.span3.api.index
+          mixin docsIndex('kb.CollectionObservable', [{factory: 'kb.collectionObservable'}, {constructor: 'constructor'}, {collection: 'collection'}, {sorted_index: 'sortedIndex'}, {sort_attribute: 'sortAttribute'}, {has_view_models: 'hasViewModels'}])
+        div.span9.api.descriptions
+          div.content
+            div.wrapper
+              block api_descriptions
