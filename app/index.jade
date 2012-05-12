@@ -3,16 +3,19 @@ extends _layout/_layout_template
 block title
   title= "Knockback.js Home"
 
-block header
-  include _layout/_layout_knockback_logo
+block includes
+  link(rel="stylesheet",href="stylesheets/index.css")
 
 block navbar
+  div.page.github_fork_me
+    include _layout/_layout_github_fork_me
   include _layout/_layout_mixin_page_navbar
   mixin pageNavbar('Home', false)
 
+block header
+  include _layout/_layout_knockback_logo
+
 block content
-  div.page.github_fork_me
-    include _layout/_layout_github_fork_me
 
   section#content.animated.fadeIn
 
@@ -60,8 +63,8 @@ block content
         col
         col.ref
         thead: tr
-          th Backbone
-          th.kb.mid Knockback
+          th Backbone.js
+          th.kb.mid Knockback.js
           th Knockout.js
           th.ref(title="Notes") !
         - var count = 0;
