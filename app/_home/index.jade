@@ -1,4 +1,7 @@
-extends _layout/_layout_template
+extends ../_layout/_layout_template
+
+include ../_layout/_layout_mixins
+include ../_docs/_docs_mixins
 
 block title
   title= "Knockback.js Home"
@@ -8,12 +11,11 @@ block includes
 
 block navbar
   div.page.github_fork_me
-    include _layout/_layout_github_fork_me
-  include _layout/_layout_mixin_page_navbar
+    include ../_layout/_layout_github_fork_me
   mixin pageNavbar('Home', false)
 
 block header
-  include _layout/_layout_knockback_logo
+  include ../_layout/_layout_knockback_logo
 
 block content
 
@@ -196,4 +198,4 @@ block content
             how Knockback provides internationalization to your applications.
 
 block footer
-  include _layout/_layout_knockback_credits
+  include ../_layout/_layout_knockback_credits

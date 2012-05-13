@@ -1,5 +1,8 @@
 extends ../_layout/_layout_template
 
+include ../_layout/_layout_mixins
+include ../_docs/_docs_mixins
+
 block title
   title= "Knockback.js Docs"
 
@@ -7,7 +10,6 @@ block includes
   link(rel="stylesheet",href="stylesheets/docs.css")
 
 block navbar
-  include ../_layout/_layout_mixin_page_navbar
   mixin pageNavbar('Docs', true)
 
 block api_descriptions
@@ -20,14 +22,14 @@ block api_descriptions
 
   h3#release='Knockback.utils.release(obj, [keys_only])'
   div="Releases any type of view model or observable using the conventions of release(), destroy(), dispose()"
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     view_model = kb.viewModel(model)
     kb.utils.release(view_model); view_model = null
 
     todos = kb.collectionObservable(collection)
     kb.utils.release(todos); todos = null
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var view_model = kb.viewModel(model);
     kb.utils.release(view_model); view_model = null;
 
@@ -48,12 +50,12 @@ block api_descriptions
         span.type='{ object | kb.ViewModel }: '
         span.label.label-inverse='optional'
         span=' the Model to set '
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     view_model = kb.viewModel(model)
 
     same_model = kb.utils.wrappedModel(view_model)
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var view_model = kb.viewModel(model);
 
     var same_model = kb.utils.wrappedModel(view_model);
@@ -66,7 +68,7 @@ block api_descriptions
         strong='obj '
         span.type='{ object | Knockback observable with setToDefault() }: '
         span=' the target for reset '
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     model = new Backbone.Model({name: 'Bob'})
     view_model =
       wrapped_name: kb.defaultWrapper(kb.observable(model, 'name'), "(no name)")
@@ -75,7 +77,7 @@ block api_descriptions
     kb.utils.setToDefault(view_model)
     # view_model.wrapped name: (no name)
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var model = new Backbone.Model({name: 'Bob'});
     var view_model = {
       wrapped_name: kb.defaultWrapper(kb.observable(model, 'name'), "(no name)")
@@ -90,13 +92,13 @@ block api_descriptions
   p
     strong='Please note:'
     span=" classes start with a capital letter (eg. kb.CollectionObservable) whereas factory methods start with a lower case letter (eg. kb.collectionObservable)"
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     todos = new kb.CollectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))
 
     kb.utils.observableInstanceOf(todos, kb.CollectionObservable) # true
     kb.utils.observableInstanceOf(todos, kb.collectionObservable) # false (factory function not class!)
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var todos = new kb.CollectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))'
 
     kb.utils.observableInstanceOf(todos, kb.CollectionObservable); // true
@@ -113,12 +115,12 @@ block api_descriptions
         strong='observable: '
         span.type='{ a Knockback or Knockout-derived class }: '
         span.label.label-inverse='optional'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     class ShortDateLocalizer extends kb.LocalizedObservable
       constructor: (value, options, view_model) ->
         super; return kb.utils.wrappedObservable(this)
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var ShortDateLocalizer = kb.LocalizedObservable.extend({
       constructor: function(value, options, view_model) {
         kb.LocalizedObservable.prototype.constructor.apply(this, arguments);
@@ -128,21 +130,19 @@ block api_descriptions
 
   //h3#options_create_clear='optionsCreateClear(options)'
   //div="TODO"
-  //pre(data-for='cs'): code.coffee.
+  //pre(data-for='cs').
   //  TODO
-  //pre(data-for='js'): code.javascript.
+  //pre(data-for='js').
   //  TODO
 
   //h3#options_create_override='optionsCreateOverride(options, create_options)'
   //div="TODO"
-  //pre(data-for='cs'): code.coffee.
+  //pre(data-for='cs').
   //  TODO
-  //pre(data-for='js'): code.javascript.
+  //pre(data-for='js').
   //  TODO
 
 block content
-  include _mixin_docs_index
-
   div.api.container
     h1="Knockback.js API and Usage Examples"
     div.container-fluid

@@ -1,5 +1,8 @@
 extends ../_layout/_layout_template
 
+include ../_layout/_layout_mixins
+include ../_docs/_docs_mixins
+
 block title
   title= "Knockback.js Docs"
 
@@ -7,7 +10,6 @@ block includes
   link(rel="stylesheet",href="stylesheets/docs.css")
 
 block navbar
-  include ../_layout/_layout_mixin_page_navbar
   mixin pageNavbar('Docs', true)
 
 block docs_overview
@@ -45,9 +47,9 @@ block docs_overview
         span=': indicates a factory function is being described. Please note that many of the Knockout classes have corresponding factory functions to reduce verbosity and to improve consistency with Knockout.js'
         p
           span='For example, this: '
-          pre: code ko.observable(model, 'name')
+          pre ko.observable(model, 'name')
           span='is equivalent to: '
-          pre: code new ko.Observable(model, 'name')
+          pre new ko.Observable(model, 'name')
         p
           span="Be careful to use the class if you call the "
           a(href='docs_kb_utils.html#observable_instance_of')='kb.utils.observableInstanceOf'
@@ -60,13 +62,11 @@ block docs_overview
         span=': indicates that a function is both a getter and a setter'
         p
           span='For example, this one gets the model:'
-          pre: code view_model.model()
+          pre view_model.model()
           span='whereas this one sets the model:'
-          pre: code view_model.model(model)
+          pre view_model.model(model)
 
 block content
-  include _mixin_docs_index
-
   div.api.container
     h1="Knockback.js API and Usage Examples"
     div.container-fluid

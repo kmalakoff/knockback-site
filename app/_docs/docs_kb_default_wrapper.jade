@@ -1,5 +1,8 @@
 extends ../_layout/_layout_template
 
+include ../_layout/_layout_mixins
+include ../_docs/_docs_mixins
+
 block title
   title= "Knockback.js Docs"
 
@@ -7,7 +10,6 @@ block includes
   link(rel="stylesheet",href="stylesheets/docs.css")
 
 block navbar
-  include ../_layout/_layout_mixin_page_navbar
   mixin pageNavbar('Docs', true)
 
 block api_descriptions
@@ -18,10 +20,10 @@ block api_descriptions
   h2='kb.DefaultWrapper'
   div="Used to provide a default value if an observable's value is null or undefined"
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     wrapped_name = kb.defaultWrapper(kb.observable(model, 'name'), "(no name)")
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var wrapped_name = kb.defaultWrapper(kb.observable(model, 'name'), "(no name)");
 
   h3#factory='kb.defaultWrapper(target_observable, default_value_observable) '
@@ -36,10 +38,10 @@ block api_descriptions
         strong='default_value_observable '
         span.type='{ an observable or constant }: '
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     wrapped_name = kb.formattedObservable(kb.observable(model, 'name'), "(no name)")
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var wrapped_name = kb.formattedObservable(kb.observable(model, 'name'), "(no name)");
 
   h3#constructor='constructor(target_observable, default_value_observable) '
@@ -53,18 +55,16 @@ block api_descriptions
         strong='default_value_observable '
         span.type='{ an observable or constant }: '
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     wrapped_name = new kb.FormattedObservable(kb.observable(model, 'name'), "(no name)")
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var wrapped_name = new kb.FormattedObservable(kb.observable(model, 'name'), "(no name)");
 
   h3#destroy='destroy()'
   div="Used to release the memory of the object"
 
 block content
-  include _mixin_docs_index
-
   div.api.container
     h1="Knockback.js API and Usage Examples"
     div.container-fluid

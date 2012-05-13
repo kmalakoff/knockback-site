@@ -1,14 +1,15 @@
-extends ../_layout/_layout_template
+extends ../../_layout/_layout_template
+
+include ../../_layout/_layout_mixins
 
 block title
   title= "Knockback.js Tutorial: Todos"
 
 block includes
   link(rel="stylesheet",href="stylesheets/tutorial.css")
-  include ../_demos/_demos_include_knockback_scripts
+  include ../../_demos/_demos_include_knockback_scripts
 
 block navbar
-  include ../_layout/_layout_mixin_page_navbar
   mixin pageNavbar('Tutorials', true)
 
 block content
@@ -97,11 +98,11 @@ block content
       li='Emulate a simplified Backbone.Model through a get method like "get: (string_id) -> ..."'
       li="Mixin Backbone.Events '_.extend(LocaleManager.prototype, Backbone.Events)' and trigger Backbone.Events 'change' and 'change:\#{string_id}' like:"
 
-    pre(data-for='cs'): code.coffee.
+    pre(data-for='cs').
       @trigger('change', @)
       @trigger("change:\#{key}", value) for key, value of @translations_by_locale[@locale_identifier]
 
-    pre(data-for='js'): code.javascript.
+    pre(data-for='js').
       this.trigger('change', @);
       for (var key in this.translations_by_locale[this.locale_identifier]) {
         this.trigger("change:\#{key}", this.translations_by_locale[this.locale_identifier][key]);
@@ -109,15 +110,15 @@ block content
 
     p='Register your custom locale manager like:'
 
-    pre(data-for='cs'): code.coffee.
+    pre(data-for='cs').
       kb.locale_manager = new MyLocaleManager()
 
-    pre(data-for='js'): code.javascript.
+    pre(data-for='js').
       kb.locale_manager = new MyLocaleManager();
 
     p='Also, if you want to perform some specialized formatting above and beyond a string lookup, you can provide custom localizer classes derived from kb.LocalizedObservable:'
 
-    pre(data-for='cs'): code.coffee.
+    pre(data-for='cs').
       class LongDateLocalizer extends kb.LocalizedObservable
         constructor: -> return super
         read: (value) ->
@@ -126,7 +127,7 @@ block content
           new_value = Globalize.parseDate(localized_string, Globalize.cultures[kb.locale_manager.getLocale()].calendars.standard.patterns.d, kb.locale_manager.getLocale())
           value.setTime(new_value.valueOf())
 
-    pre(data-for='js'): code.javascript.
+    pre(data-for='js').
       var LongDateLocalizer =  kb.LocalizedObservable.extend({
         constructor: function LongDateLocalizer() {
           return LongDateLocalizer.__super__.constructor.apply(this, arguments);
@@ -150,12 +151,12 @@ block content
 
     p='You can simply watch an attribute on the locale manager as follows:'
 
-    pre(data-for='cs'): code.coffee.
+    pre(data-for='cs').
       HeaderViewModel = ->
         ...
         @input_placeholder_text = kb.observable(kb.locale_manager, {key: 'placeholder_create'})
 
-    pre(data-for='js'): code.javascript.
+    pre(data-for='js').
       var HeaderViewModel = function() {
         ...
         this.input_placeholder_text = kb.observable(kb.locale_manager, {key: 'placeholder_create'});
@@ -163,12 +164,12 @@ block content
 
     p='Or model attributes can be localized automatically when your locale manager triggers a change:'
 
-    pre(data-for='cs'): code.coffee.
+    pre(data-for='cs').
       TodoViewModel = (model) ->
         ...
         @completed = kb.observable(model, {key: 'completed', localizer: LongDateLocalizer})
 
-    pre(data-for='js'): code.javascript.
+    pre(data-for='js').
       var TodoViewModel = function(model) {
         ...
         this.completed = kb.observable(model, {key: 'completed', localizer: LongDateLocalizer});
@@ -180,7 +181,7 @@ block content
 
     p='As demonstration, you can see that the colors arrive a little after the rendering. It is achieved by passing model references instead of models to the settings view model:'
 
-    pre(data-for='cs'): code.coffee.
+    pre(data-for='cs').
       SettingsViewModel = (priorities) ->
         @priorities = ko.observableArray(_.map(priorities, (model)-> return new PrioritiesViewModel(model)))
         ...
@@ -190,7 +191,7 @@ block content
         new Backbone.ModelRef(priorities, 'low')
       ])
 
-    pre(data-for='js'): code.javascript.
+    pre(data-for='js').
       var SettingsViewModel = function(priorities) {
         this.priorities = ko.observableArray(_.map(priorities, (model)-> return new PrioritiesViewModel(model)));
         ...
@@ -202,7 +203,7 @@ block content
 
     p="and then lazy fetching them (which creates them if they don't exist):"
 
-    pre(data-for='cs'): code.coffee.
+    pre(data-for='cs').
       # Load the prioties late to show the dynamic nature of Knockback with Backbone.ModelRef
       _.delay((->
         priorities.fetch(
@@ -214,7 +215,7 @@ block content
         ...
       ), 1000)
 
-    pre(data-for='js'): code.javascript.
+    pre(data-for='js').
       // Load the prioties late to show the dynamic nature of Knockback with Backbone.ModelRef
       _.delay(function() {
         priorities.fetch({

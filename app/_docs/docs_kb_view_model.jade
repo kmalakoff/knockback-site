@@ -1,5 +1,8 @@
 extends ../_layout/_layout_template
 
+include ../_layout/_layout_mixins
+include ../_docs/_docs_mixins
+
 block title
   title= "Knockback.js Docs"
 
@@ -7,7 +10,6 @@ block includes
   link(rel="stylesheet",href="stylesheets/docs.css")
 
 block navbar
-  include ../_layout/_layout_mixin_page_navbar
   mixin pageNavbar('Docs', true)
 
 block api_descriptions
@@ -20,13 +22,13 @@ block api_descriptions
   h4='Super class:'
     a(href='#ref_countable')=' kb.RefCountable'
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     view_model = kb.viewModel(new Backbone.Model({first_name: "Planet", last_name: "Earth"}))
 
     # Do something then clean up
     # kb.utils.release(view_model); view_model = null
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var view_model = kb.viewModel(new Backbone.Model({first_name: "Planet", last_name: "Earth"}));
 
     // Do something then clean up
@@ -36,7 +38,7 @@ block api_descriptions
     span.label.label-success='class'
   div="Used to derive a class in JavaScript (when CoffeeScript is not used)"
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     ViewModel = kb.ViewModel.extend({
       constructor: (model) ->
         kb.ViewModel.prototype.constructor.apply(this, arguments)
@@ -44,7 +46,7 @@ block api_descriptions
 
     var view_model = new ViewModel(model);
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var ViewModel = kb.ViewModel.extend({
       constructor: function(model){
         kb.ViewModel.prototype.constructor.apply(this, arguments);
@@ -78,10 +80,10 @@ block api_descriptions
             span.type='{ boolean }: '
 
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     view_model = kb.viewModel(model)
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var view_model = kb.viewModel(model);
 
   h3#constructor='constructor(model, [options])'
@@ -108,10 +110,10 @@ block api_descriptions
             span.type='{ boolean }: '
 
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     view_model = new kb.ViewModel(model)
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var view_model = new kb.ViewModel(model);
 
   h3#model='model([model]) '
@@ -125,7 +127,7 @@ block api_descriptions
         span.label.label-inverse='optional'
         span=' the model to set on the view model '
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     view_model = kb.viewModel(new Backbone.Model({name: 'bob'}))
 
     # get
@@ -134,7 +136,7 @@ block api_descriptions
     # set
     view_model.model(new Backbone.Model({name: 'fred'}))
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var view_model = kb.viewModel(new Backbone.Model({name: 'bob'}));
 
     // get
@@ -144,8 +146,6 @@ block api_descriptions
     view_model.model(new Backbone.Model({name: 'fred'}));
 
 block content
-  include _mixin_docs_index
-
   div.api.container
     h1="Knockback.js API and Usage Examples"
     div.container-fluid

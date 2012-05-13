@@ -1,5 +1,8 @@
 extends ../_layout/_layout_template
 
+include ../_layout/_layout_mixins
+include ../_docs/_docs_mixins
+
 block title
   title= "Knockback.js Docs"
 
@@ -7,7 +10,6 @@ block includes
   link(rel="stylesheet",href="stylesheets/docs.css")
 
 block navbar
-  include ../_layout/_layout_mixin_page_navbar
   mixin pageNavbar('Docs', true)
 
 block api_descriptions
@@ -18,7 +20,7 @@ block api_descriptions
   h2='kb.TriggeredObservable'
   div="Used to recalculate a value when model's attribute changes value"
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     trigger_count = 0
     model = new Backbone.Model()
 
@@ -33,7 +35,7 @@ block api_descriptions
     model.set(name: 'george')   # trigger_count: 2
     model.set(last: 'smith')    # trigger_count: 3
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var trigger_count = 0;
     var model = new Backbone.Model();
 
@@ -63,10 +65,10 @@ block api_descriptions
         span.type='{ string }: '
         span='a key to bind to changes on for Backbone.Events'
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     triggered_observable = kb.triggeredObservable(name, 'change')
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var triggered_observable = kb.triggeredObservable(name, 'change');
 
   h3#constructor='constructor(model, event_name) '
@@ -82,18 +84,16 @@ block api_descriptions
         span.type='{ string }: '
         span='a key to bind to changes on for Backbone.Events'
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     triggered_observable = new kb.TriggeredObservable(name, 'change')
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var triggered_observable = new kb.TriggeredObservable(name, 'change');
 
   h3#destroy='destroy'
   div="Used to release the memory of the object"
 
 block content
-  include _mixin_docs_index
-
   div.api.container
     h1="Knockback.js API and Usage Examples"
     div.container-fluid

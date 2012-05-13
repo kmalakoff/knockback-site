@@ -1,5 +1,8 @@
 extends ../_layout/_layout_template
 
+include ../_layout/_layout_mixins
+include ../_docs/_docs_mixins
+
 block title
   title= "Knockback.js Docs"
 
@@ -7,7 +10,6 @@ block includes
   link(rel="stylesheet",href="stylesheets/docs.css")
 
 block navbar
-  include ../_layout/_layout_mixin_page_navbar
   mixin pageNavbar('Docs', true)
 
 block api_descriptions
@@ -18,7 +20,7 @@ block api_descriptions
   h2='kb.LocalizedObservable'
   div="Used to generate an observable that automatically changes when the kb.LocaleManager's locale changes"
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     class ShortDateLocalizer extends kb.LocalizedObservable
       constructor: (value, options, view_model) ->
         super; return kb.utils.wrappedObservable(this)
@@ -35,7 +37,7 @@ block api_descriptions
       @
     view_model = new ViewModel(new Backbone.Model({date: new Date()}))
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var ShortDateLocalizer = kb.LocalizedObservable.extend({
       constructor: function(value, options, view_model) {
         kb.LocalizedObservable.prototype.constructor.apply(this, arguments);
@@ -58,7 +60,7 @@ block api_descriptions
     span.label.label-success='class'
   div="Used to derive a class in JavaScript (when CoffeeScript is not used)"
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     ShortDateLocalizer = kb.LocalizedObservable.extend({
       constructor: (value, options, view_model) ->
         kb.LocalizedObservable.prototype.constructor.apply(this, arguments)
@@ -67,7 +69,7 @@ block api_descriptions
       read: (value) -> # return something
       write: (localized_string, value) -> // do something
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var ShortDateLocalizer = kb.LocalizedObservable.extend({
       constructor: function(value, options, view_model) {
         kb.LocalizedObservable.prototype.constructor.apply(this, arguments);
@@ -81,12 +83,12 @@ block api_descriptions
   h3#constructor='constructor([value], [options], [view_model])'
   div="Used to create a new instance. For localized observables, creation is often indirect."
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     ContactViewModelDate = (model) ->
       @date = kb.observable(model, {key:'date', localizer: LongDateLocalizer}, this)
       @
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var ContactViewModelDate = function(model){
       @date = kb.observable(model, {key:'date', localizer: LongDateLocalizer}, this)
     };
@@ -112,8 +114,6 @@ block api_descriptions
         span=' the target that the localized observable synchronizes with on kb.LocaleManager changes '
 
 block content
-  include _mixin_docs_index
-
   div.api.container
     h1="Knockback.js API and Usage Examples"
     div.container-fluid

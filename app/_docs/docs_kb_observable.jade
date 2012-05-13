@@ -1,5 +1,8 @@
 extends ../_layout/_layout_template
 
+include ../_layout/_layout_mixins
+include ../_docs/_docs_mixins
+
 block title
   title= "Knockback.js Docs"
 
@@ -7,7 +10,6 @@ block includes
   link(rel="stylesheet",href="stylesheets/docs.css")
 
 block navbar
-  include ../_layout/_layout_mixin_page_navbar
   mixin pageNavbar('Docs', true)
 
 block api_descriptions
@@ -18,7 +20,7 @@ block api_descriptions
   h2='kb.Observable'
   div="Used to generate a single observable for a model's attribute"
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     ContactViewModel = (model) ->
       @name = kb.observable(model, 'name')
       @number = kb.observable(model, {key:'number', read_only: true})
@@ -27,7 +29,7 @@ block api_descriptions
     model = new Contact({name: 'Ringo', number: '555-555-5556'})
     view_model = new ContactViewModel(model)
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var ContactViewModel = function(model) {
       this.name = kb.observable(model, 'name');
       this.number = kb.observable(model, { key: 'number', read_only: true });
@@ -63,9 +65,9 @@ block api_descriptions
         span.label.label-inverse='optional'
         span=' required if you need the view model as "this" in your read or write methods '
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     name = kb.observable(model, 'name')
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var name = kb.observable(model, 'name');
 
   h3#constructor='constructor(model, mapping_info, [owner]) '
@@ -92,9 +94,9 @@ block api_descriptions
         span.label.label-inverse='optional'
         span=' required if you need the view model as "this" in your read or write methods '
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     name = new kb.Observable(model, 'name')
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var name = new kb.Observable(model, 'name');
 
   h3#destroy='destroy()'
@@ -103,7 +105,7 @@ block api_descriptions
   h3#set_to_default='setToDefault()'
   div="Used to return all of the owned observables to their default values (if they exist)"
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     model = Backbone.Model({name: 'Bob'})
     name = kb.observable(model, {key:'name', default: '(none)'})
     # name is Bob
@@ -111,7 +113,7 @@ block api_descriptions
     name.setToDefault()
     # name is (none)
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var model = Backbone.Model({name: 'Bob'});
     var name = kb.observable(model, {key:'name', default: '(none)'});
     // name is Bob
@@ -120,8 +122,6 @@ block api_descriptions
     // name is (none)
 
 block content
-  include _mixin_docs_index
-
   div.api.container
     h1="Knockback.js API and Usage Examples"
     div.container-fluid

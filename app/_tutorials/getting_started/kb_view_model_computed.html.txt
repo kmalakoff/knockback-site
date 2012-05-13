@@ -1,0 +1,5 @@
+&lt;div id='kb_view_model_computed'&gt;
+  &lt;p&gt;First name: &lt;input data-bind=&quot;value: first_name&quot; /&gt;&lt;/p&gt;
+  &lt;p&gt;Last name: &lt;input data-bind=&quot;value: last_name&quot; /&gt;&lt;/p&gt;
+  &lt;p&gt;Hello, &lt;span data-bind=&quot;text: full_name&quot;&gt; &lt;/span&gt;!&lt;/p&gt;
+&lt;/div&gt;

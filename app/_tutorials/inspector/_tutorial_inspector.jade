@@ -1,14 +1,15 @@
-extends ../_layout/_layout_template
+extends ../../_layout/_layout_template
+
+include ../../_layout/_layout_mixins
 
 block title
   title= "Knockback.js Tutorial: Inspector"
 
 block includes
   link(rel="stylesheet",href="stylesheets/tutorial.css")
-  include ../_demos/_demos_include_knockback_scripts
+  include ../../_demos/_demos_include_knockback_scripts
 
 block navbar
-  include ../_layout/_layout_mixin_page_navbar
   mixin pageNavbar('Tutorials', false)
 
 block content
@@ -32,15 +33,15 @@ block content
       li
         span="Install "
         a(href='http://brunch.io/')='Brunch'
-        pre: code.
+        pre.
           npm install -g brunch
       li
         span="Create a new project: "
-        pre: code.
+        pre.
           brunch new knockback-inspector
       li
         span="Build the new project"
-        pre: code.
+        pre.
           cd knockback-inspector
           brunch build
       li
@@ -63,7 +64,7 @@ block content
             span=" in 'vendor/scripts'"
           li
             span="Update config.coffee to point to the new files. it should look like:"
-            pre: code.
+            pre.
               files:
                 javascripts:
                   ...
@@ -78,21 +79,21 @@ block content
                     ]
       li
         span="Build the project again and check that there are no errors in your console. Use 'brunch watch' to make sure all changes are automatically picked up"
-        pre: code.
+        pre.
           brunch watch
       li
         span="Update the main Template and View to make sure Knockback.js is working"
         ul
           li
             span="Update 'app/views/templates' to:"
-            pre: code.
+            pre.
               &lt;div id="content"&gt;
                 &lt;h1 data-bind="text: title"&gt;&lt;/h1&gt;
               &lt;/div&gt;
 
           li
             span="Update 'app/views/home_view.coffee' to:"
-            pre: code.
+            pre.
               module.exports = class HomeView extends View
                 id: 'home-view'
                 template: template
@@ -106,7 +107,7 @@ block content
                   ko.applyBindings(@view_model, @el)
           li
             span="Update the following selectors in 'app/styles/main.styl' to:"
-            pre: code.
+            pre.
               #home-view
                 width: 800px
                 margin: 0 auto

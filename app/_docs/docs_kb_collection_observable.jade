@@ -1,5 +1,8 @@
 extends ../_layout/_layout_template
 
+include ../_layout/_layout_mixins
+include ../_docs/_docs_mixins
+
 block title
   title= "Knockback.js Docs"
 
@@ -7,7 +10,6 @@ block includes
   link(rel="stylesheet",href="stylesheets/docs.css")
 
 block navbar
-  include ../_layout/_layout_mixin_page_navbar
   mixin pageNavbar('Docs', true)
 
 block api_descriptions
@@ -20,11 +22,10 @@ block api_descriptions
   h4='Super class:'
     a(href='#ref_countable')=' kb.RefCountable'
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     view_model =
       todos: kb.collectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))
-
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var view_model = {
       todos: kb.collectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))
     };
@@ -60,10 +61,10 @@ block api_descriptions
           //li='store_skip_resolve '
           //  span.type='{ boolean }: '
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     todos = kb.collectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var todos = kb.collectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]));
 
   h3#constructor='constructor(collection, [options]) '
@@ -96,10 +97,10 @@ block api_descriptions
           //li='store_skip_resolve '
           //  span.type='{ boolean }: '
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     todos = new kb.CollectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var todos = new kb.CollectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]));
 
   h3#collection='collection([collection], [options]) '
@@ -119,7 +120,7 @@ block api_descriptions
           li='silent '
             span.type='{ boolean }: '
   h4='Example:'
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     todos = new kb.CollectionObservable(new Backbone.Collection())
 
     # get
@@ -128,7 +129,7 @@ block api_descriptions
     # set
     todos.collection(new Backbone.Collection([{name: 'name3'}, {name: 'name4'}]))
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var todos = new kb.CollectionObservable(new Backbone.Collection();
 
     # get
@@ -139,13 +140,13 @@ block api_descriptions
 
   h3#sorted_index='sortedIndex(sorted_index, [sort_attribute], [options])'
   div="Sets the sorted_index function for sorting Models or ViewModels in the collection observable"
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     # change the sorting function
     collection_observable.sortedIndex(
       ((view_models, vm) -> _.sortedIndex(view_models, vm, (test) -> kb.utils.wrappedModel(test).get('name')))
     )
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     // change the sorting function
     collection_observable.sortedIndex(
       function(view_models, vm){
@@ -155,14 +156,14 @@ block api_descriptions
 
   h3#sort_attribute='sortAttribute((sort_attribute, [sorted_index], [silent]))'
   div="Sets the sort attribute name for the collection observable"
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     todos = new kb.CollectionObservable(new Backbone.Collection([{name: 'Zanadu', name: 'Alex'}]))
     # in order of Zanadu then Alex
 
     todos.sortAttribute('name')
     # in order of Alex then Zanadu
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var todos = new kb.CollectionObservable(new Backbone.Collection([{name: 'Zanadu', name: 'Alex'}]));
     // in order of Zanadu then Alex
 
@@ -171,14 +172,14 @@ block api_descriptions
 
   h3#has_view_models='hasViewModels()'
   div="Returns true if the collection observable was initialized with a view model create option (and hence generates view models for each model)"
-  pre(data-for='cs'): code.coffee.
+  pre(data-for='cs').
     todos1 = new kb.CollectionObservable(new Backbone.Collection())
     todos1.hasViewModels()      # false
 
     todos2 = new kb.CollectionObservable(new Backbone.Collection(), {view_model: kb.ViewModel})
     todos2.hasViewModels()      # true
 
-  pre(data-for='js'): code.javascript.
+  pre(data-for='js').
     var todos1 = new kb.CollectionObservable(new Backbone.Collection());
     todos1.hasViewModels();     // false
 
@@ -186,8 +187,6 @@ block api_descriptions
     todos2.hasViewModels();     // true
 
 block content
-  include _mixin_docs_index
-
   div.api.container
     h1="Knockback.js API and Usage Examples"
     div.container-fluid
