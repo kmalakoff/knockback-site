@@ -71,6 +71,13 @@ def recursiveHTMLToEscapedText(path, filename, dest)
   end
 end
 
+def setupDemo(root, public_target)
+  # first generate the javascript and then copy any files in the TUTORIALS_ROOT over top so they can be hand crafted
+  `cd #{PROJECT_ROOT}; node_modules/.bin/coffee --bare --output #{public_target} #{root}`
+  Dir.entries(root).each{|filename| recursiveFilteredCopy(root, filename, public_target, ['.styl', '.coffee', '.html', '.txt', '.jade'])}
+  Dir.entries(root).each{|filename| recursiveHTMLToEscapedText(root, filename, root)}
+end
+
 ####################################################
 # The Vendor Folder
 ####################################################
@@ -88,9 +95,6 @@ Dir.entries(VENDOR_ROOT).each{|filename| recursiveFilteredCopy(VENDOR_ROOT, file
 
 Dir.entries(ASSETS_ROOT).each{|filename| recursiveFilteredCopy(ASSETS_ROOT, filename, 'public', ['.styl', '.coffee'])}
 
-# first generate the javascript and then copy any files in the TUTORIALS_ROOT over top so they can be hand crafted
-`cd #{PROJECT_ROOT}; node_modules/.bin/coffee --bare --output public/tutorials #{TUTORIALS_ROOT}`
-Dir.entries(TUTORIALS_ROOT).each{|filename| recursiveFilteredCopy(TUTORIALS_ROOT, filename, 'public/tutorials', ['.styl', '.coffee', '.html', '.txt', '.jade'])}
-Dir.entries(TUTORIALS_ROOT).each{|filename| recursiveHTMLToEscapedText(TUTORIALS_ROOT, filename, TUTORIALS_ROOT)}
+setupDemo(TUTORIALS_ROOT, 'public/tutorials')
 
 `cd #{PROJECT_ROOT}; node_modules/.bin/jade --out public app`

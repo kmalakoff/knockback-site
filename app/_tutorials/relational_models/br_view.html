@@ -1,0 +1,20 @@
+<p>First Person:
+  <input data-bind="value: occupants()[0].name"/>
+  <div>(home: <span data-bind="text: occupants()[0].livesIn().location"></span>)</div>
+</p>
+<p>Second Person:
+  <input data-bind="value: occupants()[1].name"/>
+  <div>(home: <span data-bind="text: occupants()[1].livesIn().location"></span>)</div>
+</p>
+
+<br/>
+
+<div id='br_relational_models'>
+  <p>Location: <span data-bind="text: location"></span></p>
+  <p>
+    Has these people living there:
+    <ul data-bind="foreach: occupants">
+      <li data-bind="text: name"></li>
+    </ul>
+  </p>
+</div>

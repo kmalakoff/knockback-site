@@ -1,0 +1,20 @@
+&lt;p&gt;First Person:
+  &lt;input data-bind=&quot;value: occupants()[0].name&quot;/&gt;
+  &lt;div&gt;(home: &lt;span data-bind=&quot;text: occupants()[0].livesIn().location&quot;&gt;&lt;/span&gt;)&lt;/div&gt;
+&lt;/p&gt;
+&lt;p&gt;Second Person:
+  &lt;input data-bind=&quot;value: occupants()[1].name&quot;/&gt;
+  &lt;div&gt;(home: &lt;span data-bind=&quot;text: occupants()[1].livesIn().location&quot;&gt;&lt;/span&gt;)&lt;/div&gt;
+&lt;/p&gt;
+
+&lt;br/&gt;
+
+&lt;div id='br_relational_models'&gt;
+  &lt;p&gt;Location: &lt;span data-bind=&quot;text: location&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+  &lt;p&gt;
+    Has these people living there:
+    &lt;ul data-bind=&quot;foreach: occupants&quot;&gt;
+      &lt;li data-bind=&quot;text: name&quot;&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/p&gt;
+&lt;/div&gt;
