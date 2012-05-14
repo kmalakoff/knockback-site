@@ -1,0 +1,20 @@
+<div id='kbvm_bb_model'>
+  <p>
+    <span>First Person: </span>
+    <input data-bind="value: name"/>
+  </p>
+  <p>
+    <span>Second Person: </span>
+    <input data-bind="value: friend().name"/>
+  </p>
+
+  <br/>
+
+  <p>
+    <span>Person: </span>
+    <span data-bind="text: name"></span>
+  <p>
+    <span>Has this friend: </span>
+    <span data-bind="text: friend().name"></span>
+  </p>
+</div>

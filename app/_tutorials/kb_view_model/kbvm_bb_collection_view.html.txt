@@ -1,0 +1,26 @@
+&lt;div id='kbvm_bb_collection'&gt;
+  &lt;p&gt;
+    &lt;span&gt;First Person: &lt;/span&gt;
+    &lt;input data-bind=&quot;value: name&quot;/&gt;
+  &lt;/p&gt;
+  &lt;p&gt;
+    &lt;span&gt;Second Person: &lt;/span&gt;
+    &lt;input data-bind=&quot;value: friends()[0].name&quot;/&gt;
+  &lt;/p&gt;
+  &lt;p&gt;
+    &lt;span&gt;Third Person: &lt;/span&gt;
+    &lt;input data-bind=&quot;value: friends()[1].name&quot;/&gt;
+  &lt;/p&gt;
+
+  &lt;br/&gt;
+
+  &lt;p&gt;
+    &lt;span&gt;Person: &lt;/span&gt;
+    &lt;span data-bind=&quot;text: name&quot;&gt;&lt;/span&gt;
+  &lt;p&gt;
+    &lt;span&gt;Has these friends: &lt;/span&gt;
+    &lt;ul data-bind=&quot;foreach: friends&quot;&gt;
+      &lt;li data-bind=&quot;text: name&quot;&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/p&gt;
+&lt;/div&gt;

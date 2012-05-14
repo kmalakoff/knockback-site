@@ -20,7 +20,7 @@ block api_descriptions
   h2='kb.ViewModel'
   div="Used to generate observables automatically for a model's attributes"
   h4='Super class:'
-    a(href='#ref_countable')=' kb.RefCountable'
+    a(href='docs_kb_ref_countable.html')=' kb.RefCountable'
   h4='Example:'
   pre(data-for='cs').
     view_model = kb.viewModel(new Backbone.Model({first_name: "Planet", last_name: "Earth"}))
@@ -33,6 +33,11 @@ block api_descriptions
 
     // Do something then clean up
     // kb.utils.release(view_model); view_model = null;
+
+  h4='Tutorials'
+    ul
+      li
+        a(href='tutorial_kb_view_model.html')='kb.ViewModel'
 
   h3#extend='kb.ViewModel::extend(properties, [classProperties]) '
     span.label.label-success='class'

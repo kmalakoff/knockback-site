@@ -1,0 +1,26 @@
+<div id='kbvm_bb_collection'>
+  <p>
+    <span>First Person: </span>
+    <input data-bind="value: name"/>
+  </p>
+  <p>
+    <span>Second Person: </span>
+    <input data-bind="value: friends()[0].name"/>
+  </p>
+  <p>
+    <span>Third Person: </span>
+    <input data-bind="value: friends()[1].name"/>
+  </p>
+
+  <br/>
+
+  <p>
+    <span>Person: </span>
+    <span data-bind="text: name"></span>
+  <p>
+    <span>Has these friends: </span>
+    <ul data-bind="foreach: friends">
+      <li data-bind="text: name"></li>
+    </ul>
+  </p>
+</div>
