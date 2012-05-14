@@ -1,0 +1,14 @@
+&lt;div id='lm_bulk_labels'&gt;
+  &lt;!-- ko foreach:['name', 'start_date', 'end_date'] --&gt;
+  &lt;p&gt;
+    &lt;span data-bind=&quot;text: $parent.labels[$data]&quot;&gt;&lt;/span&gt;
+    &lt;span data-bind=&quot;text: $parent[$data]&quot;&gt;&lt;/span&gt;
+  &lt;/p&gt;
+  &lt;!-- /ko --&gt;
+
+  &lt;p&gt;
+    &lt;span&gt;Current Locale: &lt;span&gt;
+    &lt;span data-bind=&quot;text: bulk_locale_manager.getLocale()&quot;&gt;&lt;span&gt;
+  &lt;/p&gt;
+  &lt;button data-bind=&quot;click: toggleLocale&quot;&gt;Toggle Locale&lt;/button&gt;
+&lt;/div&gt;

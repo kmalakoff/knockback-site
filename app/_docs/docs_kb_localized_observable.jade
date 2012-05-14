@@ -56,6 +56,11 @@ block api_descriptions
     };
     var view_model = new ViewModel(new Backbone.Model({date: new Date()}));
 
+  h4='Tutorials'
+    ul
+      li
+        a(href='tutorial_locale_manager.html')='Custom Locale Manager'
+
   h3#extend='kb.LocalizedObservable::extend(properties, [classProperties]) '
     span.label.label-success='class'
   div="Used to derive a class in JavaScript (when CoffeeScript is not used)"

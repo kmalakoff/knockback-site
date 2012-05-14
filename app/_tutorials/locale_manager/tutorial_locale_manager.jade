@@ -1,0 +1,126 @@
+extends ../../_layout/_layout_template
+
+include ../../_layout/_layout_mixins
+
+block title
+  title= "Tutorial: Custom Locale Manager"
+
+block includes
+  link(rel="stylesheet",href="stylesheets/tutorial.css")
+  include ../../_demos/_demos_include_knockback_scripts
+
+block navbar
+  mixin pageNavbar('Locale Manager', true)
+
+block content
+  section
+    h1="Tutorial: Custom Locale Manager"
+    p
+      a(href='index.html')='Knockback.js'
+      span=' does not provide a Locale Manager implementation since it depends on how you want to store and where you want to manage your localized strings.'
+    p
+      span='If you choose to use '
+      a(href='docs_kb_localized_observable.html')='kb.LocalizedObservable'
+      span=", it assumes that you assign your implementation to 'kb.locale_manager'."
+
+    p
+    h3="A Simple Implementation"
+    p
+      span='Because Knockback actually only requires a '
+      a(href='docs.html#backbone_model_signature')='Backbone.Model-like signature'
+      span=', a custom locale manager can be implemented quite easily. Here is an example:'
+
+    pre(data-for='cs')
+      include lm_simple_models.coffee
+
+    pre(data-for='js')
+      include ../../../public/tutorials/locale_manager/lm_simple_models.js
+
+    p
+      span="In more detail...we create an observable with the current locale so the locale identifier can be displayed:"
+      pre(data-for='cs')="@current_locale = ko.observable(locale_identifier)"
+      pre(data-for='js')="@current_locale = ko.observable(locale_identifier);"
+
+    p
+      span="We create a get() method that is used by ko.observable to listen for changes using Backbone.Events:"
+      pre(data-for='cs')="get: (string_id) -> ..."
+      pre(data-for='js')="get: function(string_id) {...}"
+
+    p
+      span="We trigger a Backbone.Events event to notify a subscribed ko.observable"
+      pre(data-for='cs').
+        setLocale: (locale_identifier) ->
+          @current_locale(locale_identifier)
+          @trigger('change', @)
+      pre(data-for='js').
+        setLocale: function(locale_identifier) {
+          this.current_locale(locale_identifier);
+          this.trigger('change', this);
+        }
+    p
+      span="We mixin Backbone.Events into our LocaleManager to provide 'bind', 'trigger', and 'unbind':"
+      pre(data-for='cs')="_.extend(LocaleManager.prototype, Backbone.Events)"
+      pre(data-for='js')="_.extend(LocaleManager.prototype, Backbone.Events);"
+
+    div.container-fluid
+      div.row-fluid
+        div.span8
+          h4='Views:'
+          pre
+            include lm_simple_view.html.txt
+
+          h4='ViewModel and Bindings:'
+          pre(data-for='cs')
+            include lm_simple_view_model_bindings.coffee
+
+          pre(data-for='js')
+            include ../../../public/tutorials/locale_manager/lm_simple_view_model_bindings.js
+
+        div.span4
+          h4='Live Result'
+          div.demos_result_box
+            include lm_simple_view.html
+            script(type="application/javascript",src="tutorials/locale_manager/lm_simple_models.js")
+            script(type="application/javascript",src="tutorials/locale_manager/lm_simple_view_model_bindings.js")
+
+    p
+    h3="An Advanced Implementation"
+    p
+
+    p
+      span='To make a more advanced version of the locale manager, you will want to add error checking and might choose to add parameters to the get() function, trigger on each string, and allow to query for all available locales (among other possible enhancements!):'
+
+    pre(data-for='cs')
+      include lm_advanced_models.coffee
+
+    pre(data-for='js')
+      include ../../../public/tutorials/locale_manager/lm_advanced_models.js
+
+    p
+    h3="Bulk Localized Form Labels"
+    p
+
+    p
+      span='If you need to create a large number of localized labels, you could use '
+      a(href='docs_kb_observables.html')='kb.Observables'
+      span=' like:'
+
+    div.container-fluid
+      div.row-fluid
+        div.span8
+          h4='Views:'
+          pre
+            include lm_bulk_labels_view.html.txt
+
+          h4='ViewModel and Bindings:'
+          pre(data-for='cs')
+            include lm_bulk_labels_view_model_bindings.coffee
+
+          pre(data-for='js')
+            include ../../../public/tutorials/locale_manager/lm_bulk_labels_view_model_bindings.js
+
+        div.span4
+          h4='Live Result'
+          div.demos_result_box
+            include lm_bulk_labels_view.html
+            script(type="application/javascript",src="tutorials/locale_manager/lm_bulk_labels_view_model_bindings.js")

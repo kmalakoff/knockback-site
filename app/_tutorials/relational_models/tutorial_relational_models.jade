@@ -3,7 +3,7 @@ extends ../../_layout/_layout_template
 include ../../_layout/_layout_mixins
 
 block title
-  title= "Knockback.js Tutorial: Relational Models"
+  title= "Tutorial: Relational Models"
 
 block includes
   link(rel="stylesheet",href="stylesheets/tutorial.css")
@@ -20,6 +20,31 @@ block content
       a(href='index.html')='Knockback.js'
       span=' supports nested collections that you set up yourself or that are created by '
       a(href='https://github.com/PaulUithol/Backbone-relational/')='Backbone-Relational'
+
+    p
+    h3="Manual Relations (Collection)"
+    p
+    p=":"
+
+    div.container-fluid
+      div.row-fluid
+        div.span8
+          h4='Views:'
+          pre
+            include rm_manual_view.html.txt
+
+          h4='ViewModel and Bindings:'
+          pre(data-for='cs')
+            include rm_manual_view_model_bindings.coffee
+
+          pre(data-for='js')
+            include ../../../public/tutorials/relational_models/rm_manual_view_model_bindings.js
+
+        div.span4
+          h4='Live Result'
+          div.demos_result_box
+            include rm_manual_view.html
+            script(type="application/javascript",src="tutorials/relational_models/rm_manual_view_model_bindings.js")
 
     p
     h3="Backbone-Relational"

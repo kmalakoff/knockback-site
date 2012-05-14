@@ -1,0 +1,14 @@
+<div id='lm_bulk_labels'>
+  <!-- ko foreach:['name', 'start_date', 'end_date'] -->
+  <p>
+    <span data-bind="text: $parent.labels[$data]"></span>
+    <span data-bind="text: $parent[$data]"></span>
+  </p>
+  <!-- /ko -->
+
+  <p>
+    <span>Current Locale: <span>
+    <span data-bind="text: bulk_locale_manager.getLocale()"><span>
+  </p>
+  <button data-bind="click: toggleLocale">Toggle Locale</button>
+</div>
