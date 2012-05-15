@@ -266,5 +266,7 @@ block content
     pre(data-for='js').
       Knockback.viewModel = function(model, options) { return new Knockback.ViewModel(model, options); };
     div.alert.alert-error
-      span="Be careful to differentiate the factory from the class when using "
+      span="Be careful to differentiate the "
+      span.label.label-info='factory'
+      span=" from the class when using "
       a(href='docs.htm#utils_observable_instance_of')="kb.utils.observableInstanceOf(observable, class)"

@@ -1,0 +1,9 @@
+&lt;div id='kblo_read_only'&gt;
+  &lt;p data-bind=&quot;text: main_text&quot;&gt;&lt;/p&gt;
+
+  &lt;p&gt;
+    &lt;span&gt;Current Locale: &lt;span&gt;
+    &lt;span data-bind=&quot;text: kb.locale_manager.getLocale()&quot;&gt;&lt;span&gt;
+  &lt;/p&gt;
+  &lt;button data-bind=&quot;click: toggleLocale&quot;&gt;Toggle Locale&lt;/button&gt;
+&lt;/div&gt;

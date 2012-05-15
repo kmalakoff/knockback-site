@@ -1,4 +1,4 @@
-bulk_locale_manager = new LocaleManager('en',{
+bulk_locale_manager = new LocaleManager('en', {
   'en':
     name: 'Name: '
     start_date: 'Start Date: '

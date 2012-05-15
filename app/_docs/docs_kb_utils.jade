@@ -104,7 +104,7 @@ block api_descriptions
     kb.utils.observableInstanceOf(todos, kb.CollectionObservable); // true
     kb.utils.observableInstanceOf(todos, kb.collectionObservable); // false (factory function not class!)
 
-  h3#observable='wrappedObservable(instance {, observable})'
+  h3#wrapped_observable='wrappedObservable(instance {, observable})'
   div="Used to get/set a observable an owning instance. Mainly used as a helper so you can return a ko.observable function instead of an instance when creating a new Knockback or Knockback-derived instance."
   h4='Parameters'
     ol
@@ -148,7 +148,7 @@ block content
     div.container-fluid
       div.row-fluid
         div.span3.api.index
-          mixin docsIndex('kb.utils', [{release: 'release'}, {model: 'wrappedModel'}, {set_to_default: 'setToDefault'}, {observable_instance_of: 'observableInstanceOf'}, {observable: 'wrappedObservable'} /*, {options_create_clear: 'optionsCreateClear'}, {options_create_override: 'optionsCreateOverride'}*/])
+          mixin docsIndex('kb.utils', [{release: 'release'}, {model: 'wrappedModel'}, {set_to_default: 'setToDefault'}, {observable_instance_of: 'observableInstanceOf'}, {wrapped_observable: 'wrappedObservable'} /*, {options_create_clear: 'optionsCreateClear'}, {options_create_override: 'optionsCreateOverride'}*/])
         div.span9.api.descriptions
           div.content
             div.wrapper

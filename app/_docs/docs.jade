@@ -37,10 +37,7 @@ block docs_overview
         span.label.label-info='factory'
         span=': indicates a factory function is being described. Please note that many of the Knockout classes have corresponding factory functions to reduce verbosity and to improve consistency with Knockout.js'
         p
-          span='For example, this: '
-          pre ko.observable(model, 'name')
-          span='is equivalent to: '
-          pre new ko.Observable(model, 'name')
+          span="For example, 'ko.observable(model, 'name')' is equivalent to 'new ko.Observable(model, 'name')'"
         p
           span="Be careful to use the class if you call the "
           a(href='docs_kb_utils.html#observable_instance_of')='kb.utils.observableInstanceOf'
@@ -52,6 +49,13 @@ block docs_overview
         span.label.label-important='dual purpose'
         span=': indicates that a function is both a getter and a setter.'
         p="For example, this one gets the model: 'view_model.model()' whereas this one sets the model: 'view_model.model(model)'"
+
+      p
+      li
+        span.label.label-warning='observable returned'
+        span=": indicates that an observable class is returned rather than 'this' from a constructor or function. This is used to so that they can be used like dual purpose functions and use Knockout's dependency tracking. If you derive from one of Knockback's observable classes, use "
+        a(href='docs_kb_utils.html#wrapped_observable')='kb.utils.wrappedObservable(instance)'
+        span=" to return the observable instead of the class instance if you are overriding one of these special functions."
 
     h3='Other Things Worth Knowing'
     ol
