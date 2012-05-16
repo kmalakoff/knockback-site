@@ -8,8 +8,6 @@
     &lt;div&gt;(home: &lt;span data-bind=&quot;text: occupants()[1].livesIn().location&quot;&gt;&lt;/span&gt;)&lt;/div&gt;
   &lt;/p&gt;
 
-  &lt;br/&gt;
-
   &lt;p&gt;Location: &lt;input data-bind=&quot;value: location&quot;/&gt;&lt;/p&gt;
   &lt;p&gt;
     Has these people living there:

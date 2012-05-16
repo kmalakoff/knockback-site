@@ -40,6 +40,11 @@ block api_descriptions
     });
     var view_model = new ContactViewModel(model);
 
+  h4='Tutorials'
+    ul
+      li
+        a(href='tutorial_kb_observable_options.html')='kb.Observable Options'
+
   h3#factory='kb.observable(model, mapping_info, [owner]) '
     span.label.label-info='factory'
   div="Used to create a new instance"
@@ -60,6 +65,10 @@ block api_descriptions
             span.type='{ function(value) }: '
           li='read_only '
             span.type='{ boolean }: '
+          li='localizer '
+            span.type='{ constructor(value) }: '
+          li='default '
+            span.type='{ function() or value }: '
       li
         strong='owner: '
         span.label.label-inverse='optional'
@@ -69,6 +78,10 @@ block api_descriptions
     name = kb.observable(model, 'name')
   pre(data-for='js').
     var name = kb.observable(model, 'name');
+  h4='Tutorials'
+    ul
+      li
+        a(href='tutorial_kb_observable_options.html')='kb.Observable Options'
 
   h3#constructor='constructor(model, mapping_info, [owner]) '
     span.label.label-warning='observable returned'
@@ -90,6 +103,10 @@ block api_descriptions
             span.type='{ function(value) }: '
           li='read_only '
             span.type='{ boolean }: '
+          li='localizer '
+            span.type='{ constructor(value) }: '
+          li='default '
+            span.type='{ function() or value }: '
       li
         strong='owner: '
         span.label.label-inverse='optional'
@@ -99,6 +116,10 @@ block api_descriptions
     name = new kb.Observable(model, 'name')
   pre(data-for='js').
     var name = new kb.Observable(model, 'name');
+  h4='Tutorials'
+    ul
+      li
+        a(href='tutorial_kb_observable_options.html')='kb.Observable Options'
 
   h3#destroy='destroy()'
   div="Used to release the memory of the object"

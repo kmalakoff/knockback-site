@@ -12,8 +12,6 @@
     &lt;input data-bind=&quot;value: friends()[1].name&quot;/&gt;
   &lt;/p&gt;
 
-  &lt;br/&gt;
-
   &lt;p&gt;
     &lt;span&gt;Person: &lt;/span&gt;
     &lt;span data-bind=&quot;text: name&quot;&gt;&lt;/span&gt;
