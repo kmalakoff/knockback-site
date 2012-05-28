@@ -49,3 +49,8 @@ ul li {
 p {
   font-size: 0.8em;
 }
+img.screen_shot {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

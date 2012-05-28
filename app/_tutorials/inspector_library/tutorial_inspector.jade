@@ -3,7 +3,7 @@ extends ../../_layout/_layout_template
 include ../../_layout/_layout_mixins
 
 block title
-  title= "Tutorial: Inspector"
+  title= "Tutorial: Inspector Library"
 
 block includes
   link(rel="stylesheet",href="stylesheets/tutorial.css")
@@ -13,17 +13,159 @@ block navbar
   mixin pageNavbar('Tutorials', true)
 
 block overview
-  h2='Overview'
+  h2#overview='Overview'
 
+  p="Let's start with the goals of a simple model and collection inspector..."
 
+  h4='Model Inspector Goals'
+  ul
+    li='For each simple-typed attribute, provide a label for the attribute name and a text box to edit the value'
+    li='For each model-typed attribute, provide a collapsable node with the attribute name and when opened, allow each model attribute to be inspected by type'
+    li='For each collection-typed attribute, provide a collapsable node with the attribute name and when opened, allow each model to be inspected'
 
-  h3='Screen Shot'
+  h4='Collection Inspector Goals'
+  ul
+    li='For each model-typed attribute, provide a collapsable node with the index model and when opened, allow each model attribute to be inspected bytype'
 
-  img(src='images/tutorial_inspector/screen_shot.png')
+  h3='Inspector Visualization'
+  p='Here is what the inspector could look like for a house model that has a location (simple-typed attribute) and multiple occupants (collection-typed attribute) who each has an id (simple-typed attribute), a name (simple-typed attribute), and who know which house they are living in (model-typed attribute):'
+  br
+  img.screen_shot(src='images/tutorial_inspector/screen_shot.png')
+  br
 
-  h3='Design'
+  h2#html_architecture='HTML Architecture'
+
+  p='Given the recursiveness of the design, I chose to implement this functionality using two reusable HTML templates: one for a model node that generates HTML for each of its attributes and one for a collection node that generates HTML for each for its models:'
+
+  h4="Model Node View Structure (template: 'kbi_model_node')"
+  p='Here is some pseudo-HTML for the model node:'
+  pre.
+    <li data-bind="css: {opened: opened, closed: !opened()}">
+      <div data-bind="click: toggle">
+        <span data-bind="text: (opened() ? '- ' : '+ ' )"></span>
+        <span data-bind="text: name"></span>
+      </div>
+
+      <form>
+        <!-- FOREACH ATTRIBUTE -->
+
+          <!-- IF SIMPLE -->
+            <fieldset>
+              <label></label>
+              <input type="text">
+            </fieldset>
+
+          <!-- ELSE IF MODEL -->
+            <!-- RENDER MODEL NODE -->
+
+          <!-- ELSE IF COLLECTION -->
+            <!-- RENDER COLLECTION NODE -->
+
+      </form>
+    </li>
+  strong='Highlights:'
+  ul
+    li='each model node uses a <li> that can either be in opened or closed state'
+    li='use a <div> to wrap a +/- state indicator, the name of the node, and a click handler to toggle the opened/closed state of the node'
+    li='the model attributes are grouped in a <form>'
+    li='each simple-typed attribute are wrapped in a <fieldset> in with a <label> and <input> for the name and value, respectively'
+    li='each model-typed attribute are rendered using the model node template'
+    li='each collection-typed attribute are rendered using the collection node template'
+
+  h4="Collection Node View Structure (template: 'kbi_collection_node')"
+  p='Here is some pseudo-HTML for the collection node:'
+  pre.
+    <li data-bind="css: {opened: opened, closed: !opened()}">
+      <div data-bind="click: toggle">
+        <span data-bind="text: (opened() ? '- ' : '+ ' )"></span>
+        <span data-bind="text: name"></span>
+      </div>
+
+      <!-- FOREACH MODEL -->
+        <!-- RENDER MODEL NODE -->
+    </li>
+
+  strong='Highlights:'
+  ul
+    li='each collection node uses a <li> that can either be in opened or closed state'
+    li='use a <div> to wrap a +/- state indicator, the name of the node, and a click handler to toggle the opened/closed state of the node'
+    li="the collection's models are wrapped in an <ul> and each model can be rendered using the model node template"
+
+  h2#control_flow_architecture='Control Flow Architecture'
+
   p
-    span='The design is as follows:'
+    span='We can implement an inspector by:'
+    ol
+      li='Using Knockback to generate a graph starting at a kb.ViewModel or kb.CollectionObservable from a Backbone.Model or Backbone.Collection, respectively.'
+      li='Using Knockout to traverse the graph, to wrap each kb.ViewModel node or kb.CollectionObservable node in a NodeViewModel, and to conditionally continue to render the graph depending on the opened/closed state of the node.'
+
+  h3='Graph Generation'
+  P
+    span='By default, a kb.ViewModel will generate a kb.ViewModel for each of its nested models and a kb.collectionObservable for each of its nested collections when used like:'
+    pre.
+      kb.viewModel(my_model)
+    span='Also, a kb.CollectionObservable can easily be configured to generate a kb.ViewModel for each of its models like:'
+    pre.
+      kb.collectionObservable(my_collection, {view_model: kb.ViewModel})
+    span="What this means is that Knockback takes care of circular references between Backbone.Models or Backbone.Collections so you don't have to. In the case of circular references, you just need to be careful to handle cycles correctly when you traverse the nodes in the graph."
+
+  h3='Traversing the Graph'
+  p='Because there can be cycles between the models and collections in the graph, the inspector uses a separate kbi.NodeViewModel to expose properties for the opened/closed state of the node, the name of the node, and the (potentially shared) node itself. A kbi.NodeViewModel is constructed with the following parameters: (name, opened_state, kb.ViewModel or kb.CollectionObservable).'
+  p='By doing this, the same kb.ViewModel for a model can be opened or closed in different parts of the tree and can have unique names depending on where it is referenced from.'
+  p="Also, each of the node templates, needs to take appropriate action to block the full tree from being rendered out when a kbi.NodeViewModel is in the closed state. With Knockout, this is easy to do using a '<!-- ko if: opened -->' control flow statement."
+
+  p="Updating the 'kbi_model_node' pseudo HTML: "
+  pre.
+    <li data-bind="css: {opened: opened, closed: !opened()}">
+      <div data-bind="click: toggle">
+        <span data-bind="text: (opened() ? '- ' : '+ ' )"></span>
+        <span data-bind="text: name"></span>
+      </div>
+
+      <!-- ko if: opened -->
+        <form>
+          <!-- FOREACH ATTRIBUTE -->
+
+            <!-- IF SIMPLE -->
+              <fieldset>
+                <label></label>
+                <input type="text">
+              </fieldset>
+
+            <!-- ELSE IF MODEL -->
+              <ul data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel(attribute_name, false, node)}"></ul>
+
+            <!-- ELSE IF COLLECTION -->
+              <ul data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel(attribute_name+'[]', true, node)}"></ul>
+
+        </form>
+      <!-- /ko -->
+    </li>
+
+  p="Updating the 'kbi_collection_node' pseudo HTML: "
+  pre.
+    <li data-bind="css: {opened: opened, closed: !opened()}">
+      <div data-bind="click: toggle">
+        <span data-bind="text: (opened() ? '- ' : '+ ' )"></span>
+        <span data-bind="text: name"></span>
+      </div>
+
+      <!-- ko if: opened -->
+        <!-- FOREACH MODEL -->
+          <ul data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel('['+$index()+']', false, node)}"></ul>
+      <!-- /ko -->
+    </li>
+
+  p
+    strong='Please note:'
+    ul
+      li="Each kb.ViewModel or kb.CollectionObservable node is rendered with <ul> to start a new tree that is filled in by either the 'kbi_model_node' or 'kbi_collection_node' templates."
+      li="Each kbi.NodeViewModel is given a name to indicate its relationship."
+      li="In the case of models, the templates are rendered in a closed state to break potential cycles; whereas, collections are rendered in an open state so we are presented with the indices of the contained models."
+      li="When the node is closed, only the HTML that displays the name of the node and allows for a click to open the node is generated."
+
+  h2#library_architecture='Knockback Inspector Library Architecture and Implementation Details'
+  p
     ol
       li="We will create a namespace 'kbi' for the Knockback inspector"
 
@@ -464,16 +606,23 @@ block future_enhacements
 
 block content
   section
-    h1='Tutorial: Knockback Inspector'
+    h1='Tutorial: Knockback Inspector Library'
 
-    p='This tutorial shows how to create an inspector for a Backbone.Model or a Backbone.Collection that you can embed in your website for debugging purposes. The inspector allows you to view and edit model attributes including nested models and collections.'
+    p='This tutorial shows how to create an inspector for a Backbone.Model or a Backbone.Collection that you can embed in your website for debugging purposes. For a model, the inspector allows you to view and edit its attributes including nested models and collections; for a collection, the inspector allows you to view and edit its models.'
 
     p
-      span='Although the inspector can be useful as presented in this tutorial, this version is simple and stripped down for learning purposes. For the latest full implementation:'
+      span='Although the inspector can be useful as presented in this tutorial, this version is simple and stripped down for learning purposes; for example, it does not treat changing of model ids as a special case, there are no special editors for time/date/color attribute types, etc. For the latest full implementation:'
       ul
         li: a(href='https://github.com/kmalakoff/knockback-inspector/')='View the GitHub project'
         li: a(href='http://kmalakoff.github.com/knockback-inspector/')='Try the demo'
-      span='Feel free to contribute your own ideas to the GitHub project or to implement some of the extensions in the "Future Enhancements".'
+      span='Feel free to contribute to the GitHub project with your own ideas or with some of the proposals in the "Future Enhancements" section.'
+
+    h2='Table of Contents'
+    ol
+      li: a(href='#overview')='Overview'
+      li: a(href='#html_architecture')='HTML Architecture'
+      li: a(href='#control_flow_architecture')='Control Flow Architecture'
+      li: a(href='#library_architecture')='Library Architecture and Implementation Details'
 
     block overview
     block step1
