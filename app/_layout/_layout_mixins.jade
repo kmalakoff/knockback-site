@@ -1,7 +1,7 @@
 mixin pageNavbarWriteItem(label, url, active_label)
   if (url instanceof Array)
     li.dropdown
-      a(href="#", data-toggle="dropdown").dropdown-toggle #{label}
+      a(href='#', data-toggle='dropdown').dropdown-toggle #{label}
         b.caret
       ul.dropdown-menu
         li

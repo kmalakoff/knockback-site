@@ -3,10 +3,10 @@ extends ../../_layout/_layout_template
 include ../../_layout/_layout_mixins
 
 block title
-  title= "Tutorial: kb.Observable Options"
+  title Tutorial: kb.Observable Options
 
 block includes
-  link(rel="stylesheet",href="stylesheets/tutorial.css")
+  link(rel='stylesheet', href='stylesheets/tutorial.css')
   include ../../_demos/_demos_include_knockback_scripts
 
 block navbar
@@ -14,27 +14,27 @@ block navbar
 
 block content
   section
-    h1="Tutorial: kb.Observable Options"
+    h1 Tutorial: kb.Observable Options
     p
-      a(href='index.html')='Knockback.js'
-      span=" provides ways to customize a kb.Observable when it is created. This tutorial provides working examples of using these options."
+      a(href='index.html') Knockback.js
+      span  provides ways to customize a kb.Observable when it is created. This tutorial provides working examples of using these options.
 
     p
-    h3="{read: function(), write: function(value)}"
-    p="Instead of performing a simple Backbone.Model get or set to synchronize with a kb.Observable, you can provide a custom read or write method like for a ko.observable."
+    h3 {read: function(), write: function(value)}
+    p Instead of performing a simple Backbone.Model get or set to synchronize with a kb.Observable, you can provide a custom read or write method like for a ko.observable.
     p
-      strong="Note:"
-      span=" just like in Knockout.js, if you require access to the owning view model, it provided as 'this' in read and write methods if you provide it as a parameter to the kb.observable's create method: (model, options, owning_view_model)"
+      strong Note:
+      span  just like in Knockout.js, if you require access to the owning view model, it provided as 'this' in read and write methods if you provide it as a parameter to the kb.observable's create method: (model, options, owning_view_model)
 
     div.container-fluid
       div.row-fluid
         div.span8
 
-          h4='Views:'
+          h4 Views:
           pre
             include kboo_read_write_view.html.txt
 
-          h4='ViewModel and Bindings:'
+          h4 ViewModel and Bindings:
           pre(data-for='cs')
             include kboo_read_write_view_model_bindings.coffee
 
@@ -42,23 +42,23 @@ block content
             include ../../../public/tutorials/kb_observable_options/kboo_read_write_view_model_bindings.js
 
         div.span4
-          h4='Live Result'
+          h4 Live Result
           div.demos_result_box
             include kboo_read_write_view.html
-            script(type="application/javascript",src="tutorials/kb_observable_options/kboo_read_write_view_model_bindings.js")
+            script(type='application/javascript', src='tutorials/kb_observable_options/kboo_read_write_view_model_bindings.js')
 
     p
-    h3="{read_only: boolean}"
-    p="If you want to block an Backbone.Model's attribute from being updated, you can provide a read_only option. Knockback will throw an Error is the observable attempts to update the attribute."
+    h3 {read_only: boolean}
+    p If you want to block an Backbone.Model's attribute from being updated, you can provide a read_only option. Knockback will throw an Error is the observable attempts to update the attribute.
     div.container-fluid
       div.row-fluid
         div.span8
 
-          h4='Views:'
+          h4 Views:
           pre
             include kboo_read_only_view.html.txt
 
-          h4='ViewModel and Bindings:'
+          h4 ViewModel and Bindings:
           pre(data-for='cs')
             include kboo_read_only_view_model_bindings.coffee
 
@@ -66,32 +66,32 @@ block content
             include ../../../public/tutorials/kb_observable_options/kboo_read_only_view_model_bindings.js
 
         div.span4
-          h4='Live Result'
+          h4 Live Result
           div.demos_result_box
             include kboo_read_only_view.html
-            script(type="application/javascript",src="tutorials/kb_observable_options/kboo_read_only_view_model_bindings.js")
+            script(type='application/javascript', src='tutorials/kb_observable_options/kboo_read_only_view_model_bindings.js')
             p
 
     p
-    h3="{localizer: constructor(value)}"
+    h3 {localizer: constructor(value)}
     p
-      span="Instead of a read and/or write option, you can provide a kb.LocalizedObservable derived class for custom localized of an attribute. Please see the "
-      a(href='tutorial_kb_localized_observable.html#localized_input')='kb.LocalizedObservable tutorial'
-      span=" for an example."
+      span Instead of a read and/or write option, you can provide a kb.LocalizedObservable derived class for custom localized of an attribute. Please see the 
+      a(href='tutorial_kb_localized_observable.html#localized_input')  kb.LocalizedObservable tutorial
+      span  for an example.
 
   //
     p
-    h3="{default: function() or value}"
-    p="If you want to block an Backbone.Model's attribute from being updated, you can provide a read_only option. Knockback will throw an Error is the observable attempts to update the attribute."
+    h3 {default: function() or value}
+    p If you want to block an Backbone.Model's attribute from being updated, you can provide a read_only option. Knockback will throw an Error is the observable attempts to update the attribute.
     div.container-fluid
       div.row-fluid
         div.span8
 
-          h4='Views:'
+          h4 Views:
           pre
             include kboo_default_view.html.txt
 
-          h4='ViewModel and Bindings:'
+          h4 ViewModel and Bindings:
           pre(data-for='cs')
             include kboo_default_view_model_bindings.coffee
 
@@ -99,9 +99,9 @@ block content
             include ../../../public/tutorials/kb_observable_options/kboo_default_view_model_bindings.js
 
         div.span4
-          h4='Live Result'
+          h4 Live Result
           div.demos_result_box
             include kboo_default_view.html
-            script(type="application/javascript",src="tutorials/kb_observable_options/kboo_default_view_model_bindings.js")
+            script(type='application/javascript', src='tutorials/kb_observable_options/kboo_default_view_model_bindings.js')
             p
 

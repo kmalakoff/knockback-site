@@ -3,36 +3,36 @@ extends ../../_layout/_layout_template
 include ../../_layout/_layout_mixins
 
 block title
-  title= "Tutorial: Relational Models"
+  title Tutorial: Relational Models
 
 block includes
-  link(rel="stylesheet",href="stylesheets/tutorial.css")
+  link(rel='stylesheet', href='stylesheets/tutorial.css')
   include ../../_demos/_demos_include_knockback_scripts
-  script(type="application/javascript",src="vendor/javascripts/backbone-relational-0.5.0.js")
+  script(type='application/javascript', src='vendor/javascripts/backbone-relational-0.5.0.js')
 
 block navbar
   mixin pageNavbar('Relational Models', true)
 
 block content
   section
-    h1="Tutorial: Relational Models"
+    h1 Tutorial: Relational Models
     div
-      a(href='index.html')='Knockback.js'
-      span=' supports nested collections that you set up yourself or that are created by '
-      a(href='https://github.com/PaulUithol/Backbone-relational/')='Backbone-Relational'
+      a(href='index.html') Knockback.js
+      span  supports nested collections that you set up yourself or that are created by
+      a(href='https://github.com/PaulUithol/Backbone-relational/') Backbone-Relational
 
     p
-    h3="Manual Relations (Collection)"
+    h3 Manual Relations (Collection)
     p
 
     div.container-fluid
       div.row-fluid
         div.span8
-          h4='Views:'
+          h4 Views:
           pre
             include rm_manual_view.html.txt
 
-          h4='ViewModel and Bindings:'
+          h4 ViewModel and Bindings:
           pre(data-for='cs')
             include rm_manual_view_model_bindings.coffee
 
@@ -40,31 +40,31 @@ block content
             include ../../../public/tutorials/relational_models/rm_manual_view_model_bindings.js
 
         div.span4
-          h4='Live Result'
+          h4 Live Result
           div.demos_result_box
             include rm_manual_view.html
-            script(type="application/javascript",src="tutorials/relational_models/rm_manual_view_model_bindings.js")
+            script(type='application/javascript', src='tutorials/relational_models/rm_manual_view_model_bindings.js')
 
     p
-    h3="Backbone-Relational"
+    h3 Backbone-Relational
     p
-    p="Let's look at an example from the Backbone-Relational site:"
+    p Let's look at an example from the Backbone-Relational site:
 
     div.container-fluid
       div.row-fluid
         div.span8
-          h4='Views:'
+          h4 Views:
           pre
             include br_view.html.txt
 
-          h4='Models:'
+          h4 Models:
           pre(data-for='cs')
             include br_models.coffee
 
           pre(data-for='js')
             include ../../../public/tutorials/relational_models/br_models.js
 
-          h4='ViewModel and Bindings:'
+          h4 ViewModel and Bindings:
           pre(data-for='cs')
             include br_view_model_bindings.coffee
 
@@ -72,8 +72,8 @@ block content
             include ../../../public/tutorials/relational_models/br_view_model_bindings.js
 
         div.span4
-          h4='Live Result'
+          h4 Live Result
           div.demos_result_box
             include br_view.html
-            script(type="application/javascript",src="tutorials/relational_models/br_models.js")
-            script(type="application/javascript",src="tutorials/relational_models/br_view_model_bindings.js")
+            script(type='application/javascript', src='tutorials/relational_models/br_models.js')
+            script(type='application/javascript', src='tutorials/relational_models/br_view_model_bindings.js')

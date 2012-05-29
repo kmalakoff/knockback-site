@@ -6,8 +6,8 @@ mixin docsIndexWriteItem(label, url, active_class, active_functions)
       if active_functions
         each active_function in active_functions
           each function_label, function_id in active_function
-            li='- '
-              a(href='##{function_id}') #{function_label}
+            li -
+              a(href='##{function_id}')  #{function_label}
 
   else
     li.type

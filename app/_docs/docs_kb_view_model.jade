@@ -4,10 +4,10 @@ include ../_layout/_layout_mixins
 include ../_docs/_docs_mixins
 
 block title
-  title= "Knockback.js Docs"
+  title Knockback.js Docs
 
 block includes
-  link(rel="stylesheet",href="stylesheets/docs.css")
+  link(rel='stylesheet', href='stylesheets/docs.css')
 
 block navbar
   mixin pageNavbar('Docs', true)
@@ -17,11 +17,11 @@ block api_descriptions
   //////////////////////////////////
   // kb.ViewModel
   //////////////////////////////////
-  h2='kb.ViewModel'
-  div="Used to generate observables automatically for a model's attributes"
-  h4='Super class:'
-    a(href='docs_kb_ref_countable.html')=' kb.RefCountable'
-  h4='Examples:'
+  h2 kb.ViewModel
+  div Used to generate observables automatically for a model's attributes
+  h4 Super class:
+    a(href='docs_kb_ref_countable.html')  kb.RefCountable
+  h4 Examples:
   pre(data-for='cs').
     view_model = kb.viewModel(new Backbone.Model({first_name: "Planet", last_name: "Earth"}))
 
@@ -34,15 +34,14 @@ block api_descriptions
     // Do something then clean up
     // kb.utils.release(view_model); view_model = null;
 
-  h4='Tutorials'
+  h4 Tutorials
     ul
       li
-        a(href='tutorial_kb_view_model.html')='kb.ViewModel'
+        a(href='tutorial_kb_view_model.html') kb.ViewModel
 
-  h3#extend='kb.ViewModel::extend(properties, [classProperties]) '
-    span.label.label-success='class'
-  div="Used to derive a class in JavaScript (when CoffeeScript is not used)"
-  h4='Example:'
+  h3#extend kb.ViewModel::extend(properties, [classProperties]) <span class='label label-success'>class</span>
+  div Used to derive a class in JavaScript (when CoffeeScript is not used)
+  h4 Example:
   pre(data-for='cs').
     ViewModel = kb.ViewModel.extend({
       constructor: (model) ->
@@ -60,78 +59,70 @@ block api_descriptions
     });
     var view_model = new ViewModel(model);
 
-  h3#factory='kb.viewModel(model, [options]) '
-    span.label.label-info='factory'
-  div="Used to derive a class in JavaScript (when CoffeeScript is not used)"
-  h4='Parameters'
+  h3#factory kb.viewModel(model, [options]) <span class='label label-info'>factory</span>
+  div Used to derive a class in JavaScript (when CoffeeScript is not used)
+  h4 Parameters
     ol
       li
-        strong='model: '
-        span.type='{ Backbone.Model }: '
-        span='the model whose attributes will be synchronized'
+        strong model:
+        span.type { Backbone.Model }:
+        span the model whose attributes will be synchronized
       li
-        strong='options: '
-        span.label.label-inverse='optional'
+        strong options: <span class='label label-inverse'>optional</span>
         ul
-          li='internals '
-            span.type='{ [strings] }: '
-          li='requires '
-            span.type='{ [strings] }: '
-          li='children '
-            span.type='{ function(model, key, options) | {key: function(model, key, options)} }: '
-          li='create '
-            span.type='{ function(model, key, options) }: '
-          li='read_only '
-            span.type='{ boolean }: '
+          li internals
+            span.type { [strings] }:
+          li requires
+            span.type { [strings] }:
+          li children
+            span.type { function(model, key, options) | {key: function(model, key, options)} }:
+          li create
+            span.type { function(model, key, options) }:
+          li read_only
+            span.type { boolean }:
 
-  h4='Example:'
+  h4 Example:
   pre(data-for='cs').
     view_model = kb.viewModel(model)
 
   pre(data-for='js').
     var view_model = kb.viewModel(model);
 
-  h3#constructor='constructor(model, [options])'
-  div="Used to derive a class in JavaScript (when CoffeeScript is not used)"
-  h4='Parameters'
+  h3#constructor constructor(model, [options])
+  div Used to derive a class in JavaScript (when CoffeeScript is not used)
+  h4 Parameters
     ol
       li
-        strong='model: '
-        span.type='{ Backbone.Model }: '
-        span='the model whose attributes will be synchronized'
+        strong model:
+        span.type { Backbone.Model }:
+        span the model whose attributes will be synchronized
       li
-        strong='options: '
-        span.label.label-inverse='optional'
+        strong options: <span class='label label-inverse'>optional</span>
         ul
-          li='internals '
-            span.type='{ [strings] }: '
-          li='requires '
-            span.type='{ [strings] }: '
-          li='children '
-            span.type='{ function(model, key, options) | {key: function(model, key, options)} }: '
-          li='create '
-            span.type='{ function(model, key, options) }: '
-          li='read_only '
-            span.type='{ boolean }: '
+          li internals
+            span.type { [strings] }:
+          li requires
+            span.type { [strings] }:
+          li children
+            span.type { function(model, key, options) | {key: function(model, key, options)} }:
+          li create
+            span.type { function(model, key, options) }:
+          li read_only
+            span.type { boolean }:
 
-  h4='Example:'
+  h4 Example:
   pre(data-for='cs').
     view_model = new kb.ViewModel(model)
 
   pre(data-for='js').
     var view_model = new kb.ViewModel(model);
 
-  h3#model='model([model]) '
-    span.label.label-important='dual purpose'
-  div="Used to get/set the model"
-  h4='Parameters'
+  h3#model model([model]) <span class='label label-important'>dual purpose</span>
+  div Used to get/set the model
+  h4 Parameters
     ol
-      li
-        strong='model: '
-        span.type='{ Backbone.Model }: '
-        span.label.label-inverse='optional'
-        span=' the model to set on the view model '
-  h4='Example:'
+      li <strong>model:</strong> <span class='type'>{ Backbone.Model }:</span> <span class='label label-inverse'>optional</span> the model to set on the view model
+  h4 Example:
   pre(data-for='cs').
     view_model = kb.viewModel(new Backbone.Model({name: 'bob'}))
 
@@ -152,11 +143,11 @@ block api_descriptions
 
 block content
   div.api.container
-    h1="Knockback.js API and Usage Examples"
+    h1 Knockback.js API and Usage Examples
     div.container-fluid
       div.row-fluid
         div.span3.api.index
-          mixin docsIndex('kb.ViewModel', [{extend: 'extend'}, {factory: 'kb.viewModel'}, {constructor: 'constructor'}, {model: 'model'}])
+          mixin docsIndex('kb.ViewModel', [{extend: 'extend'}, {factory: 'kb.viewModel'}, {constructor: 'constructor'}, { model: 'model'}])
         div.span9.api.descriptions
           div.content
             div.wrapper

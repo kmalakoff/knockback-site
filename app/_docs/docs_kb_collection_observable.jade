@@ -4,10 +4,10 @@ include ../_layout/_layout_mixins
 include ../_docs/_docs_mixins
 
 block title
-  title= "Knockback.js Docs"
+  title Knockback.js Docs
 
 block includes
-  link(rel="stylesheet",href="stylesheets/docs.css")
+  link(rel='stylesheet', href='stylesheets/docs.css')
 
 block navbar
   mixin pageNavbar('Docs', true)
@@ -17,11 +17,11 @@ block api_descriptions
   //////////////////////////////////
   // kb.CollectionObservable
   //////////////////////////////////
-  h2='kb.CollectionObservable'
-  div="Used to generate ViewModels automatically for a collections's models"
-  h4='Super class:'
-    a(href='docs_kb_ref_countable.html')=' kb.RefCountable'
-  h4='Example:'
+  h2 kb.CollectionObservable
+  div Used to generate ViewModels automatically for a collections's models
+  h4 Super class:
+    a(href='docs_kb_ref_countable.html')  kb.RefCountable
+  h4 Example:
   pre(data-for='cs').
     view_model =
       todos: kb.collectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))
@@ -30,97 +30,88 @@ block api_descriptions
       todos: kb.collectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))
     };
 
-  h3#factory='kb.collectionObservable(collection, [options]) '
-    span.label.label-info='factory'
-  div="Used to create a new instance"
-  h4='Parameters'
+  h3#factory kb.collectionObservable(collection, [options]) <span class='label label-info'>factory</span>
+  div Used to create a new instance
+  h4 Parameters
     ol
       li
-        strong='model: '
-        strong='model: '
-        span.type='{ Backbone.Collection }: '
-        span='the collection to synchronize with model additions, removals, and resorting '
+        strong model:
+        span.type { Backbone.Collection }:
+        span the collection to synchronize with model additions, removals, and resorting
       li
-        strong='options: '
-        span.label.label-inverse='optional'
+        strong options: <span class='label label-inverse'>optional</span>
         ul
-          li='view_model '
-            span.type='{ constructor(model, options) }: '
-          li='view_model_create '
-            span.type='{ function(model, options) }: '
-          li='create '
-            span.type='{ function(model, options) }: '
-          li='sort_attribute '
-            span.type='{ string }: '
-          li='sorted_index '
-            span.type='{ function(models | view_models, model_to_add | view_model_to_add) }: '
-          li='defer '
-            span.type='{ boolean }: '
-          //li='store '
-          //  span.type='{ function(model, options) }: '
-          //li='store_skip_resolve '
-          //  span.type='{ boolean }: '
-  h4='Example:'
+          li view_model
+            span.type { constructor(model, options) }:
+          li view_model_create
+            span.type { function(model, options) }:
+          li create
+            span.type { function(model, options) }:
+          li sort_attribute
+            span.type { string }:
+          li sorted_index
+            span.type { function(models | view_models, model_to_add | view_model_to_add) }:
+          li defer
+            span.type { boolean }:
+          //li store
+          //  span.type { function(model, options) }:
+          //li store_skip_resolve
+          //  span.type { boolean }:
+  h4 Example:
   pre(data-for='cs').
     todos = kb.collectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))
 
   pre(data-for='js').
     var todos = kb.collectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]));
 
-  h3#constructor='constructor(collection, [options]) '
-    span.label.label-warning='observable returned'
-  div="Used to create a new instance"
-  h4='Parameters'
+  h3#constructor constructor(collection, [options]) <span class='label label-warning'>observable returned</span>
+  div Used to create a new instance
+  h4 Parameters
     ol
       li
-        strong='model: '
-        strong='model: '
-        span.type='{ Backbone.Collection }: '
-        span='the collection to synchronize with model additions, removals, and resorting '
+        strong model:
+        span.type { Backbone.Collection }:
+        span the collection to synchronize with model additions, removals, and resorting
       li
-        strong='options: '
-        span.label.label-inverse='optional'
+        strong options: <span class='label label-inverse'>optional</span>
         ul
-          li='view_model '
-            span.type='{ constructor(model, options) }: '
-          li='view_model_create '
-            span.type='{ function(model, options) }: '
-          li='create '
-            span.type='{ function(model, options) }: '
-          li='sort_attribute '
-            span.type='{ string }: '
-          li='sorted_index '
-            span.type='{ function(models | view_models, model_to_add | view_model_to_add) }: '
-          li='defer '
-            span.type='{ boolean }: '
-          //li='store '
-          //  span.type='{ function(model, options) }: '
-          //li='store_skip_resolve '
-          //  span.type='{ boolean }: '
-  h4='Example:'
+          li view_model
+            span.type { constructor(model, options) }:
+          li view_model_create
+            span.type { function(model, options) }:
+          li create
+            span.type { function(model, options) }:
+          li sort_attribute
+            span.type { string }:
+          li sorted_index
+            span.type { function(models | view_models, model_to_add | view_model_to_add) }:
+          li defer
+            span.type { boolean }:
+          //li store
+          //  span.type { function(model, options) }:
+          //li store_skip_resolve
+          //  span.type { boolean }:
+  h4 Example:
   pre(data-for='cs').
     todos = new kb.CollectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))
 
   pre(data-for='js').
     var todos = new kb.CollectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]));
 
-  h3#collection='collection([collection], [options]) '
-    span.label.label-important='dual purpose'
-  div="Used to get/set the collection"
-  h4='Parameters'
+  h3#collection collection([collection], [options]) <span class='label label-important'>dual purpose</span>
+  div Used to get/set the collection
+  h4 Parameters
     ol
       li
-        strong='collection '
-        span.type='{ Backbone.Collection }: '
-        span.label.label-inverse='optional'
-        span=' the collection to synchronize with model additions, removals, and resorting '
+        strong collection
+        span.type { Backbone.Collection }: <span class='label label-inverse'>optional</span>
+        span  the collection to synchronize with model additions, removals, and resorting
       li
-        strong='options: '
-        span.label.label-inverse='optional'
+        strong options: <span class='label label-inverse'>optional</span>
         ul
-          li='silent '
-            span.type='{ boolean }: '
-  h4='Example:'
+          li silent
+            span.type { boolean }:
+  h4 Example:
   pre(data-for='cs').
     todos = new kb.CollectionObservable(new Backbone.Collection())
 
@@ -139,8 +130,8 @@ block api_descriptions
     # set
     todos.collection(new Backbone.Collection([{name: 'name3'}, {name: 'name4'}]));
 
-  h3#sorted_index='sortedIndex(sorted_index, [sort_attribute], [options])'
-  div="Sets the sorted_index function for sorting Models or ViewModels in the collection observable"
+  h3#sorted_index sortedIndex(sorted_index, [sort_attribute], [options])
+  div Sets the sorted_index function for sorting Models or ViewModels in the collection observable
   pre(data-for='cs').
     # change the sorting function
     collection_observable.sortedIndex(
@@ -155,8 +146,8 @@ block api_descriptions
       }
     );
 
-  h3#sort_attribute='sortAttribute((sort_attribute, [sorted_index], [silent]))'
-  div="Sets the sort attribute name for the collection observable"
+  h3#sort_attribute sortAttribute((sort_attribute, [sorted_index], [silent]))
+  div Sets the sort attribute name for the collection observable
   pre(data-for='cs').
     todos = new kb.CollectionObservable(new Backbone.Collection([{name: 'Zanadu', name: 'Alex'}]))
     # in order of Zanadu then Alex
@@ -171,8 +162,8 @@ block api_descriptions
     todos.sortAttribute('name');
     // in order of Alex then Zanadu
 
-  h3#has_view_models='hasViewModels()'
-  div="Returns true if the collection observable was initialized with a view model create option (and hence generates view models for each model)"
+  h3#has_view_models hasViewModels()
+  div Returns true if the collection observable was initialized with a view model create option (and hence generates view models for each model)
   pre(data-for='cs').
     todos1 = new kb.CollectionObservable(new Backbone.Collection())
     todos1.hasViewModels()      # false
@@ -189,7 +180,7 @@ block api_descriptions
 
 block content
   div.api.container
-    h1="Knockback.js API and Usage Examples"
+    h1 Knockback.js API and Usage Examples
     div.container-fluid
       div.row-fluid
         div.span3.api.index

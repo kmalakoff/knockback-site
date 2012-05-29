@@ -4,10 +4,10 @@ include ../_layout/_layout_mixins
 include ../_docs/_docs_mixins
 
 block title
-  title= "Knockback.js Docs"
+  title Knockback.js Docs
 
 block includes
-  link(rel="stylesheet",href="stylesheets/docs.css")
+  link(rel='stylesheet', href='stylesheets/docs.css')
 
 block navbar
   mixin pageNavbar('Docs', true)
@@ -17,9 +17,9 @@ block api_descriptions
   //////////////////////////////////
   // kb.RefCountable
   //////////////////////////////////
-  h2='kb.RefCountable'
-  div="The base class for all reference-counted classes"
-  h4='Example:'
+  h2 kb.RefCountable
+  div The base class for all reference-counted classes
+  h4 Example:
   pre(data-for='cs').
     class MyClass extends kb.RefCountable
       constructor: ->
@@ -55,10 +55,9 @@ block api_descriptions
 
     my_instance.release();  // ref count: 0 and __destroy() called
 
-  h3#extend='kb.RefCountable::extend(properties, [classProperties]) '
-    span.label.label-success='class'
-  div="Used to derive a class in JavaScript (when CoffeeScript is not used)"
-  h4='Example:'
+  h3#extend kb.RefCountable::extend(properties, [classProperties]) <span class='label label-success'>class</span>
+  div Used to derive a class in JavaScript (when CoffeeScript is not used)
+  h4 Example:
   pre(data-for='cs').
     MyClass = kb.RefCountable.extend({
       constructor: (model) ->
@@ -73,33 +72,32 @@ block api_descriptions
       }
     });
 
-  h3#constructor='constructor'
-  div="Used to create a new instance"
+  h3#constructor constructor
+  div Used to create a new instance
 
-  h3#retain='retain()'
-  div="Increases reference count by 1"
+  h3#retain retain()
+  div Increases reference count by 1
   pre(data-for='cs').
     my_instance.retain()
   pre(data-for='js').
     my_instance.retain();
 
-  h3#ref_count='refCount()'
-  div="Returns the current reference count"
+  h3#ref_count refCount()
+  div Returns the current reference count
   pre(data-for='cs').
     my_instance.refCount()
   pre(data-for='js').
     my_instance.refCount();
 
-  h3#release='release()'
-  div="Decreases reference count by 1 and calls __destroy() when ref_count becomes 0"
+  h3#release release()
+  div Decreases reference count by 1 and calls __destroy() when ref_count becomes 0
   pre(data-for='cs').
     my_instance.release()
   pre(data-for='js').
     my_instance.release();
 
-  h3#__destroy='__destroy() '
-    span.label='abstract'
-  div="Called when reference count becomes 0"
+  h3#__destroy __destroy() <span class='label'>abstract</span>
+  div Called when reference count becomes 0
   pre(data-for='cs').
     my_instance = new MyClass()       # ref count: 1
     my_instance.release()             # ref count: 0 and __destroy() called
@@ -109,7 +107,7 @@ block api_descriptions
 
 block content
   div.api.container
-    h1="Knockback.js API and Usage Examples"
+    h1 Knockback.js API and Usage Examples
     div.container-fluid
       div.row-fluid
         div.span3.api.index

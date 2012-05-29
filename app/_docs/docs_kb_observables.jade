@@ -4,10 +4,10 @@ include ../_layout/_layout_mixins
 include ../_docs/_docs_mixins
 
 block title
-  title= "Knockback.js Docs"
+  title Knockback.js Docs
 
 block includes
-  link(rel="stylesheet",href="stylesheets/docs.css")
+  link(rel='stylesheet', href='stylesheets/docs.css')
 
 block navbar
   mixin pageNavbar('Docs', true)
@@ -19,7 +19,7 @@ block api_descriptions
   //////////////////////////////////
   h2='kb.Observables'
   div="Used to generate observables manually for a model's attributes"
-  h4='Example:'
+  h4 Example:
   pre(data-for='cs').
     ContactViewModel = (model) ->
       @attribute_observables = kb.observables(model, {
@@ -46,29 +46,25 @@ block api_descriptions
     var model = new Contact({name: 'John', number: '555-555-5558', date: new Date(1940, 10, 9)});
     view_model = new ContactViewModel(model);
 
-  h3#factory='kb.observables(model, mappings_info, [view_model], [options]) '
-    span.label.label-info='factory'
-  div="Used to create a new instance"
-  h4='Parameters'
+  h3#factory kb.observables(model, mappings_info, [view_model], [options]) <span class='label label-info'>factory</span>
+  div Used to create a new instance
+  h4 Parameters
     ol
       li
-        strong='model: '
-        span.type='{ Backbone.Model }: '
+        strong model:
+        span.type { Backbone.Model }:
         span='the model whose attributes will be synchronized '
       li
-        strong='mappings_info: '
-        span.type=' { [mapping_info as would be passed to each kb.observable | string for an attribute key] + {key: string}}: '
+        strong mappings_info:
+        span.type { [mapping_info as would be passed to each kb.observable | string for an attribute key] + {key: string}}:
       li
-        strong='view_model: '
-        span.label.label-inverse='optional'
-        span=' the view model target to set the properties for each mapped attribute (the kb.Observables instance itself will always have the generated observables set in its properties) '
+        strong view_model: <span class='label label-inverse'>optional</span> the view model target to set the properties for each mapped attribute (the kb.Observables instance itself will always have the generated observables set in its properties) '
 
       li
-        strong='options: '
-        span.label.label-inverse='optional'
-        span.type=' { boolean for read_only | {read_only: boolean} }: '
-        span=' the view model target to set the properties for each mapped attribute (the kb.Observables instance itself will always have the generated observables set in its properties) '
-  h4='Example:'
+        strong options: <span class='label label-inverse'>optional</span>
+        span.type { boolean for read_only | {read_only: boolean} }:
+        span  the view model target to set the properties for each mapped attribute (the kb.Observables instance itself will always have the generated observables set in its properties)
+  h4 Example:
   pre(data-for='cs').
     view_model = {}
     kb.observables(model, {name: 'name', date: 'date'}, view_model)
@@ -77,28 +73,26 @@ block api_descriptions
     var view_model = {};
     kb.observables(model, {name: 'name', date: 'date'}, view_model);
 
-  h3#constructor='constructor(model, mappings_info, [view_model], [options]) '
-  div="Used to create a new instance"
-  h4='Parameters'
+  h3#constructor constructor(model, mappings_info, [view_model], [options])
+  div Used to create a new instance
+  h4 Parameters
     ol
       li
-        strong='model: '
-        span.type='{ Backbone.Model }: '
-        span='the model whose attributes will be synchronized '
+        strong model:
+        span.type { Backbone.Model }:
+        span the model whose attributes will be synchronized
       li
-        strong='mappings_info: '
-        span.type=' { [mapping_info as would be passed to each kb.observable | string for an attribute key] + {key: string}}: '
+        strong mappings_info:
+        span.type  { [mapping_info as would be passed to each kb.observable | string for an attribute key] + {key: string}}:
       li
-        strong='view_model: '
-        span.label.label-inverse='optional'
-        span=' the view model target to set the properties for each mapped attribute (the kb.Observables instance itself will always have the generated observables set in its properties) '
+        strong view_model: <span class='label label-inverse'>optional</span>
+        span  the view model target to set the properties for each mapped attribute (the kb.Observables instance itself will always have the generated observables set in its properties)
 
       li
-        strong='options: '
-        span.label.label-inverse='optional'
-        span.type=' { boolean for read_only | {read_only: boolean} }: '
-        span=' the view model target to set the properties for each mapped attribute (the kb.Observables instance itself will always have the generated observables set in its properties) '
-  h4='Example:'
+        strong options: <span class='label label-inverse'>optional</span>
+        span.type  { boolean for read_only | {read_only: boolean} }:
+        span  the view model target to set the properties for each mapped attribute (the kb.Observables instance itself will always have the generated observables set in its properties)
+  h4 Example:
   pre(data-for='cs').
     view_model = {}
     new kb.Observables(model, {name: 'name', date: 'date'}, view_model)
@@ -107,10 +101,10 @@ block api_descriptions
     var view_model = {}
     new kb.Observables(model, {name: 'name', date: 'date'}, view_model);
 
-  h3#destroy='destroy()'
-  div="Used to release the memory of the object"
+  h3#destroy destroy()
+  div Used to release the memory of the object
 
-  h3#set_to_default='setToDefault()'
+  h3#set_to_default setToDefault()
   div="Used to return all of the owned observables to their default values (if they exist)"
   pre(data-for='cs').
     ContactViewModel = (model) ->
@@ -150,7 +144,7 @@ block api_descriptions
 
 block content
   div.api.container
-    h1="Knockback.js API and Usage Examples"
+    h1 Knockback.js API and Usage Examples
     div.container-fluid
       div.row-fluid
         div.span3.api.index

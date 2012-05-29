@@ -4,10 +4,10 @@ include ../_layout/_layout_mixins
 include ../_docs/_docs_mixins
 
 block title
-  title= "Knockback.js Docs"
+  title Knockback.js Docs
 
 block includes
-  link(rel="stylesheet",href="stylesheets/docs.css")
+  link(rel='stylesheet', href='stylesheets/docs.css')
 
 block navbar
   mixin pageNavbar('Docs', true)
@@ -17,9 +17,9 @@ block api_descriptions
   //////////////////////////////////
   // kb.TriggeredObservable
   //////////////////////////////////
-  h2='kb.TriggeredObservable'
-  div="Used to recalculate a value when model's attribute changes value"
-  h4='Example:'
+  h2 kb.TriggeredObservable
+  div Used to recalculate a value when model's attribute changes value
+  h4 Example:
   pre(data-for='cs').
     trigger_count = 0
     model = new Backbone.Model()
@@ -51,52 +51,50 @@ block api_descriptions
     model.set(name: 'george');    # trigger_count: 2
     model.set(last: 'smith');     # trigger_count: 3
 
-  h3#factory='kb.triggeredObservable(model, event_name) '
-    span.label.label-info='factory'
-  div="Used to create a new instance"
-  h4='Parameters'
+  h3#factory kb.triggeredObservable(model, event_name) <span class='label label-info'>factory</span>
+  div Used to create a new instance
+  h4 Parameters
     ol
       li
-        strong='model: '
-        span.type='{ Backbone.Model }: '
-        span='the model to bind to'
+        strong model:
+        span.type { Backbone.Model }:
+        span the model to bind to
       li
-        strong='event_name: '
-        span.type='{ string }: '
-        span='a key to bind to changes on for Backbone.Events'
-  h4='Example:'
+        strong event_name:
+        span.type { string }:
+        span a key to bind to changes on for Backbone.Events
+  h4 Example:
   pre(data-for='cs').
     triggered_observable = kb.triggeredObservable(name, 'change')
 
   pre(data-for='js').
     var triggered_observable = kb.triggeredObservable(name, 'change');
 
-  h3#constructor='constructor(model, event_name) '
-    span.label.label-warning='observable returned'
-  div="Used to create a new instance"
-  h4='Parameters'
+  h3#constructor constructor(model, event_name) <span class='label label-warning'>observable returned</span>
+  div Used to create a new instance
+  h4 Parameters
     ol
       li
-        strong='model: '
-        span.type='{ Backbone.Model }: '
-        span='the model to bind to'
+        strong model:
+        span.type { Backbone.Model }:
+        span the model to bind to
       li
-        strong='event_name: '
-        span.type='{ string }: '
-        span='a key to bind to changes on for Backbone.Events'
-  h4='Example:'
+        strong event_name:
+        span.type { string }:
+        span a key to bind to changes on for Backbone.Events
+  h4 Example:
   pre(data-for='cs').
     triggered_observable = new kb.TriggeredObservable(name, 'change')
 
   pre(data-for='js').
     var triggered_observable = new kb.TriggeredObservable(name, 'change');
 
-  h3#destroy='destroy'
-  div="Used to release the memory of the object"
+  h3#destroy destroy
+  div Used to release the memory of the object
 
 block content
   div.api.container
-    h1="Knockback.js API and Usage Examples"
+    h1 Knockback.js API and Usage Examples
     div.container-fluid
       div.row-fluid
         div.span3.api.index

@@ -4,10 +4,10 @@ include ../_layout/_layout_mixins
 include ../_docs/_docs_mixins
 
 block title
-  title= "Knockback.js Home"
+  title Knockback.js Home
 
 block includes
-  link(rel="stylesheet",href="stylesheets/index.css")
+  link(rel='stylesheet', href='stylesheets/index.css')
 
 block navbar
   div.page.github_fork_me
@@ -24,22 +24,22 @@ block content
     .cols.wrapped
       .col: div.content
         h2 Dependencies
-        p='Knockback requires Knockout.js and Backbone.js (and therefore Underscore.js) to be already loaded on the page:'
+        p Knockback requires Knockout.js and Backbone.js (and therefore Underscore.js) to be already loaded on the page:
         ul
           li
-            a(href='https://github.com/SteveSanderson/knockout/downloads/')='Knockout.js'
+            a(href='https://github.com/SteveSanderson/knockout/downloads/') Knockout.js
           li
-            a(href='http://documentcloud.github.com/underscore/')='Underscore.js'
+            a(href='http://documentcloud.github.com/underscore/') Underscore.js
           li
-            a(href='http://documentcloud.github.com/backbone/')='Backbone.js'
-        p='Optional dependencies:'
+            a(href='http://documentcloud.github.com/backbone/') Backbone.js
+        p Optional dependencies:
         ul
           li
-            a(href='https://github.com/kmalakoff/backbone-modelref')='Backbone-ModelRef'
-            div=' (for lazy loading)'
+            a(href='https://github.com/kmalakoff/backbone-modelref') Backbone-ModelRef
+            div  (for lazy loading)
           li
-            a(href='https://github.com/PaulUithol/Backbone-relational/')='Backbone-Relational'
-            div=' (for inter-model dependency management)'
+            a(href='https://github.com/PaulUithol/Backbone-relational/') Backbone-Relational
+            div  (for inter-model dependency management)
 
       .col: div.content
         h2 Features
@@ -52,12 +52,12 @@ block content
       .col: div.content
         h2 Latest <small>0.15.1</small>
         ul
-          li <a href="https://raw.github.com/kmalakoff/knockback/0.15.1/knockback.js">Development</a> <small>71 KB</small>
-          li <a href="https://raw.github.com/kmalakoff/knockback/0.15.1/knockback.min.js">Production</a> <small>42 KB</small>
+          li <a href='https://raw.github.com/kmalakoff/knockback/0.15.1/knockback.js'>Development</a> <small>71 KB</small>
+          li <a href='https://raw.github.com/kmalakoff/knockback/0.15.1/knockback.min.js'>Production</a> <small>42 KB</small>
         p
-          span='Please look at the '
-          a(href='release_notes.html')='release and upgrade notes'
-          span=' if you are migrating from an earlier version.'
+          span Please look at the
+          a(href='release_notes.html')  release and upgrade notes
+          span  if you are migrating from an earlier version.
         h2 Source
         :markdown
           You can find the source on [Github][0]. To provide feedback leave a message
@@ -84,7 +84,7 @@ block content
           th Backbone.js
           th.kb.mid Knockback.js
           th Knockout.js
-          th.ref(title="Notes") !
+          th.ref(title="Notes') !
         - var count = 0;
         - var refer = 'comparison-';
         - var descr = 'View description';
@@ -100,9 +100,9 @@ block content
             td.no Manual serialization
             td.ref!= ref(descr, refer, 1)
           tr
-            td.no: abbr(title="Model/View/Controller") MVC
+            td.no: abbr(title="Model/View/Controller') MVC
             td.done &#9755;
-            td.yes: abbr(title="Model/View/ViewModel") MVVM
+            td.yes: abbr(title="Model/View/ViewModel') MVVM
             td.hidden
           tr
             td.no Low level DOM maninulation

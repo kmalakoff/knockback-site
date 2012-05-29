@@ -4,10 +4,10 @@ include ../_layout/_layout_mixins
 include ../_docs/_docs_mixins
 
 block title
-  title= "Knockback.js Docs"
+  title Knockback.js Docs
 
 block includes
-  link(rel="stylesheet",href="stylesheets/docs.css")
+  link(rel='stylesheet', href='stylesheets/docs.css')
 
 block navbar
   mixin pageNavbar('Docs', true)
@@ -17,9 +17,9 @@ block api_descriptions
   //////////////////////////////////
   // kb.LocalizedObservable
   //////////////////////////////////
-  h2='kb.LocalizedObservable'
-  div="Used to generate an observable that automatically changes when the kb.LocaleManager's locale changes"
-  h4='Example:'
+  h2 kb.LocalizedObservable
+  div Used to generate an observable that automatically changes when the kb.LocaleManager's locale changes
+  h4 Example:
   pre(data-for='cs').
     class ShortDateLocalizer extends kb.LocalizedObservable
       constructor: (value, options, view_model) ->
@@ -56,17 +56,16 @@ block api_descriptions
     };
     var view_model = new ViewModel(new Backbone.Model({date: new Date()}));
 
-  h4='Tutorials'
+  h4 Tutorials
     ul
       li
-        a(href='tutorial_kb_localized_observable.html')='kb.LocalizedObservable'
+        a(href='tutorial_kb_localized_observable.html') kb.LocalizedObservable
       li
-        a(href='tutorial_locale_manager.html')='Custom Locale Manager'
+        a(href='tutorial_locale_manager.html') Custom Locale Manager
 
-  h3#extend='kb.LocalizedObservable::extend(properties, [classProperties]) '
-    span.label.label-success='class'
-  div="Used to derive a class in JavaScript (when CoffeeScript is not used)"
-  h4='Example:'
+  h3#extend kb.LocalizedObservable::extend(properties, [classProperties]) <span class='label label-success'>class</span>
+  div Used to derive a class in JavaScript (when CoffeeScript is not used)
+  h4 Example:
   pre(data-for='cs').
     ShortDateLocalizer = kb.LocalizedObservable.extend({
       constructor: (value, options, view_model) ->
@@ -87,9 +86,9 @@ block api_descriptions
       write: function(localized_string, value) { /* do something */ }
     });
 
-  h3#constructor='constructor([value], [options], [view_model])'
-  div="Used to create a new instance. For localized observables, creation is often indirect."
-  h4='Example:'
+  h3#constructor constructor([value], [options], [view_model])
+  div Used to create a new instance. For localized observables, creation is often indirect.
+  h4 Example:
   pre(data-for='cs').
     ContactViewModelDate = (model) ->
       @date = kb.observable(model, {key:'date', localizer: LongDateLocalizer}, this)
@@ -100,29 +99,27 @@ block api_descriptions
       @date = kb.observable(model, {key:'date', localizer: LongDateLocalizer}, this)
     };
 
-  h3#destroy='destroy()'
-  div="Used to release the memory of the object"
+  h3#destroy destroy()
+  div Used to release the memory of the object
 
-  h3#set_to_default='setToDefault()'
-  div="Used to return the observable to its default value (if it exists)"
+  h3#set_to_default setToDefault()
+  div Used to return the observable to its default value (if it exists)
 
-  h3#reset_to_current='resetToCurrent()'
-  div="Used to return the observable to the value of its target (for example returning an input field to the last good state)"
+  h3#reset_to_current resetToCurrent()
+  div Used to return the observable to the value of its target (for example returning an input field to the last good state)
 
-  h3#observed_value='observedValue([value]) '
-    span.label.label-important='dual purpose'
-  div="Used to get/set the value that the localized observable is changing when the kb.LocaleManager changes"
-  h4='Parameters'
+  h3#observed_value observedValue([value]) <span class='label label-important'>dual purpose</span>
+  div Used to get/set the value that the localized observable is changing when the kb.LocaleManager changes
+  h4 Parameters
     ol
       li
-        strong='value: '
-        span.type='{ a Knockback or Knockout-derived class }: '
-        span.label.label-inverse='optional'
-        span=' the target that the localized observable synchronizes with on kb.LocaleManager changes '
+        strong value:
+        span.type { a Knockback or Knockout-derived class }: <span class='label label-inverse'>optional</span>
+        span  the target that the localized observable synchronizes with on kb.LocaleManager changes
 
 block content
   div.api.container
-    h1="Knockback.js API and Usage Examples"
+    h1 Knockback.js API and Usage Examples
     div.container-fluid
       div.row-fluid
         div.span3.api.index
