@@ -13,8 +13,6 @@ block navbar
   mixin pageNavbar('Tutorials', true)
 
 block overview
-  h2#overview='Overview'
-
   p="Let's start with the goals of a simple model and collection inspector..."
 
   h4='Model Inspector Goals'
@@ -33,7 +31,7 @@ block overview
   img.screen_shot(src='images/tutorial_inspector/screen_shot.png')
   br
 
-  h3#html_templates='HTML Templates'
+  h3='HTML Templates'
 
   p='Given the recursiveness of the design, I chose to implement this functionality using two reusable HTML templates: one for a model node that generates HTML for each of its attributes and one for a collection node that generates HTML for each for its models:'
 
@@ -92,10 +90,8 @@ block overview
     li="The collection's models are wrapped in an <ul> and each model can be rendered using the model node template"
 
 block control_flow
-  h2#control_flow='Control Flow'
-
   p
-    span='We can implement an inspector by:'
+    span='Using Knockback.js, we can implement an inspector by:'
     ol
       li='Using Knockback to generate a graph starting at a kb.ViewModel or kb.CollectionObservable from a Backbone.Model or Backbone.Collection, respectively.'
       li='Using Knockout to traverse the graph, to wrap each kb.ViewModel node or kb.CollectionObservable node in a NodeViewModel, and to conditionally continue to render the graph depending on the opened/closed state of the node.'
@@ -169,14 +165,12 @@ block control_flow
       li="When the node is closed, only the HTML that displays the name of the node and allows for a click to open the node is generated."
 
 block library_architecture
-  h2#library_architecture='Library Architecture'
-
-  p="Knockback-Inspector will be designed as a library meaning:"
+  p="Knockback-Inspector will be designed as a library with the following characteristics:"
     ol
-      li="The library will be in the 'kbi' namespace"
-      li="The library version will be available in 'kbi.VERSION'"
+      li="It will be in the 'kbi' namespace"
+      li="It version will be available in 'kbi.VERSION'"
       li
-        span="The library code will be separated into multiple directories and files as follows:"
+        span="It code will be separated into multiple directories and files as follows:"
         pre.
           - lib
             - kbi_core.js
@@ -190,83 +184,66 @@ block library_architecture
             - kbi_model_node_view.js
 
       li
-        span="The Library, Model, ViewModel, and View files contain the following implementations:"
-        ul
-          li
-            strong="kbi_core.js: "
-            ul
-              li="provides the kbi namespace"
-              li="provides the kbi.VERSION semantic versioning string"
-          li
-            strong="kbi_string_template_engine.js: "
-            ul: li="implements kbi.StringTemplateSource and kbi.StringTemplateEngine to expose the 'kbi_model_node' and 'kbi_collection_node' templates to Knockout.js"
-          li
-            strong="kbi_fetched.js: "
-            ul
-              li="implements the kbi.FetchedModel class to provide a Backbone.Model implementation with function that can be used to inspect a JSON server response when you do not have your own specialized implementation"
-              li="implements the kbi.FetchedCollection class to provide a Backbone.Collection implementation with parse function that can be used to inspect a JSON server response when you do not have your own specialized implementation"
-          li
-            strong="kbi_node_view_model.js: "
-            ul: li="implements the kbi.NodeViewModel class to create a ViewModel instance for each kb.ViewModel or kb.CollectionObservable node in the graph with a name and opened state"
-          li
-            strong="kbi_collection_node_view.js: "
-            ul: li="provides kbi.CollectionNodeView which holds an HTML string that is used by the kbi.StringTemplateEngine whenever Knockout.js requests the 'kbi_collection_node' template"
-          li
-            strong="kbi_model_node_view.js: "
-            ul: li="provides kbi.ModelNodeView which holds an HTML string that is used by the kbi.StringTemplateEngine whenever Knockout.js requests the 'kbi_model_node' template"
-  p
+        span="The files will contain the following implementations:"
+        h3="kbi_core.js"
+        p="Provides the kbi namespace and the kbi.VERSION semantic versioning string."
+        h3="kbi_string_template_engine.js"
+        p="Implements kbi.StringTemplateSource and kbi.StringTemplateEngine to expose the 'kbi_model_node' and 'kbi_collection_node' templates to Knockout.js."
+        h3="kbi_fetched.js"
+        p="Implements the kbi.FetchedModel and the kbi.FetchedCollection classes providing a Backbone.Model and a Backbone.Collection with the parse function that can be used to inspect a JSON server response when you do not have your own specialized implementations."
+        h3="kbi_node_view_model.js"
+        p="Implements the kbi.NodeViewModel class to create a ViewModel instance for each kb.ViewModel or kb.CollectionObservable node in the graph with a name and opened state."
+        p
+          span="Because the kbi.NodeViewModel class is shared for kb.ViewModel and kb.CollectionObservable nodes, in the case of kb.ViewModel, we need to add slightly more functionality to handle exposing and traversing the attributes:"
+          ul
+            li
+              strong='Attribute Names'
+              span=' : in order to be able to iterate through all of the attributes in a Backbone.Model with Knockout, we will store their names in an array.'
+            li
+              strong='Attribute Types'
+              span=" : in order to select the correct attribute rendering in the template, we provide a helper function called 'attributeType()' that returns the string 'simple', 'model', or 'collection'"
 
-    li
-      span="Because the kbi.NodeViewModel class is shared for kb.ViewModel and kb.CollectionObservable nodes, in the case of kb.ViewModel, we need to add slightly more functionality to handle exposing and traversing the attributes:"
-      ol
-        li
-          strong='Attribute Names'
-          span=' : in order to be able to iterate through all of the attributes in a Backbone.Model with Knockout, we will store their names in an array.'
-        li
-          strong='Attribute Types'
-          span=" : in order to select the correct attribute rendering in the template, we provide a helper function called 'attributeType()' that returns the string 'simple', 'model', or 'collection'"
+        p
+          span="Updating the pseudo-HTML for the model node:"
+          pre.
+            <li data-bind="css: {opened: opened, closed: !opened()}">
+              <div data-bind="click: toggle">
+                <span data-bind="text: (opened() ? '- ' : '+ ' )"></span>
+                <span data-bind="text: name"></span>
+              </div>
 
-      p="Updating the pseudo-HTML for the model node:"
-      pre.
-        <li data-bind="css: {opened: opened, closed: !opened()}">
-          <div data-bind="click: toggle">
-            <span data-bind="text: (opened() ? '- ' : '+ ' )"></span>
-            <span data-bind="text: name"></span>
-          </div>
+              <!-- ko if: opened -->
+                <form>
+                  <!-- ko foreach: attribute_names -->
 
-          <!-- ko if: opened -->
-            <form>
-              <!-- ko foreach: attribute_names -->
+                    <!-- ko if: ($parent.attributeType($data) == 'simple') -->
+                      <fieldset>
+                        <label class='control-label' data-bind="text: $data"> </label>
+                        <input type="text" data-bind="value: $parent.node[$data]">
+                      </fieldset>
+                    <!-- /ko -->
 
-                <!-- ko if: ($parent.attributeType($data) == 'simple') -->
-                  <fieldset>
-                    <label class='control-label' data-bind="text: $data"> </label>
-                    <input type="text" data-bind="value: $parent.node[$data]">
-                  </fieldset>
-                <!-- /ko -->
+                    <!-- ko if: ($parent.attributeType($data) == 'model') -->
+                      <ul data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel($data, false, $parent.node[$data])}"></ul>
+                    <!-- /ko -->
 
-                <!-- ko if: ($parent.attributeType($data) == 'model') -->
-                  <ul data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel($data, false, $parent.node[$data])}"></ul>
-                <!-- /ko -->
+                    <!-- ko if: ($parent.attributeType($data) == 'collection') -->
+                      <ul data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel($data+'[]', true, $parent.node[$data])}"></ul>
+                    <!-- /ko -->
 
-                <!-- ko if: ($parent.attributeType($data) == 'collection') -->
-                  <ul data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel($data+'[]', true, $parent.node[$data])}"></ul>
-                <!-- /ko -->
-
+                  <!-- /ko -->
+                </form>
               <!-- /ko -->
-            </form>
-          <!-- /ko -->
 
-        </li>
-      p
-        strong='Please note:'
-        span=' because Knockout.js pushes a new binding context on the stack during the iteration through the attribute_names, $data is mapped to the attribute name and the attribute itself can be accessed in the parent context using $parent.node[$data])'
-
+            </li>
+        p='Because Knockout.js pushes a new binding context on the stack during the iteration through the attribute_names, $data is mapped to the attribute name and the attribute itself can be accessed in the parent context using $parent.node[$data])'
+        h3="kbi_collection_node_view.js"
+        p="Provides kbi.CollectionNodeView which holds an HTML string that is used by the kbi.StringTemplateEngine whenever Knockout.js requests the 'kbi_collection_node' template."
+        h3="kbi_model_node_view.js"
+        p="Provides kbi.ModelNodeView which holds an HTML string that is used by the kbi.StringTemplateEngine whenever Knockout.js requests the 'kbi_model_node' template."
     p="OK. Let's start..."
 
 block step1
-  h2='Step 1: Setting up the Project'
-
   p="This tutorial demonstrates how to use Knockback to create a tree view to inspect Backbone.Model attributes and Backbone.Collections including potentially recursive relationships between models."
   p="The application is built using CoffeeScript and JavaScript."
 
@@ -372,7 +349,6 @@ block step1
             print data.toString()
 
 block step2
-  h2='Step 2: Create a Hard-Coded Version Embedded in index.html'
   p
     span="First, we will hard-code a model and collection relationship in index.html. We will use straight JavaScript in this step since it will be included in the .html file body as:"
     pre.
@@ -608,11 +584,9 @@ block step2
     p=""
 
 block step3
-  h2='Step 3: Add Model Fetching'
   p='TODO'
 
 block step4
-  h2='Step 4: Create a Reusable Library Version'
   p='TODO'
 
 block future_enhancements
@@ -651,18 +625,52 @@ block content
         li: a(href='http://kmalakoff.github.com/knockback-inspector/')='Try the demo'
       span='Feel free to contribute to the GitHub project with your own ideas or with some of the proposals in the "Future Enhancements" section.'
 
-    h2='Table of Contents'
-    ol
-      li: a(href='#overview')='Overview'
-      li: a(href='#html_templates')='HTML Templates'
-      li: a(href='#control_flow_architecture')='Control Flow'
-      li: a(href='#library_architecture')='Library Architecture'
-
-    block overview
-    block control_flow
-    block library_architecture
-    block step1
-    block step2
-    block step3
-    block step4
-    block future_enhancements
+    div.accordion#sections
+      div.accordion-group
+        div.accordion-heading
+          a.accordion-toggle(data-toggle='collapse', href='#collapseOverview')="Overview"
+        div.accordion-body.collapse#collapseOverview(style='height: 0px;')
+          div.accordion-inner
+            block overview
+      div.accordion-group
+        div.accordion-heading
+          a.accordion-toggle(data-toggle='collapse', href='#collapseControlFlow')="Control Flow"
+        div.accordion-body.collapse#collapseControlFlow(style='height: 0px;')
+          div.accordion-inner
+            block control_flow
+      div.accordion-group
+        div.accordion-heading
+          a.accordion-toggle(data-toggle='collapse', href='#collapseLibraryArchitecture')="Library Architecture"
+        div.accordion-body.collapse#collapseLibraryArchitecture(style='height: 0px;')
+          div.accordion-inner
+            block library_architecture
+      div.accordion-group
+        div.accordion-heading
+          a.accordion-toggle(data-toggle='collapse', href='#collapseStep1')="Step 1: Setting up the Project"
+        div.accordion-body.collapse#collapseStep1(style='height: 0px;')
+          div.accordion-inner
+            block step1
+      div.accordion-group
+        div.accordion-heading
+          a.accordion-toggle(data-toggle='collapse', href='#collapseStep2')="Step 2: Create a Hard-Coded Version Embedded in index.html"
+        div.accordion-body.collapse#collapseStep2(style='height: 0px;')
+          div.accordion-inner
+            block step2
+      div.accordion-group
+        div.accordion-heading
+          a.accordion-toggle(data-toggle='collapse', href='#collapseStep3')="Step 3: Add Fetching"
+        div.accordion-body.collapse#collapseStep3(style='height: 0px;')
+          div.accordion-inner
+            block step3
+      div.accordion-group
+        div.accordion-heading
+          a.accordion-toggle(data-toggle='collapse', href='#collapseStep4')="Step 4: Create a Reusable Library Version"
+        div.accordion-body.collapse#collapseStep4(style='height: 0px;')
+          div.accordion-inner
+            block step4
+      div.accordion-group
+        div.accordion-heading
+          a.accordion-toggle(data-toggle='collapse', href='#collapseFutureEnhancements')="Future Enhancements"
+        div.accordion-body.collapse#collapseFutureEnhancements(style='height: 0px;')
+          div.accordion-inner
+            block future_enhancements
