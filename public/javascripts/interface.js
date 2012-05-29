@@ -1,8 +1,9 @@
 $(function(){
-
-  var codestyle;
   var languages = ['cs','js'];
-  (codestyle = $('.selection.codestyle')).on('change', 'input', function(){
+  var codestyle = $('.selection.codestyle');
+
+  // bind all
+  codestyle.on('change', 'input', function(){
     var now = codestyle.find('input:checked');
     var language = now.val();
     for (var i = 0, l = languages.length; i<l; ++i) {
@@ -10,6 +11,7 @@ $(function(){
       $('[data-for="'+lang+'"]')[ lang === language ? 'show' : 'hide' ]();
     }
   });
-  codestyle.find('.auto').removeClass('auto').click();
 
-})
+  // initial state
+  codestyle.find('.auto').removeClass('auto').click();
+});

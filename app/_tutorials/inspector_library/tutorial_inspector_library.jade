@@ -12,6 +12,10 @@ block includes
 block navbar
   mixin pageNavbar('Tutorials', true)
 
+////////////////
+// Overview
+////////////////
+
 block overview
   p Let's start with the goals of a simple model and collection inspector...
 
@@ -89,6 +93,9 @@ block overview
     li Use a div tag to wrap a +/- state indicator, the name of the node, and a click handler to toggle the opened/closed state of the node
     li The collection's models are wrapped in an unordered list tag and each model can be rendered using the model node template
 
+////////////////
+// Control Flow
+////////////////
 block control_flow
   p
     span Using Knockback.js, we can implement an inspector by:
@@ -164,6 +171,9 @@ block control_flow
       li In the case of models, the templates are rendered in a closed state to break potential cycles; whereas, collections are rendered in an open state so we are presented with the indices of the contained models.
       li When the node is closed, only the HTML that displays the name of the node and allows for a click to open the node is generated.
 
+////////////////
+// Library Architecture
+////////////////
 block library_architecture
   p Knockback-Inspector will be designed as a library with the following characteristics:
     ol
@@ -243,6 +253,9 @@ block library_architecture
         p Provides kbi.ModelNodeView which holds an HTML string that is used by the kbi.StringTemplateEngine whenever Knockout.js requests the 'kbi_model_node' template.
     p OK. Let's start...
 
+////////////////
+// Step 1
+////////////////
 block step1
   p This tutorial demonstrates how to use Knockback to create a tree view to inspect Backbone.Model attributes and Backbone.Collection models including potentially recursive relationships between models.
   p
@@ -425,14 +438,14 @@ block step1
         <body>
           <div id='content'>
             <h1 class='inspector_title' data-bind="text: title"></h1>
+
+            <!-- Step 1: Setting up the Project -->
+            <script type='text/javascript'>
+              var   app_model = new Backbone.Model({title: 'Knockback Inspector (' + kbi.VERSION + ')'});
+              $('.inspector_title').each(function(){ ko.applyBindings(kb.viewModel(app_model), this); });
+            </script>
+
           </div>
-
-          <!-- KNOCKBACK BINDINGS - INSPECTOR TITLE -->
-          <script>
-            var   app_model = new Backbone.Model({title: 'Knockback Inspector (' + kbi.VERSION + ')'});
-            $('.inspector_title').each(function(){ ko.applyBindings(kb.viewModel(app_model), this); });
-          </script>
-
         </body>
         </html>
       p
@@ -444,8 +457,8 @@ block step1
           li
             span To use Knockback.js, we create a Backbone.Model with a an attribute called 'title' and then use Knockout.js to bind each DOM element with the 'inspector_title' class to a kb.ViewModel using the kb.viewModel factory function:
             pre.
-              <!-- KNOCKBACK BINDINGS - INSPECTOR TITLE -->
-              <script>
+              <!-- Step 1: Setting up the Project -->
+              <script type='text/javascript'>
                 var   app_model = new Backbone.Model({title: 'Knockback Inspector (' + kbi.VERSION + ')'});
                 $('.inspector_title').each(function(){ ko.applyBindings(kb.viewModel(app_model), this); });
               </script>
@@ -455,248 +468,453 @@ block step1
       img.screen_shot(src='images/tutorial_inspector/screen_shot_step1.png')
       br
 
+////////////////
+// Step 2
+////////////////
 block step2
   p
-    span First, we will hard-code a model and collection relationship in index.html. We will use straight JavaScript in this step since it will be included in the .html file body as:
+    span This step shows how to render a Backbone.Model with a relations in a collection-typed attribute named friends. First, let's put the following in index.html inside the content div:
     pre.
-      <script type='text/javascript'>
-        var collection = new Backbone.Collection([]);
-        var model1 = new Backbone.Model({name: 'Model1', friends: collection});
-        var model2 = new Backbone.Model({name: 'Model2', friend: model1});
-        collection.add(model2);
-      </script>
+      <body>
+        <div id='content'>
+          ...
+
+          <!-- Step 2: Rendering a Backbone.Model using kb.ViewModel -->
+          <ul id='backbone_model' class='kbi' data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel('root', true, $data)}"></ul>
+          <script type='text/javascript'>
+            var model1 = new Backbone.Model({name: 'Model1', pet: 'frog', friends: new Backbone.Collection([])});
+            var model2 = new Backbone.Model({name: 'Model2', pet: 'dog', friends: new Backbone.Collection([])});
+            var model3 = new Backbone.Model({name: 'Model3', pet: '(none)', friends: new Backbone.Collection([])});
+            model1.get('friends').reset([model2, model3]);
+            model2.get('friends').reset([model1, model3]);
+            model3.get('friends').reset([model1, model2]);
+
+            ko.applyBindings(kb.viewModel(model1), $('#backbone_model')[0]);
+          </script>
+
+          ...
+        </div>
+      </body>
+    span You should recognize the unordered list HTML from the Control Flow and Library Architecture sections (if not, please review those sections):
+    pre.
+      <ul id='backbone_model' class='kbi' data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel('root', true, $data)}"></ul>
+    span This unordered list tag starts a new tree in the DOM that is found by jQuery using the #backbone_model id selector and is bound by Knockout.js using:
+    pre.
+      ko.applyBindings(kb.viewModel(model1), $('#backbone_model')[0]);
+    span Because Knockout is binding directly to the kb.ViewModel in ko.applyBindings, we can access the kb.ViewModel using $data when the new kbi.NodeViewModel is created.
+
   p
-    span TODO:
-    pre(data-for='cs').
-      @kbi or= {}
-      @kbi.VERSION = '0.1.0'
-    pre(data-for='js').
-      TODO
+    span Let's start by implementing the kbi.NodeViewModel which contains a name ('root'), an opened state (true), and the kb.ViewModel node ($data). A shared implementation for both a kb.ViewModel and a kb.CollectionObservable would be as follows:
 
-    span Next, we will create the ViewModel nodes for the kb.ViewModel and kb.CollectionObservable. To keep things simple, we'll create a single ViewModel class for both collections and models starting with 'view_models/kbi_node_view_model.coffee' or 'view_models/kbi_node_view_model.js':
-    pre(data-for='cs').
+  div(data-for='cs')
+    h3 Create /src/view_models/kbi_node_view_model.coffee:
+    pre.
       class kbi.NodeViewModel
-        constructor: (name, opened, kb_object) ->
+        constructor: (name, opened, node) ->
           @name = name
           @opened = ko.observable(opened)
-          @kb_object = kb_object
+          @node = ko.utils.unwrapObservable(node)
 
-        toggle: -> @opened(!@opened())
-    pre(data-for='js').
-      TODO
+  div(data-for='js')
+    h3 Create /javascripts/view_models/kbi_node_view_model.js:
+    pre.
+      kbi.NodeViewModel = function(name, opened, node) {
+        this.name = name;
+        this.opened = ko.observable(opened);
+        this.node = ko.utils.unwrapObservable(node);
+      };
+    span <strong>Note:</strong> the node needs to be unwrapped because when Knockback generates kb.ViewModels and kb.Collection observables for nested Backbone.Models and Backbone.Collections, it wraps them in ko.Observables in case the underlying relationship changes.
 
+  h2='kbi.NodeViewModel'
+  p
     span Next, we will add the attribute functionality used for Backbone.Model's kb.ViewModels:
-
     pre(data-for='cs').
       class kbi.NodeViewModel
-        constructor: (name, opened, kb_object) ->
+        constructor: (name, opened, node) ->
           @name = name
           @opened = ko.observable(opened)
-          @kb_object = kb_object
+          @node = ko.utils.unwrapObservable(node)
 
-          # a kb.ViewModel indicates the kb_object is a Backbone.Model
-          if (@kb_object instanceof kb.ViewModel)
-            model = kb.utils.wrappedModel(@kb_object)
-            @attributes = ko.observableArray(if (model and model.attributes) then _.keys(model.attributes) else [])
-
-        toggle: -> @opened(!@opened())
+          # a kb.ViewModel indicates the node is a Backbone.Model
+          if (@node instanceof kb.ViewModel)
+            model = kb.utils.wrappedModel(@node)
+            @attribute_names = ko.observableArray(if model then _.keys(model.attributes) else [])
+          @
 
         attributeType: (key) ->
-          attribute_connector = @kb_object[key]
+          attribute_connector = @node[key]
           return 'model' if (ko.utils.unwrapObservable(attribute_connector) instanceof kb.ViewModel)
           return 'collection' if kb.utils.observableInstanceOf(attribute_connector, kb.CollectionAttributeConnector)
           return 'simple'
     pre(data-for='js').
-      TODO
+      kbi.NodeViewModel = function(name, opened, node) {
+        this.name = name;
+        this.opened = ko.observable(opened);
+        this.node = ko.utils.unwrapObservable(node);
 
-    p
-      span The new code in the constructor checks to see if the Knockback object is a kb.ViewModel meaning it wraps a Backbone.Model and if so, it stores the attribute names in a ko.observableArray for later traversing
-      pre(data-for='cs').
-        # a kb.ViewModel indicates the kb_object is a Backbone.Model
-        if (@kb_object instanceof kb.ViewModel)
-          model = kb.utils.wrappedModel(@kb_object)
-          @attributes = ko.observableArray(if (model and model.attributes) then _.keys(model.attributes) else [])
-      pre(data-for='js').
-        TODO
-
-    p
-      span The new function 'attributeType(key)' is a helper to see what type each attribute is so that Views for nested models, collections, and simple attribute types can be selected more easily.
-      pre(data-for='cs').
-        attribute_connector = @kb_object[key]
-        return 'model' if (ko.utils.unwrapObservable(attribute_connector) instanceof kb.ViewModel)
-        return 'collection' if kb.utils.observableInstanceOf(attribute_connector, kb.CollectionAttributeConnector)
-        return 'simple'
-      pre(data-for='js').
-        TODO
-
-    span Next, we will create the View templates for each node type. Because Knockout handles all of the dynamic aspects of the template, we can simply use a static string for our templates
-
-  h3='Views'
-    p
-      span TODO: add styles including kbi classes
-
-    p
-      span Let's start with the kb.CollectionObservable View by creating the following file in 'views/kbi_collection_node_view_html.coffee' or 'views/kbi_collection_node_view_html.js'
-    pre(data-for='cs').
-      kbi.CollectionNodeViewHTML = """
-      <li>
-        <span><i data-bind="click: function(){ opened(!opened()) }, css:{'icon-plus': !opened(), 'icon-minus': opened}"></i></i><i class="icon-th-list"></i> <span data-bind="text: name"></span></span>
-
-        <!-- ko if: opened -->
-          <div data-bind="foreach: collection_observable">
-            <ul class='tree' data-bind="template: {name: 'views/templates/model_node', data:  collectionModelNodeViewModel($parent.collection_observable, false, $data)}"></ul>
-          </div>
-        <!-- /ko -->
-      </li>
-      """
-    pre(data-for='js').
-      TODO
-
-    span For the kb.ViewModel View we will create the following file in 'views/kbi_model_node_view_html.coffee' or 'views/kbi_model_node_view_html.js'. To start with, let's look at the high level structure:
-    pre(data-for='cs').
-      kbi.ModelNodeViewHTML = """
-      <li>
-        <span><i data-bind="click: function(){ opened(!opened()) }, css:{'icon-plus': !opened(), 'icon-minus': opened}"></i></i><i class="icon-book"></i> <span data-bind="text: name"></span></span>
-        <!-- ko if: opened -->
-          <!-- ko foreach: attributes -->
-
-            <!-- ko if: ($parent.attributeType($data) == 'model') -->
-              ...
-            <!-- /ko -->
-
-            <!-- ko if: ($parent.attributeType($data) == 'collection') -->
-              ...
-            <!-- /ko -->
-
-            <!-- ko if: ($parent.attributeType($data) == 'simple') -->
-              ...
-            <!-- /ko -->
-
-          <!-- /ko -->
-        <!-- /ko -->
-      </li>
-      """
-    pre(data-for='js').
-      TODO
-
-    p
-      span The structure is similar to View for a collection node. We only render the attributes if the node is opened, and when opened, we traverse each attribute and depending on each type (model, collection, or simple), we render them. OK. Let's add the rendering per type.
-    h4 Model Attributes
-    p
-      span For a model, we just rendering the same template again as follows:
-      pre.
-        <ul class='kbi' data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel($data, false, $parent.kb_object[$data])}"></ul>
-
-      span Note: because we are rendering the template inside the iteration of attributes, $data stores the attribute name and the attribute information is in the parent's kb.ViewModel so we access it using Knockout's $parent in the binding context like '$parent.kb_object[$data]'.
-
-    h4 Collection Attributes
-    p
-      span For a collection, we render the collection node template and generate a name using the $index property that Knockout provides:
-      pre.
-        <ul class='kbi' data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel($data, true, $parent.kb_object[$data])}"></ul>
-
-      span Note: because we are rendering the template inside the iteration of attributes, $data stores the attribute name and the attribute information is in the parent's kb.ViewModel so we access it using Knockout's $parent in the binding context like '$parent.kb_object[$data]'.
-
-    h4 Simple Attributes
-    p
-      span For the attributes, we will just create a label and text input box.
-      pre.
-        <fieldset>
-          <label class='control-label' data-bind="text: $data"> </label>
-          <input class='input-large' type="text" data-bind="value: $parent.kb_object[$data]">
-        </fieldset>
-
-    h4 Putting it all together
-    p
-      span If we combine everything, we get the following template.
-      pre.
-        kbi.ModelNodeViewHTML = """
-        <li class='kbi'>
-          <div class='kbi model' data-bind="click: function(){ opened(!opened()) }, css: {opened: opened, closed: !opened()}"><span data-bind="text: name"></span> (M)</div>
-
-          <!-- ko if: opened -->
-            <form class='kbi'>
-              <!-- ko foreach: attributes -->
-
-                <!-- ko if: ($parent.attributeType($data) == 'model') -->
-                  <ul class='kbi' data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel($data, false, $parent.kb_object[$data])}"></ul>
-                <!-- /ko -->
-
-                <!-- ko if: ($parent.attributeType($data) == 'collection') -->
-                  <ul class='kbi' data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel($data, true, $parent.kb_object[$data])}"></ul>
-                <!-- /ko -->
-
-                <!-- ko if: ($parent.attributeType($data) == 'simple') -->
-                  <fieldset>
-                    <label class='control-label' data-bind="text: $data"> </label>
-                    <input class='input-large' type="text" data-bind="value: $parent.kb_object[$data]">
-                  </fieldset>
-                <!-- /ko -->
-
-              <!-- /ko -->
-            </form>
-          <!-- /ko -->
-        </li>
-        """
-
-    h3 Exposing the Templates to Knockout
-    p
-      span Knockout works out of the box on a static HTML page where all templates are inlined, but because we are providing our templates in a library as strings and because they can be recursive, we have assigned them names 'kbi_collection_node' and 'kbi_model_node' that need to be looked up somewhere to provide the HTML to Knockout for binding purposes. There are two implementations Knockout requires for this: 'templateEngine' and 'templateSource': you can look at
-      a(href='http://www.knockmeout.net/2011/10/ko-13-preview-part-3-template-sources.html')  an in-depth tutorial online for a full implementation
-      span  but for now, I'll try to keep the code and support to a minimum
-
-    pre(data-for='cs').
-      TODO
-    pre(data-for='js').
-      // template source
-      kbi.StringTemplateSource = function(template_string) {
-        this.template_string = template_string;
-        return this;
+        // a kb.ViewModel indicates the node is a Backbone.Model
+        if (this.node instanceof kb.ViewModel) {
+          var model = kb.utils.wrappedModel(this.node);
+          this.attribute_names = ko.observableArray(model ? _.keys(model.attributes) : []);
+        }
       };
+
+      kbi.NodeViewModel.prototype.attributeType = function(key) {
+        var attribute_connector = this.node[key];
+        if (ko.utils.unwrapObservable(attribute_connector) instanceof kb.ViewModel)
+          return 'model';
+        else if (kb.utils.observableInstanceOf(attribute_connector, kb.CollectionAttributeConnector))
+          return 'collection';
+        else
+          return 'simple';
+      };
+    span The new code in the constructor just collects all of the attribute names and the attributeType(key) function just checks the property in the kb.ViewModel for its type rather than performing this check directly in the template.
+
+  h2='Views'
+  p
+    span Next, we will finalize the View templates for each node type as started in the Control Flow and Library Architecture sections. Because Knockout handles all of the dynamic aspects of the template, we can simply use a static string for our templates.
+
+  h3 Template: 'kbi_model_node'
+  div(data-for='cs')
+    h4 Create /src/views/kbi_model_node_view.coffee:
+    pre.
+      kbi.ModelNodeView = """
+      <li class='kbi' data-bind="css: {opened: opened, closed: !opened()}">
+        <div class='kbi model' data-bind="click: function(){ opened(!opened()); }">
+          <span data-bind="text: (opened() ? '- ' : '+ ' )"></span>
+          <span data-bind="text: name"></span>
+        </div>
+
+        <!-- ko if: opened -->
+          <form class='kbi'>
+            <!-- ko foreach: attribute_names -->
+
+              <!-- ko if: ($parent.attributeType($data) == 'simple') -->
+                <fieldset>
+                  <label class='control-label' data-bind="text: $data"> </label>
+                  <input type="text" data-bind="value: $parent.node[$data]">
+                </fieldset>
+              <!-- /ko -->
+
+              <!-- ko if: ($parent.attributeType($data) == 'model') -->
+                <ul class='kbi' data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel($data, false, $parent.node[$data])}"></ul>
+              <!-- /ko -->
+
+              <!-- ko if: ($parent.attributeType($data) == 'collection') -->
+                <ul class='kbi' data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel($data+'[]', true, $parent.node[$data])}"></ul>
+              <!-- /ko -->
+
+            <!-- /ko -->
+          </form>
+        <!-- /ko -->
+      </li>
+      """
+  div(data-for='js')
+    h4 Create /javascripts/views/kbi_model_node_view.js:
+    pre.
+      kbi.ModelNodeView = "<li class='kbi' data-bind=\"css: {opened: opened, closed: !opened()}\"> \\
+        <div class='kbi model' data-bind=\"click: function(){ opened(!opened()); }\"> \\
+          <span data-bind=\"text: (opened() ? '- ' : '+ ' )\"></span> \\
+          <span data-bind=\"text: name\"></span> \\
+        </div> \\
+      \\
+        <!-- ko if: opened --> \\
+          <form class='kbi'> \\
+            <!-- ko foreach: attribute_names --> \\
+      \\
+              <!-- ko if: ($parent.attributeType($data) == 'simple') --> \\
+                <fieldset> \\
+                  <label class='control-label' data-bind=\"text: $data\"> </label> \\
+                  <input type=\"text\" data-bind=\"value: $parent.node[$data]\"> \\
+                </fieldset> \\
+              <!-- /ko --> \\
+      \\
+              <!-- ko if: ($parent.attributeType($data) == 'model') --> \\
+                <ul class='kbi' data-bind=\"template: {name: 'kbi_model_node', data: new kbi.NodeViewModel($data, false, $parent.node[$data])}\"></ul> \\
+              <!-- /ko --> \\
+      \\
+              <!-- ko if: ($parent.attributeType($data) == 'collection') --> \\
+                <ul class='kbi' data-bind=\"template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel($data+'[]', true, $parent.node[$data])}\"></ul> \\
+              <!-- /ko --> \\
+      \\
+            <!-- /ko --> \\
+          </form> \\
+        <!-- /ko --> \\
+      </li>";
+    span <strong>Note:</strong> In order to make multi-line strings, we put a '\\' at the end of each continuing line.
+  p
+    span This template is similar to the last pseudo HTML in the Library Architecture section with a few changes to make it a polished template:
+    ul
+      li The 'kbi' and 'model' classes have been added for css styling
+      li Knockout if control flow comments have been specified to render the correct template section based on the attribute type
+      li Because 'foreach: attribute_names' creates a new binding context inside the loop, we can access the actual kbi.NodeViewModel using $parent and the attribute name using $data.
+
+  h3 Template: 'kbi_collection_node'
+  div(data-for='cs')
+    h4 Create /src/views/kbi_collection_node_view.coffee:
+    pre.
+      kbi.CollectionNodeView = """
+      <li class='kbi' data-bind="css: {opened: opened, closed: !opened()}">
+        <div class='collection' data-bind="click: function(){ opened(!opened()) }">
+          <span data-bind="text: (opened() ? '- ' : '+ ' )"></span>
+          <span data-bind="text: name"></span>
+        </div>
+
+        <!-- ko if: opened -->
+          <!-- ko foreach: node -->
+            <ul class='kbi' data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel('['+$index()+']', false, $data)}"></ul>
+          <!-- /ko -->
+        <!-- /ko -->
+      </li>
+      """
+  div(data-for='js')
+    h4 Create /javascripts/views/kbi_collection_node_view.js:
+    pre.
+      kbi.CollectionNodeView = " \\
+      <li class='kbi' data-bind=\"css: {opened: opened, closed: !opened()}\"> \\
+        <div class='collection' data-bind=\"click: function(){ opened(!opened()) }\"> \\
+          <span data-bind=\"text: (opened() ? '- ' : '+ ' )\"></span> \\
+          <span data-bind=\"text: name\"></span> \\
+        </div> \\
+      \\
+        <!-- ko if: opened --> \\
+          <!-- ko foreach: node --> \\
+            <ul class='kbi' data-bind=\"template: {name: 'kbi_model_node', data: new kbi.NodeViewModel('['+$index()+']', false, $data)}\"></ul> \\
+          <!-- /ko --> \\
+        <!-- /ko --> \\
+      </li>";
+    span <strong>Note:</strong> In order to make multi-line strings, we put a '\\' at the end of each continuing line.
+  p
+    span This template is similar to the last pseudo HTML in the Library Architecture section with a few changes to make it a polished template:
+    ul
+      li The 'kbi' and 'collection' classes have been added for css styling
+      li Because the kb.CollectionObservable is actually a ko.observableArray, we can access its items (which contain kb.ViewModels for each Backbone.Model) using 'foreach: node'
+      li Because 'foreach: node' creates a new binding context inside the loop, we access each kb.ViewModel using $data.
+
+  h2 Exposing the Templates to Knockout
+  p
+    span Knockout works out of the box on a static HTML page where all templates are inlined, but because we need to render graphs meaning 'kbi_collection_node' and 'kbi_model_node' can refer to one another, we store the templates as strings and need to provide them to Knockout whenever it encounters them in a tag with data-bind="template: {name: 'template_name', data: some_data }".
+  p
+    span There are two things Knockout requires for this: 'templateEngine' and 'templateSource': you can look at
+    a(href='http://www.knockmeout.net/2011/10/ko-13-preview-part-3-template-sources.html')  an in-depth online tutorial
+    span but for now, I'll try to keep the code and support to a minimum.
+
+  div(data-for='cs')
+    h4 Create /src/lib/kbi_string_template_engine.coffee:
+    pre.
+      # template source
+      class kbi.StringTemplateSource
+        constructor: (@template_string) ->
+        text: (value) -> return @template_string
+
+      # template engine
+      class kbi.StringTemplateEngine extends ko.nativeTemplateEngine
+        constructor: ->
+          @allowTemplateRewriting = false
+
+        makeTemplateSource: (template) ->
+          switch (template)
+            when 'kbi_model_node' then return new kbi.StringTemplateSource(kbi.ModelNodeView)
+            when 'kbi_collection_node' then return new kbi.StringTemplateSource(kbi.CollectionNodeView)
+            else return ko.nativeTemplateEngine.prototype.makeTemplateSource.apply(this, arguments)  div(data-for='js')
+
+  div(data-for='js')
+    h4 Create /javascripts/lib/kbi_string_template_engine.js:
+    pre.
+      // template source
+      kbi.StringTemplateSource = function(template_string) { this.template_string = template_string; };
       kbi.StringTemplateSource.prototype.text = function(value) { return this.template_string; };
 
       // template engine
-      kbi.StringTemplateEngine = function() { return this; };
+      kbi.StringTemplateEngine = function() { this.allowTemplateRewriting = false; };
       kbi.StringTemplateEngine.prototype = new ko.nativeTemplateEngine();
       kbi.StringTemplateEngine.prototype.makeTemplateSource = function(template) {
         switch (template) {
           case 'kbi_model_node':
-            return new kbi.StringTemplateSource(kbi.ModelNodeViewHTML);
+            return new kbi.StringTemplateSource(kbi.ModelNodeView);
           case 'kbi_collection_node':
-            return new kbi.StringTemplateSource(kbi.CollectionNodeViewHTML);
+            return new kbi.StringTemplateSource(kbi.CollectionNodeView);
           default:
             return ko.nativeTemplateEngine.prototype.makeTemplateSource.apply(this, arguments);
         }
       };
+  p
+    span The kbi.StringTemplateSource class simply stores a string and returns it when text() is called.
+  p
+    span The kbi.StringTemplateEngine class is derived from ko.nativeTemplateEngine, uses this.allowTemplateRewriting to tell Knockout that the template source is very simple, and implements a makeTemplateSource() function to look up the template by name.
 
-    p The kbi.StringTemplateSource is a template source that uses a 'text' function to return an HTML string (but does not handle Knockout template re-writing nor data storage).
-    p The kbi.StringTemplateEngine derives from ko.nativeTemplateEngine() and returns a kbi.StringTemplateSource is if recognizes the name or the default implementation otherwise. If you want to integrate the Knockout-Inspector templates into your own application, you'll need to supply a similar way to return the View strings.
-    p We tell Knockout about our custom 'kbi.StringTemplateEngine' template engine using the following call in index.html:
+  h3 Register kbi.StringTemplateEngine with Knockout
+  p
+    span Setting the template engine is done in the index.html file rather than the library so you can hook up your own template engine implementation as you need depending on which template engine you are using.
+  p
+    span For this tutorial, add the following to index.html after the Knockout-Inspector library, but before you use a 'kbi_model_node' or 'kbi_collection_node' template:
     pre.
+      <!-- KNOCKOUT INITIALIZATION -->
       <script type='text/javascript'>
         // set the template engine so Knockout can find 'kbi_model_node' and 'kbi_collection_node' templates
         ko.setTemplateEngine(new kbi.StringTemplateEngine());
       </script>
-    p Setting the template engine is done in the index.html file rather than the library so you can hook up your own template engine implementation as you need depending on which template engine you are using.
+  p
+    span <strong>Note:</strong> if you are integrating Knockback-Inspector into your own application and you are not using the default Knockout template engine, you will to write a register your own template engine with Knockout. You can use kbi.StringTemplateEngine as a starting point.
 
-    h3 Hooking up index.html
-    p Next, we need to update the index file to provide all of the javascript files
-    pre.
-      <script src="javascripts/view_models/kbi_node_view_model.js"></script>
-      <script src="javascripts/views/kbi_collection_node_view.js"></script>
-      <script src="javascripts/views/kbi_model_node_view.js"></script>
-      <script src="javascripts/lib/kbi_string_template_engine.js"></script>
+  h2 Hooking up the library
+  p Finally, add all of the javascript files to index.html and try it out!
+  pre.
+    <!-- KNOCKBACK-INSPECTOR LIBRARY -->
+    <script src="javascripts/lib/kbi_core.js"></script>
+    <script src="javascripts/view_models/kbi_node_view_model.js"></script>
+    <script src="javascripts/views/kbi_collection_node_view.js"></script>
+    <script src="javascripts/views/kbi_model_node_view.js"></script>
+    <script src="javascripts/lib/kbi_string_template_engine.js"></script>
 
-    h3 Providing Sample Data to Inspect
-
+////////////////
+// Step 3
+////////////////
 block step3
-  p TODO
+  p
+    span Because we already have an implementation for 'kbi_collection_node' and kbi.NodeViewModel can be used with both kb.ViewModels and kb.CollectionObservables, we should be able to render a tree starting with a kb.CollectionObservable as follows:
+    pre.
+      <ul data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel('root', true, kb.collectionObservable(collection, {view_model: kb.ViewModel}))}"></ul>
+    span <strong>Note:</strong> the kb.CollectionObservable requires the view_model option because by default it stores the collection models rather than generating kb.ViewModels.
+  p
+    span Let's use Backbone-Relational to generate some relations and then render the relations:
+    pre.
+      <!-- Step 3: Rendering a BackboneRelational using kb.CollectionObservable -->
+      <ul id='backbone_relational' class='kbi' data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel('root', true, $data)}"></ul>
+      <script type='text/javascript'>
+        var Person = Backbone.RelationalModel.extend({});
+        var House = Backbone.RelationalModel.extend({
+          relations: [{
+            type: Backbone.HasMany,
+            key: 'occupants',
+            relatedModel: 'Person',
+            reverseRelation: {
+              key: 'livesIn'
+            }
+          }]
+        });
 
+        var bob = new Person({id: 'person-1', name: 'Bob'});
+        var fred = new Person({id: 'person-2', name: 'Fred'});
+        var house = new House({
+          location: 'In the middle of our street',
+          occupants: ['person-1', 'person-2']
+        });
+
+        ko.applyBindings(kb.collectionObservable(house.get('occupants'), {view_model: kb.ViewModel}), $('#backbone_relational')[0]);
+      </script>
+  p It just works!
+
+////////////////
+// Step 4
+////////////////
 block step4
-  p TODO
+  p To provide a general purpose way to inspect JSON data returned from a Backbone.Model or Backbone.Collection fetch call, we will implement kbi.FetchedModel and kbi.FetchedCollection that are generated when we traverse the returned JSON.
+  div(data-for='cs')
+    h4 Create /src/models/kbi_fetched.coffee:
+    pre.
+      # General-purpose model for fetched JSON when you do not have a specialized implementation
+      class kbi.FetchedModel extends Backbone.Model
+        parse: (response) ->
+          attributes = {}
+          for key, value of response
+            if _.isObject(value)
+              model = new kbi.FetchedModel()
+              attributes[key] = model.set(model.parse(value))
+            else if _.isArray(value)
+              collection = new kbi.FetchedCollection()
+              attributes[key] = collection.reset(collection.parse(value))
+            else
+              attributes[key] = value
+          return attributes
 
+      # General-purpose collection for fetched JSON when you do not have a specialized implementation
+      class kbi.FetchedCollection extends Backbone.Collection
+        model: kbi.FetchedModel
+        parse: (response) -> return response.results
+  div(data-for='js')
+    h4 Create /javascripts/models/kbi_fetched.js:
+    pre.
+      // General-purpose model for fetched JSON when you do not have a specialized implementation
+      kbi.FetchedModel = Backbone.Model.extend({
+        parse: function(response) {
+          var attributes, collection, key, model, value;
+          attributes = {};
+          for (key in response) {
+            value = response[key];
+            if (_.isObject(value)) {
+              model = new kbi.FetchedModel();
+              attributes[key] = model.set(model.parse(value));
+            } else if (_.isArray(value)) {
+              collection = new kbi.FetchedCollection();
+              attributes[key] = collection.reset(collection.parse(value));
+            } else {
+              attributes[key] = value;
+            }
+          }
+          return attributes;
+        }
+      });
+
+      // General-purpose collection for fetched JSON when you do not have a specialized implementation
+      kbi.FetchedCollection = Backbone.Collection.extend({
+        model: kbi.FetchedModel,
+        parse: function(response) { return response.results; }
+      });
+  p Quite simply, when parsing the data, kbi.FetchedModel generates kbi.FetchedModel when it encounters a JSON object, generates a kbi.FetchedCollection when it encounters a JSON array, and otherwise, it just stores the simple type in the attribute.
+  p
+    span We can use the kbi.FetchedCollection and a kb.CollectionObservable to render a tree of the data returned from a Twitter query as follows:
+    pre.
+      <!-- Step 4: Rendering a Twitter Query using kb.CollectionObservable -->
+      <ul id='fetched_collection' class='kbi' data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel('root', true, $data)}"></ul>
+      <script type='text/javascript'>
+        var tweets = new kbi.FetchedCollection();
+        tweets.url = 'http://search.twitter.com/search.json?q=knockbackjs&callback=?';
+        tweets.fetch();
+
+        ko.applyBindings(kb.collectionObservable(tweets, {view_model: kb.ViewModel}), $('#fetched_collection')[0]);
+      </script>
+    span This case is no different from Step 3 except that the collection is filled in asynchronously after a fetch.
+
+////////////////
+// Step 5
+////////////////
+block step5
+  p The last step is to turn the library into a single file, wrap it in an anonymous function, and to minimize it. For CoffeeScript, this can be achieved by updating the Cakefile as follows:
+  pre.
+    {print} = require 'util'
+    {spawn} = require 'child_process'
+    path = require 'path'
+
+    callback = ->
+      spawn 'uglifyjs', ['-o', 'knockback-inspector.min.js', 'knockback-inspector.js']
+      print "\#{(new Date).toLocaleTimeString()} - generated knockback-inspector.min.js\\n"
+
+    task 'build', 'Build javascripts/ from src/', ->
+      coffee = spawn 'coffee', ['-c', '-j', 'knockback-inspector.js', 'src']
+      coffee.stderr.on 'data', (data) ->
+        process.stderr.write data.toString()
+      coffee.stdout.on 'data', (data) ->
+        print data.toString()
+      coffee.on 'exit', (code) ->
+        callback?() if code is 0
+
+    task 'watch', 'Watch src/ for changes', ->
+      coffee = spawn 'coffee', ['-w', '-o', '.', '-j', 'knockback-inspector.js', 'src']
+      coffee.stderr.on 'data', (data) ->
+        print 'Error'
+        process.stderr.write data.toString()
+      coffee.stdout.on 'data', (data) ->
+        print data.toString()
+        callback?()
+  p The difference are that now we are using the -j (or --join) option without generating temporary files in the /javascripts directory and we implemented a callback to uglify the knockback-inspector.js whenever it changed.
+  p <strong>Note:</strong> you can choose a scripting language of your choice to concatenate and minimized the JavaScript files directly.
+
+
+////////////////
+// Future Enhancements
+////////////////
 block future_enhancements
-  h2 Future Enhancement Ideas
   p
     span The inspector works for the most part, but as with anything it can always be improved! Here are some ideas:
     ul
@@ -763,22 +981,28 @@ block content
             block step1
       div.accordion-group
         div.accordion-heading
-          a.accordion-toggle(data-toggle='collapse', href='#collapseStep2')="Step 2: Create a Hard-Coded Version Embedded in index.html"
+          a.accordion-toggle(data-toggle='collapse', href='#collapseStep2')="Step 2: Rendering a Backbone.Model using kb.ViewModel"
         div.accordion-body.collapse#collapseStep2(style='height: 0px;')
           div.accordion-inner
             block step2
       div.accordion-group
         div.accordion-heading
-          a.accordion-toggle(data-toggle='collapse', href='#collapseStep3')="Step 3: Add Fetching"
+          a.accordion-toggle(data-toggle='collapse', href='#collapseStep3')="Step 3: Rendering a BackboneRelational using kb.CollectionObservable"
         div.accordion-body.collapse#collapseStep3(style='height: 0px;')
           div.accordion-inner
             block step3
       div.accordion-group
         div.accordion-heading
-          a.accordion-toggle(data-toggle='collapse', href='#collapseStep4')="Step 4: Create a Reusable Library Version"
+          a.accordion-toggle(data-toggle='collapse', href='#collapseStep4')="Step 4: Rendering a Twitter Query using kb.CollectionObservable"
         div.accordion-body.collapse#collapseStep4(style='height: 0px;')
           div.accordion-inner
             block step4
+      div.accordion-group
+        div.accordion-heading
+          a.accordion-toggle(data-toggle='collapse', href='#collapseStep5')="Step 5: Create a Reusable Library Version"
+        div.accordion-body.collapse#collapseStep5(style='height: 0px;')
+          div.accordion-inner
+            block step5
       div.accordion-group
         div.accordion-heading
           a.accordion-toggle(data-toggle='collapse', href='#collapseFutureEnhancements')="Future Enhancements"
