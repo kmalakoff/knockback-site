@@ -40,10 +40,15 @@ section div {
   padding: 0;
 }
 ol li {
-  font-size: 0.9em;
+  font-size: 14px;
 }
 ul li {
-  font-size: 0.9em;
+  font-size: 14px;
+  font-weight: normal;
+}
+ol li ul li,
+ul li ul li {
+  font-size: 14px;
   font-weight: normal;
 }
 p {

@@ -33,7 +33,7 @@ block overview
   img.screen_shot(src='images/tutorial_inspector/screen_shot.png')
   br
 
-  h2#html_architecture='HTML Architecture'
+  h3#html_templates='HTML Templates'
 
   p='Given the recursiveness of the design, I chose to implement this functionality using two reusable HTML templates: one for a model node that generates HTML for each of its attributes and one for a collection node that generates HTML for each for its models:'
 
@@ -65,12 +65,12 @@ block overview
     </li>
   strong='Highlights:'
   ul
-    li='each model node uses a <li> that can either be in opened or closed state'
-    li='use a <div> to wrap a +/- state indicator, the name of the node, and a click handler to toggle the opened/closed state of the node'
-    li='the model attributes are grouped in a <form>'
-    li='each simple-typed attribute are wrapped in a <fieldset> in with a <label> and <input> for the name and value, respectively'
-    li='each model-typed attribute are rendered using the model node template'
-    li='each collection-typed attribute are rendered using the collection node template'
+    li='Each model node uses a <li> that can either be in opened or closed state'
+    li='Use a <div> to wrap a +/- state indicator, the name of the node, and a click handler to toggle the opened/closed state of the node'
+    li='The model attributes are grouped in a <form>'
+    li='Each simple-typed attribute are wrapped in a <fieldset> in with a <label> and <input> for the name and value, respectively'
+    li='Each model-typed attribute are rendered using the model node template'
+    li='Each collection-typed attribute are rendered using the collection node template'
 
   h4="Collection Node View Structure (template: 'kbi_collection_node')"
   p='Here is some pseudo-HTML for the collection node:'
@@ -87,11 +87,12 @@ block overview
 
   strong='Highlights:'
   ul
-    li='each collection node uses a <li> that can either be in opened or closed state'
-    li='use a <div> to wrap a +/- state indicator, the name of the node, and a click handler to toggle the opened/closed state of the node'
-    li="the collection's models are wrapped in an <ul> and each model can be rendered using the model node template"
+    li='Each collection node uses a <li> that can either be in opened or closed state'
+    li='Use a <div> to wrap a +/- state indicator, the name of the node, and a click handler to toggle the opened/closed state of the node'
+    li="The collection's models are wrapped in an <ul> and each model can be rendered using the model node template"
 
-  h2#control_flow_architecture='Control Flow Architecture'
+block control_flow
+  h2#control_flow='Control Flow'
 
   p
     span='We can implement an inspector by:'
@@ -101,13 +102,16 @@ block overview
 
   h3='Graph Generation'
   P
-    span='By default, a kb.ViewModel will generate a kb.ViewModel for each of its nested models and a kb.collectionObservable for each of its nested collections when used like:'
-    pre.
-      kb.viewModel(my_model)
-    span='Also, a kb.CollectionObservable can easily be configured to generate a kb.ViewModel for each of its models like:'
-    pre.
-      kb.collectionObservable(my_collection, {view_model: kb.ViewModel})
-    span="What this means is that Knockback takes care of circular references between Backbone.Models or Backbone.Collections so you don't have to. In the case of circular references, you just need to be careful to handle cycles correctly when you traverse the nodes in the graph."
+    span='By default, a '
+    a(href='docs_kb_view_model.html')='kb.ViewModel'
+    span=" will generate a kb.ViewModel for each of its nested models and a kb.collectionObservable for each of its nested collections when used like:"
+    pre kb.viewModel(my_model)
+  P
+    span='Also, a '
+    a(href='docs_kb_collection_observable.html')='kb.CollectionObservable'
+    span=" can easily be configured to generate a kb.ViewModel for each of its models when configured like: "
+    pre kb.collectionObservable(my_collection, {view_model: kb.ViewModel})
+  P="What this means is that Knockback takes care of circular references between Backbone.Models or Backbone.Collections so you don't have to. In the case of circular references, you just need to be careful to handle cycles correctly when you traverse the nodes in the graph."
 
   h3='Traversing the Graph'
   p='Because there can be cycles between the models and collections in the graph, the inspector uses a separate kbi.NodeViewModel to expose properties for the opened/closed state of the node, the name of the node, and the (potentially shared) node itself. A kbi.NodeViewModel is constructed with the following parameters: (name, opened_state, kb.ViewModel or kb.CollectionObservable).'
@@ -164,71 +168,101 @@ block overview
       li="In the case of models, the templates are rendered in a closed state to break potential cycles; whereas, collections are rendered in an open state so we are presented with the indices of the contained models."
       li="When the node is closed, only the HTML that displays the name of the node and allows for a click to open the node is generated."
 
-  h2#library_architecture='Knockback Inspector Library Architecture and Implementation Details'
-  p
+block library_architecture
+  h2#library_architecture='Library Architecture'
+
+  p="Knockback-Inspector will be designed as a library meaning:"
     ol
-      li="We will create a namespace 'kbi' for the Knockback inspector"
+      li="The library will be in the 'kbi' namespace"
+      li="The library version will be available in 'kbi.VERSION'"
+      li
+        span="The library code will be separated into multiple directories and files as follows:"
+        pre.
+          - lib
+            - kbi_core.js
+            - kbi_string_template_engine.js
+          - models
+            - kbi_fetched.js
+          - view_models
+            - kbi_node_view_model.js
+          - views
+            - kbi_collection_node_view.js
+            - kbi_model_node_view.js
 
       li
-        span='We will traverse the root provided to create a '
-        a(href='docs_kb_view_model.html')='kb.ViewModel'
-        span=' with Knockback observables for Backbone.Model attributes or to create a '
-        a(href='docs_kb_collection_observable.html')='kb.CollectionObservable'
-        span=' to generate kb.ViewModels for each model in a Backbone.Collection.'
-      li
-        span='We will create a ViewModel node and corresponding View for each kb.ViewModel that wraps a Backbone.Model so they can be named, opened, etc...'
-        span='The ViewModel for each node should have the following properties:'
+        span="The Library, Model, ViewModel, and View files contain the following implementations:"
         ul
           li
-            strong='kb.ViewModel'
-            span=' : the view model that was automatically generated by Knockback. Basically, each node will refer to a kb.ViewModel rather than being shared so it can have its own opened/closed state, name, etc'
-          li
-            strong='Attribute Names'
-            span=' : in order to be able to iterate through all of the attributes in a Backbone.Model with Knockout, we will store their names in an array.'
-          li
-            strong='Name'
-            span=' : a name indicating that it is the starting/root node, giving the name of the owning attribute if it is stored in a Backbone.Model attribute, or giving the index if it is stored in a Backbone.Collection'
-          li
-            strong='Expanded'
-            span=' : a boolean indicating whether the node is open or closed. Non-root nodes will start closed to avoid infinite recursion in Backbone.Model relationship cycles.'
-        span='The View for each node should be structured as follows:'
-        ul
-          li='There should be a way to indicate that the node is opened or closed along with the node name.'
-          li="Only if the node is opened, we will traverse the Backbone.Model's attributes to avoid infinite recursion for nested models."
-          li="When opened, we will render each attribute depending on its type:"
+            strong="kbi_core.js: "
             ul
-              li
-                strong='Backbone.Model'
-                span=' : recursively render a View Model node for the nested model'
-              li
-                strong='Backbone.Collection'
-                span=' : render a kb.CollectionObservable node for the nested collection'
-              li
-                strong='Simple Attribute'
-                span=' : render a the name of the attribute and an input to change the value'
-      li
-        span='We will create a ViewModel node and corresponding View for each kb.CollectionObservable that wraps a Backbone.Collection so they can be named, opened, etc...'
-        span='The ViewModel for each node should have the following properties:'
-        ul
+              li="provides the kbi namespace"
+              li="provides the kbi.VERSION semantic versioning string"
           li
-            strong='kb.CollectionObservable'
-            span=' : the collection observable that was automatically generated by Knockback. Basically, each node will refer to a kb.CollectionObservable rather than being shared so it can have its own opened/closed state, name, etc'
+            strong="kbi_string_template_engine.js: "
+            ul: li="implements kbi.StringTemplateSource and kbi.StringTemplateEngine to expose the 'kbi_model_node' and 'kbi_collection_node' templates to Knockout.js"
           li
-            strong='Name'
-            span=' : a name indicating that it is the starting/root node, or giving the name of the owning attribute if it is stored in a Backbone.Model attribute'
+            strong="kbi_fetched.js: "
+            ul
+              li="implements the kbi.FetchedModel class to provide a Backbone.Model implementation with function that can be used to inspect a JSON server response when you do not have your own specialized implementation"
+              li="implements the kbi.FetchedCollection class to provide a Backbone.Collection implementation with parse function that can be used to inspect a JSON server response when you do not have your own specialized implementation"
           li
-            strong='Expanded'
-            span=' : a boolean indicating whether the node is open or closed. Non-root nodes will start closed to avoid infinite recursion in Backbone.Model relationship cycles.'
-        span='The View for each node should be structured as follows:'
-        ul
-          li='There should be a way to indicate that the node is opened or closed along with the node name.'
-          li="Only if the node is opened, we will traverse the Backbone.Collection's models to avoid infinite recursion for nested models."
-          li="When opened, we will render each model using the ViewModel node (as above)"
-    p="OK. Let's start..."
+            strong="kbi_node_view_model.js: "
+            ul: li="implements the kbi.NodeViewModel class to create a ViewModel instance for each kb.ViewModel or kb.CollectionObservable node in the graph with a name and opened state"
+          li
+            strong="kbi_collection_node_view.js: "
+            ul: li="provides kbi.CollectionNodeView which holds an HTML string that is used by the kbi.StringTemplateEngine whenever Knockout.js requests the 'kbi_collection_node' template"
+          li
+            strong="kbi_model_node_view.js: "
+            ul: li="provides kbi.ModelNodeView which holds an HTML string that is used by the kbi.StringTemplateEngine whenever Knockout.js requests the 'kbi_model_node' template"
+  p
 
-    h3='Implementing the Design'
-    p
-      span='What we are going to do is first start with a version embedded in index.html (Step 1) and then package a library (Step 2) that can be used in a jsFiddle or even your own website for debugging!'
+    li
+      span="Because the kbi.NodeViewModel class is shared for kb.ViewModel and kb.CollectionObservable nodes, in the case of kb.ViewModel, we need to add slightly more functionality to handle exposing and traversing the attributes:"
+      ol
+        li
+          strong='Attribute Names'
+          span=' : in order to be able to iterate through all of the attributes in a Backbone.Model with Knockout, we will store their names in an array.'
+        li
+          strong='Attribute Types'
+          span=" : in order to select the correct attribute rendering in the template, we provide a helper function called 'attributeType()' that returns the string 'simple', 'model', or 'collection'"
+
+      p="Updating the pseudo-HTML for the model node:"
+      pre.
+        <li data-bind="css: {opened: opened, closed: !opened()}">
+          <div data-bind="click: toggle">
+            <span data-bind="text: (opened() ? '- ' : '+ ' )"></span>
+            <span data-bind="text: name"></span>
+          </div>
+
+          <!-- ko if: opened -->
+            <form>
+              <!-- ko foreach: attribute_names -->
+
+                <!-- ko if: ($parent.attributeType($data) == 'simple') -->
+                  <fieldset>
+                    <label class='control-label' data-bind="text: $data"> </label>
+                    <input type="text" data-bind="value: $parent.node[$data]">
+                  </fieldset>
+                <!-- /ko -->
+
+                <!-- ko if: ($parent.attributeType($data) == 'model') -->
+                  <ul data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel($data, false, $parent.node[$data])}"></ul>
+                <!-- /ko -->
+
+                <!-- ko if: ($parent.attributeType($data) == 'collection') -->
+                  <ul data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel($data+'[]', true, $parent.node[$data])}"></ul>
+                <!-- /ko -->
+
+              <!-- /ko -->
+            </form>
+          <!-- /ko -->
+
+        </li>
+      p
+        strong='Please note:'
+        span=' because Knockout.js pushes a new binding context on the stack during the iteration through the attribute_names, $data is mapped to the attribute name and the attribute itself can be accessed in the parent context using $parent.node[$data])'
+
+    p="OK. Let's start..."
 
 block step1
   h2='Step 1: Setting up the Project'
@@ -581,7 +615,7 @@ block step4
   h2='Step 4: Create a Reusable Library Version'
   p='TODO'
 
-block future_enhacements
+block future_enhancements
   h2='Future Enhancement Ideas'
   p
     span='The inspector works for the most part, but as with anything it can always be improved! Here are some ideas: '
@@ -620,13 +654,15 @@ block content
     h2='Table of Contents'
     ol
       li: a(href='#overview')='Overview'
-      li: a(href='#html_architecture')='HTML Architecture'
-      li: a(href='#control_flow_architecture')='Control Flow Architecture'
-      li: a(href='#library_architecture')='Library Architecture and Implementation Details'
+      li: a(href='#html_templates')='HTML Templates'
+      li: a(href='#control_flow_architecture')='Control Flow'
+      li: a(href='#library_architecture')='Library Architecture'
 
     block overview
+    block control_flow
+    block library_architecture
     block step1
     block step2
     block step3
     block step4
-    block future_enhacements
+    block future_enhancements
