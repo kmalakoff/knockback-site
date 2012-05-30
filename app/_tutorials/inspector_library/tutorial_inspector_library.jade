@@ -29,12 +29,6 @@ block overview
   ul
     li For each model-typed attribute, provide a collapsable node with the index model and when opened, allow each model attribute to be inspected bytype
 
-  h3 Inspector Visualization
-  p Here is what the inspector could look like for a house model that has a location (simple-typed attribute) and multiple occupants (collection-typed attribute) who each has an id (simple-typed attribute), a name (simple-typed attribute), and who know which house they are living in (model-typed attribute):
-  br
-  img.screen_shot(src='images/tutorial_inspector/screen_shot_overview.png')
-  br
-
   h3 HTML Templates
 
   p Given the recursiveness of the design, I chose to implement this functionality using two reusable HTML templates: one for a model node that generates HTML for each of its attributes and one for a collection node that generates HTML for each for its models:
@@ -48,22 +42,20 @@ block overview
         <span data-bind="text: name"></span>
       </div>
 
-      <form>
-        <!-- FOREACH ATTRIBUTE -->
+      <!-- FOREACH ATTRIBUTE -->
 
-          <!-- IF SIMPLE -->
-            <fieldset>
-              <label></label>
-              <input type='text'>
-            </fieldset>
+        <!-- IF SIMPLE -->
+          <fieldset>
+            <label></label>
+            <input type='text'>
+          </fieldset>
 
-          <!-- ELSE IF MODEL -->
-            <!-- RENDER MODEL NODE -->
+        <!-- ELSE IF MODEL -->
+          <!-- RENDER MODEL NODE -->
 
-          <!-- ELSE IF COLLECTION -->
-            <!-- RENDER COLLECTION NODE -->
+        <!-- ELSE IF COLLECTION -->
+          <!-- RENDER COLLECTION NODE -->
 
-      </form>
     </li>
   strong Highlights:
   ul
@@ -130,22 +122,20 @@ block control_flow
       </div>
 
       <!-- ko if: opened -->
-        <form>
-          <!-- FOREACH ATTRIBUTE -->
+        <!-- FOREACH ATTRIBUTE -->
 
-            <!-- IF SIMPLE -->
-              <fieldset>
-                <label></label>
-                <input type='text'>
-              </fieldset>
+          <!-- IF SIMPLE -->
+            <fieldset>
+              <label></label>
+              <input type='text'>
+            </fieldset>
 
-            <!-- ELSE IF MODEL -->
-              <ul data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel(attribute_name, false, node)}"></ul>
+          <!-- ELSE IF MODEL -->
+            <ul data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel(attribute_name, false, node)}"></ul>
 
-            <!-- ELSE IF COLLECTION -->
-              <ul data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel(attribute_name+'[]', true, node)}"></ul>
+          <!-- ELSE IF COLLECTION -->
+            <ul data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel(attribute_name+'[]', true, node)}"></ul>
 
-        </form>
       <!-- /ko -->
     </li>
   p Updating the 'kbi_collection_node' pseudo HTML:
@@ -221,26 +211,24 @@ block library_architecture
               </div>
 
               <!-- ko if: opened -->
-                <form>
-                  <!-- ko foreach: attribute_names -->
+                <!-- ko foreach: attribute_names -->
 
-                    <!-- ko if: ($parent.attributeType($data) == 'simple') -->
-                      <fieldset>
-                        <label class='control-label' data-bind="text: $data"> </label>
-                        <input type='text' data-bind="value: $parent.node[$data]">
-                      </fieldset>
-                    <!-- /ko -->
-
-                    <!-- ko if: ($parent.attributeType($data) == 'model') -->
-                      <ul data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel($data, false, $parent.node[$data])}"></ul>
-                    <!-- /ko -->
-
-                    <!-- ko if: ($parent.attributeType($data) == 'collection') -->
-                      <ul data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel($data+'[]', true, $parent.node[$data])}"></ul>
-                    <!-- /ko -->
-
+                  <!-- ko if: ($parent.attributeType($data) == 'simple') -->
+                    <fieldset>
+                      <label data-bind="text: $data"> </label>
+                      <input type='text' data-bind="value: $parent.node[$data]">
+                    </fieldset>
                   <!-- /ko -->
-                </form>
+
+                  <!-- ko if: ($parent.attributeType($data) == 'model') -->
+                    <ul data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel($data, false, $parent.node[$data])}"></ul>
+                  <!-- /ko -->
+
+                  <!-- ko if: ($parent.attributeType($data) == 'collection') -->
+                    <ul data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel($data+'[]', true, $parent.node[$data])}"></ul>
+                  <!-- /ko -->
+
+                <!-- /ko -->
               <!-- /ko -->
 
             </li>
@@ -283,9 +271,8 @@ block step1
       pre.
         - knockback-inspector
           - vendor
-            - javascripts
     li
-      span Put all of the dependent libraries into the 'vendor/javascripts' folder
+      span Put all of the dependent libraries into the 'vendor' folder
       ul
         li
           a(href='http://jquery.com/') jQuery.js
@@ -306,7 +293,6 @@ block step1
         - knockback-inspector
           - index.html
           - vendor
-            - javascripts
       pre.
         <!doctype html>
         <head>
@@ -315,12 +301,12 @@ block step1
           <title>Knockback Inspector</title>
 
           <!-- DEPENDENCIES -->
-          <script src='vendor/javascripts/jquery-1.7.2.js'></script>
-          <script src='vendor/javascripts/knockout-2.1.0.js'></script>
-          <script src='vendor/javascripts/underscore-1.3.1.js'></script>
-          <script src='vendor/javascripts/backbone-0.9.2.js'></script>
-          <script src='vendor/javascripts/backbone-relational.js'></script>
-          <script src='vendor/javascripts/knockback-0.15.1.js'></script>
+          <script src='vendor/jquery-1.7.2.js'></script>
+          <script src='vendor/knockout-2.1.0.js'></script>
+          <script src='vendor/underscore-1.3.1.js'></script>
+          <script src='vendor/backbone-0.9.2.js'></script>
+          <script src='vendor/backbone-relational.js'></script>
+          <script src='vendor/knockback-0.15.1.js'></script>
 
           <!-- APPLICATION STYLING -->
           <style type='text/css'>
@@ -357,7 +343,6 @@ block step1
             - view_models
             - views
           - vendor
-            - javascripts
       span You can find information on how to set up a Cakefile for build and watch commands in
       a(href='http://arcturo.github.com/library/coffeescript/05_compiling.html')  The Little Book on CoffeeScript - Compiling
       span . I slightly modified the book examples to compile to the output directory of /javascripts.
@@ -400,7 +385,6 @@ block step1
             - view_models
             - views
           - vendor
-            - javascripts
     li(data-for='js')
       p Next, create /lib/kbi_core.js to implement the kbi namespace and semantic version string
       pre.
@@ -416,12 +400,12 @@ block step1
           <title class='inspector_title' data-bind="text: title"></title>
 
           <!-- DEPENDENCIES -->
-          <script src='vendor/javascripts/jquery-1.7.2.js'></script>
-          <script src='vendor/javascripts/knockout-2.1.0.js'></script>
-          <script src='vendor/javascripts/underscore-1.3.1.js'></script>
-          <script src='vendor/javascripts/backbone-0.9.2.js'></script>
-          <script src='vendor/javascripts/backbone-relational.js'></script>
-          <script src='vendor/javascripts/knockback-0.15.1.js'></script>
+          <script src='vendor/jquery-1.7.2.js'></script>
+          <script src='vendor/knockout-2.1.0.js'></script>
+          <script src='vendor/underscore-1.3.1.js'></script>
+          <script src='vendor/backbone-0.9.2.js'></script>
+          <script src='vendor/backbone-relational.js'></script>
+          <script src='vendor/knockback-0.15.1.js'></script>
 
           <!-- KNOCKBACK-INSPECTOR LIBRARY -->
           <script src='javascripts/lib/kbi_core.js'></script>
@@ -584,62 +568,58 @@ block step2
         </div>
 
         <!-- ko if: opened -->
-          <form class='kbi'>
-            <!-- ko foreach: attribute_names -->
+          <!-- ko foreach: attribute_names -->
 
-              <!-- ko if: ($parent.attributeType($data) == 'simple') -->
-                <fieldset>
-                  <label class='control-label' data-bind="text: $data"> </label>
-                  <input type='text' data-bind="value: $parent.node[$data]">
-                </fieldset>
-              <!-- /ko -->
-
-              <!-- ko if: ($parent.attributeType($data) == 'model') -->
-                <ul class='kbi' data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel($data, false, $parent.node[$data])}"></ul>
-              <!-- /ko -->
-
-              <!-- ko if: ($parent.attributeType($data) == 'collection') -->
-                <ul class='kbi' data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel($data+'[]', true, $parent.node[$data])}"></ul>
-              <!-- /ko -->
-
+            <!-- ko if: ($parent.attributeType($data) == 'simple') -->
+              <fieldset class='kbi'>
+                <label data-bind="text: $data"> </label>
+                <input type='text' data-bind="value: $parent.node[$data]">
+              </fieldset>
             <!-- /ko -->
-          </form>
+
+            <!-- ko if: ($parent.attributeType($data) == 'model') -->
+              <ul class='kbi' data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel($data, false, $parent.node[$data])}"></ul>
+            <!-- /ko -->
+
+            <!-- ko if: ($parent.attributeType($data) == 'collection') -->
+              <ul class='kbi' data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel($data+'[]', true, $parent.node[$data])}"></ul>
+            <!-- /ko -->
+
+          <!-- /ko -->
         <!-- /ko -->
       </li>
       """
   div(data-for='js')
     h4 Create /javascripts/views/kbi_model_node_view.js:
     pre.
-      kbi.ModelNodeView = "<li class='kbi' data-bind=\"css: {opened: opened, closed: !opened()}\"> \\
-        <div class='kbi model' data-bind=\"click: function(){ opened(!opened()); }\"> \\
-          <span data-bind=\"text: (opened() ? '- ' : '+ ' )\"></span> \\
-          <span data-bind=\"text: name\"></span> \\
-        </div> \\
-      \\
-        <!-- ko if: opened --> \\
-          <form class='kbi'> \\
-            <!-- ko foreach: attribute_names --> \\
-      \\
-              <!-- ko if: ($parent.attributeType($data) == 'simple') --> \\
-                <fieldset> \\
-                  <label class='control-label' data-bind=\"text: $data\"> </label> \\
-                  <input type=\"text\" data-bind=\"value: $parent.node[$data]\"> \\
-                </fieldset> \\
-              <!-- /ko --> \\
-      \\
-              <!-- ko if: ($parent.attributeType($data) == 'model') --> \\
-                <ul class='kbi' data-bind=\"template: {name: 'kbi_model_node', data: new kbi.NodeViewModel($data, false, $parent.node[$data])}\"></ul> \\
-              <!-- /ko --> \\
-      \\
-              <!-- ko if: ($parent.attributeType($data) == 'collection') --> \\
-                <ul class='kbi' data-bind=\"template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel($data+'[]', true, $parent.node[$data])}\"></ul> \\
-              <!-- /ko --> \\
-      \\
-            <!-- /ko --> \\
-          </form> \\
-        <!-- /ko --> \\
+      kbi.ModelNodeView = "<li class='kbi' data-bind=\"css: {opened: opened, closed: !opened()}\"> \
+        <div class='kbi model' data-bind=\"click: function(){ opened(!opened()); }\"> \
+          <span data-bind=\"text: (opened() ? '- ' : '+ ' )\"></span> \
+          <span data-bind=\"text: name\"></span> \
+        </div> \
+      \
+        <!-- ko if: opened --> \
+          <!-- ko foreach: attribute_names --> \
+      \
+            <!-- ko if: ($parent.attributeType($data) == 'simple') --> \
+              <fieldset class='kbi'> \
+                <label data-bind=\"text: $data\"> </label> \
+                <input type=\"text\" data-bind=\"value: $parent.node[$data]\"> \
+              </fieldset> \
+            <!-- /ko --> \
+      \
+            <!-- ko if: ($parent.attributeType($data) == 'model') --> \
+              <ul class='kbi' data-bind=\"template: {name: 'kbi_model_node', data: new kbi.NodeViewModel($data, false, $parent.node[$data])}\"></ul> \
+            <!-- /ko --> \
+      \
+            <!-- ko if: ($parent.attributeType($data) == 'collection') --> \
+              <ul class='kbi' data-bind=\"template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel($data+'[]', true, $parent.node[$data])}\"></ul> \
+            <!-- /ko --> \
+      \
+          <!-- /ko --> \
+        <!-- /ko --> \
       </li>";
-    span <strong>Note:</strong> In order to make multi-line strings, we put a '\\' at the end of each continuing line.
+    span <strong>Note:</strong> In order to make multi-line strings, we put a '\' at the end of each continuing line.
   p
     span This template is similar to the last pseudo HTML in the Library Architecture section with a few changes to make it a polished template:
     ul
@@ -668,20 +648,20 @@ block step2
   div(data-for='js')
     h4 Create /javascripts/views/kbi_collection_node_view.js:
     pre.
-      kbi.CollectionNodeView = " \\
-      <li class='kbi' data-bind=\"css: {opened: opened, closed: !opened()}\"> \\
-        <div class='collection' data-bind=\"click: function(){ opened(!opened()) }\"> \\
-          <span data-bind=\"text: (opened() ? '- ' : '+ ' )\"></span> \\
-          <span data-bind=\"text: name\"></span> \\
-        </div> \\
-      \\
-        <!-- ko if: opened --> \\
-          <!-- ko foreach: node --> \\
-            <ul class='kbi' data-bind=\"template: {name: 'kbi_model_node', data: new kbi.NodeViewModel('['+$index()+']', false, $data)}\"></ul> \\
-          <!-- /ko --> \\
-        <!-- /ko --> \\
+      kbi.CollectionNodeView = " \
+      <li class='kbi' data-bind=\"css: {opened: opened, closed: !opened()}\"> \
+        <div class='collection' data-bind=\"click: function(){ opened(!opened()) }\"> \
+          <span data-bind=\"text: (opened() ? '- ' : '+ ' )\"></span> \
+          <span data-bind=\"text: name\"></span> \
+        </div> \
+      \
+        <!-- ko if: opened --> \
+          <!-- ko foreach: node --> \
+            <ul class='kbi' data-bind=\"template: {name: 'kbi_model_node', data: new kbi.NodeViewModel('['+$index()+']', false, $data)}\"></ul> \
+          <!-- /ko --> \
+        <!-- /ko --> \
       </li>";
-    span <strong>Note:</strong> In order to make multi-line strings, we put a '\\' at the end of each continuing line.
+    span <strong>Note:</strong> In order to make multi-line strings, we put a '\' at the end of each continuing line.
   p
     span This template is similar to the last pseudo HTML in the Library Architecture section with a few changes to make it a polished template:
     ul
@@ -765,6 +745,12 @@ block step2
     <script src='javascripts/views/kbi_model_node_view.js'></script>
     <script src='javascripts/lib/kbi_string_template_engine.js'></script>
 
+  p
+    span You should see something like:
+    br
+    img.screen_shot(src='images/tutorial_inspector/screen_shot_step2.png')
+    br
+
 ////////////////
 // Step 3
 ////////////////
@@ -801,7 +787,12 @@ block step3
 
         ko.applyBindings(kb.collectionObservable(house.get('occupants'), {view_model: kb.ViewModel}), $('#backbone_relational')[0]);
       </script>
-  p It just works!
+
+  p
+    span It just works!
+    br
+    img.screen_shot(src='images/tutorial_inspector/screen_shot_step3.png')
+    br
 
 ////////////////
 // Step 4
@@ -864,21 +855,46 @@ block step4
     span We can use the kbi.FetchedCollection and a kb.CollectionObservable to render a tree of the data returned from a Twitter query as follows:
     pre.
       <!-- Step 4: Rendering a Twitter Query using kb.CollectionObservable -->
-      <ul id='fetched_collection' class='kbi' data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel('root', true, $data)}"></ul>
-      <script type='text/javascript'>
-        var tweets = new kbi.FetchedCollection();
-        tweets.url = 'http://search.twitter.com/search.json?q=knockbackjs&callback=?';
-        tweets.fetch();
+      <ul class='kbi' id='fetched_collection'>
+        <li class='kbi'>
+          <fieldset class='kbi'>
+            <label>URL</label>
+            <input type='text' data-bind="value: url">
+          </fieldset>
+          <ul class='kbi' data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel('root', true, collection)}"></ul>
+        </li>
+      </ul>
 
-        ko.applyBindings(kb.collectionObservable(tweets, {view_model: kb.ViewModel}), $('#fetched_collection')[0]);
+      <script type='text/javascript'>
+        var   custom_url_model = new Backbone.Model({url: '', collection: new kbi.FetchedCollection()});
+        var   view_model = kb.viewModel(custom_url_model);
+        view_model.url.subscribe(function(url){
+          custom_url_model.get('collection').url = url;
+          custom_url_model.get('collection').fetch();
+        });
+
+        ko.applyBindings(view_model, $('#fetched_collection')[0]);
+        view_model.url('http://search.twitter.com/search.json?q=knockbackjs&callback=?');
       </script>
-    span This case is no different from Step 3 except that the collection is filled in asynchronously after a fetch.
+    p
+      span To explain:
+      ul
+        li We create a Backbone.Model with the url (string) and collection (kbi.FetchedCollection) attributes and we use Knockback to create a kb.ViewModel with url and collection Knockout observable properties
+        li We use Knockout to subscribe to the url observable to be notified when the url changes and when it does, we set the collection url and perform a fetch using Backbone's ORM.
+        li We initialize the url value after everything is set up so the first fetch is triggered.
+
+  p
+    span You should be able to change the twitter search query or enter any RESTful, public url that returns JSON with a results array.
+    br
+    img.screen_shot(src='images/tutorial_inspector/screen_shot_step4.png')
+    br
 
 ////////////////
 // Step 5
 ////////////////
 block step5
-  p The last step is to turn the library into a single file, wrap it in an anonymous function, and to minimize it. For CoffeeScript, this can be achieved by updating the Cakefile as follows:
+
+  p The last step is to turn the library into a single file named 'knockback-inspector.min.js', wrap it in an anonymous function, and to minimize it. For CoffeeScript, this can be achieved by updating the Cakefile as follows:
   pre.
     {print} = require 'util'
     {spawn} = require 'child_process'
@@ -886,7 +902,7 @@ block step5
 
     callback = ->
       spawn 'uglifyjs', ['-o', 'knockback-inspector.min.js', 'knockback-inspector.js']
-      print "\#{(new Date).toLocaleTimeString()} - generated knockback-inspector.min.js\\n"
+      print "\#{(new Date).toLocaleTimeString()} - generated knockback-inspector.min.js\n"
 
     task 'build', 'Build javascripts/ from src/', ->
       coffee = spawn 'coffee', ['-c', '-j', 'knockback-inspector.js', 'src']
@@ -906,7 +922,7 @@ block step5
         print data.toString()
         callback?()
   p The difference are that now we are using the -j (or --join) option without generating temporary files in the /javascripts directory and we implemented a callback to uglify the knockback-inspector.js whenever it changed.
-  p <strong>Note:</strong> you can choose a scripting language of your choice to concatenate and minimized the JavaScript files directly.
+  p <strong>Note:</strong> if you are using JavaScript, you can use the scripting language of your choice to concatenate and minimize the individual JavaScript files into 'knockback-inspector.min.js'.
 
 
 ////////////////
@@ -951,6 +967,11 @@ block content
       strong Note: because this is an intermediate tutorial, you should already have reviewed the
       a(href='tutorial_getting_started.html')  Getting Started Tutorial
       strong  before attempting this one.
+
+    h2 Inspector Visualization
+    p Here is what the inspector could look like for a house model that has a location (simple-typed attribute) and multiple occupants (collection-typed attribute) who each has an id (simple-typed attribute), a name (simple-typed attribute), and who know which house they are living in (model-typed attribute):
+    img.screen_shot(src='images/tutorial_inspector/screen_shot_overview.png')
+    br
 
     div.accordion#sections
       div.accordion-group
@@ -997,7 +1018,7 @@ block content
             block step4
       div.accordion-group
         div.accordion-heading
-          a.accordion-toggle(data-toggle='collapse', href='#collapseStep5') Step 5: Create a Reusable Library Version
+          a.accordion-toggle(data-toggle='collapse', href='#collapseStep5') Step 5: Create a Reusable Library Version <strong>(CoffeeScript Only)</strong>
         div.accordion-body.collapse#collapseStep5(style='height: 0px;')
           div.accordion-inner
             block step5
