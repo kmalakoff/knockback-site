@@ -131,10 +131,10 @@ block control_flow
             </fieldset>
 
           <!-- ELSE IF MODEL -->
-            <ul data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel(attribute_name, false, node)}"></ul>
+            <ul data-bind="template: {name: 'kbi_model_node', data: kbi.nvm(attribute_name, false, node)}"></ul>
 
           <!-- ELSE IF COLLECTION -->
-            <ul data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel(attribute_name+'[]', true, node)}"></ul>
+            <ul data-bind="template: {name: 'kbi_collection_node', data: kbi.nvm(attribute_name+'[]', true, node)}"></ul>
 
       <!-- /ko -->
     </li>
@@ -148,7 +148,7 @@ block control_flow
 
       <!-- ko if: opened -->
         <!-- FOREACH MODEL -->
-          <ul data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel('['+$index()+']', false, node)}"></ul>
+          <ul data-bind="template: {name: 'kbi_model_node', data: kbi.nvm('['+$index()+']', false, node)}"></ul>
       <!-- /ko -->
     </li>
 
@@ -221,11 +221,11 @@ block library_architecture
                   <!-- /ko -->
 
                   <!-- ko if: ($parent.attributeType($data) == 'model') -->
-                    <ul data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel($data, false, $parent.node[$data])}"></ul>
+                    <ul data-bind="template: {name: 'kbi_model_node', data: kbi.nvm($data, false, $parent.node[$data])}"></ul>
                   <!-- /ko -->
 
                   <!-- ko if: ($parent.attributeType($data) == 'collection') -->
-                    <ul data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel($data+'[]', true, $parent.node[$data])}"></ul>
+                    <ul data-bind="template: {name: 'kbi_collection_node', data: kbi.nvm($data+'[]', true, $parent.node[$data])}"></ul>
                   <!-- /ko -->
 
                 <!-- /ko -->
@@ -462,7 +462,7 @@ block step2
           ...
 
           <!-- Step 2: Rendering a Backbone.Model using kb.ViewModel -->
-          <ul id='backbone_model' class='kbi' data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel('root', true, $data)}"></ul>
+          <ul id='backbone_model' class='kbi' data-bind="template: {name: 'kbi_model_node', data: kbi.nvm('root', true, $data)}"></ul>
           <script type='text/javascript'>
             var model1 = new Backbone.Model({name: 'Model1', pet: 'frog', friends: new Backbone.Collection([])});
             var model2 = new Backbone.Model({name: 'Model2', pet: 'dog', friends: new Backbone.Collection([])});
@@ -479,11 +479,11 @@ block step2
       </body>
     span You should recognize the unordered list HTML from the Control Flow and Library Architecture sections (if not, please review those sections):
     pre.
-      <ul id='backbone_model' class='kbi' data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel('root', true, $data)}"></ul>
+      <ul id='backbone_model' class='kbi' data-bind="template: {name: 'kbi_model_node', data: kbi.nvm('root', true, $data)}"></ul>
     span This unordered list tag starts a new tree in the DOM that is found by jQuery using the #backbone_model id selector and is bound by Knockout.js using:
     pre.
       ko.applyBindings(kb.viewModel(model1), $('#backbone_model')[0]);
-    span Because Knockout is binding directly to the kb.ViewModel in ko.applyBindings, we can access the kb.ViewModel using $data when the new kbi.NodeViewModel is created.
+    span Because Knockout is binding directly to the kb.ViewModel in ko.applyBindings, we can access the kb.ViewModel using $data when the kbi.nvm is created.
 
   p
     span Let's start by implementing the kbi.NodeViewModel which contains a name ('root'), an opened state (true), and the kb.ViewModel node ($data). A shared implementation for both a kb.ViewModel and a kb.CollectionObservable would be as follows:
@@ -497,6 +497,9 @@ block step2
           @opened = ko.observable(opened)
           @node = ko.utils.unwrapObservable(node)
 
+      # factory
+      kbi.nodeViewModel = kbi.nvm = (name, opened, node) -> return new kbi.NodeViewModel(name, opened, node)
+  p kbi.nodeViewModel() and kbi.nvm() are factory functions to help reduce the verbosity of the code in the templates.
   div(data-for='js')
     h3 Create /javascripts/view_models/kbi_node_view_model.js:
     pre.
@@ -505,6 +508,10 @@ block step2
         this.opened = ko.observable(opened);
         this.node = ko.utils.unwrapObservable(node);
       };
+
+      // factory
+      kbi.nodeViewModel = kbi.nvm = function(name, opened, node) { return new kbi.NodeViewModel(name, opened, node); };
+    p kbi.nodeViewModel() and kbi.nvm() are factory functions to help reduce the verbosity of the code in the templates.
     span <strong>Note:</strong> the node needs to be unwrapped because when Knockback generates kb.ViewModels and kb.Collection observables for nested Backbone.Models and Backbone.Collections, it wraps them in ko.Observables in case the underlying relationship changes.
 
   h2='kbi.NodeViewModel'
@@ -528,6 +535,9 @@ block step2
           return 'model' if (ko.utils.unwrapObservable(attribute_connector) instanceof kb.ViewModel)
           return 'collection' if kb.utils.observableInstanceOf(attribute_connector, kb.CollectionAttributeConnector)
           return 'simple'
+
+      # factory
+      kbi.nodeViewModel = kbi.nvm = (name, opened, node) -> return new kbi.NodeViewModel(name, opened, node)
     pre(data-for='js').
       kbi.NodeViewModel = function(name, opened, node) {
         this.name = name;
@@ -550,6 +560,9 @@ block step2
         else
           return 'simple';
       };
+
+      // factory
+      kbi.nodeViewModel = kbi.nvm = function(name, opened, node) { return new kbi.NodeViewModel(name, opened, node); };
     span The new code in the constructor just collects all of the attribute names and the attributeType(key) function just checks the property in the kb.ViewModel for its type rather than performing this check directly in the template.
 
   h2='Views'
@@ -578,11 +591,11 @@ block step2
             <!-- /ko -->
 
             <!-- ko if: ($parent.attributeType($data) == 'model') -->
-              <ul class='kbi' data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel($data, false, $parent.node[$data])}"></ul>
+              <ul class='kbi' data-bind="template: {name: 'kbi_model_node', data: kbi.nvm($data, false, $parent.node[$data])}"></ul>
             <!-- /ko -->
 
             <!-- ko if: ($parent.attributeType($data) == 'collection') -->
-              <ul class='kbi' data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel($data+'[]', true, $parent.node[$data])}"></ul>
+              <ul class='kbi' data-bind="template: {name: 'kbi_collection_node', data: kbi.nvm($data+'[]', true, $parent.node[$data])}"></ul>
             <!-- /ko -->
 
           <!-- /ko -->
@@ -609,11 +622,11 @@ block step2
             <!-- /ko --> \
       \
             <!-- ko if: ($parent.attributeType($data) == 'model') --> \
-              <ul class='kbi' data-bind=\"template: {name: 'kbi_model_node', data: new kbi.NodeViewModel($data, false, $parent.node[$data])}\"></ul> \
+              <ul class='kbi' data-bind=\"template: {name: 'kbi_model_node', data: kbi.nvm($data, false, $parent.node[$data])}\"></ul> \
             <!-- /ko --> \
       \
             <!-- ko if: ($parent.attributeType($data) == 'collection') --> \
-              <ul class='kbi' data-bind=\"template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel($data+'[]', true, $parent.node[$data])}\"></ul> \
+              <ul class='kbi' data-bind=\"template: {name: 'kbi_collection_node', data: kbi.nvm($data+'[]', true, $parent.node[$data])}\"></ul> \
             <!-- /ko --> \
       \
           <!-- /ko --> \
@@ -640,7 +653,7 @@ block step2
 
         <!-- ko if: opened -->
           <!-- ko foreach: node -->
-            <ul class='kbi' data-bind="template: {name: 'kbi_model_node', data: new kbi.NodeViewModel('['+$index()+']', false, $data)}"></ul>
+            <ul class='kbi' data-bind="template: {name: 'kbi_model_node', data: kbi.nvm('['+$index()+']', false, $data)}"></ul>
           <!-- /ko -->
         <!-- /ko -->
       </li>
@@ -657,7 +670,7 @@ block step2
       \
         <!-- ko if: opened --> \
           <!-- ko foreach: node --> \
-            <ul class='kbi' data-bind=\"template: {name: 'kbi_model_node', data: new kbi.NodeViewModel('['+$index()+']', false, $data)}\"></ul> \
+            <ul class='kbi' data-bind=\"template: {name: 'kbi_model_node', data: kbi.nvm('['+$index()+']', false, $data)}\"></ul> \
           <!-- /ko --> \
         <!-- /ko --> \
       </li>";
@@ -758,13 +771,13 @@ block step3
   p
     span Because we already have an implementation for 'kbi_collection_node' and kbi.NodeViewModel can be used with both kb.ViewModels and kb.CollectionObservables, we should be able to render a tree starting with a kb.CollectionObservable as follows:
     pre.
-      <ul data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel('root', true, kb.collectionObservable(collection, {view_model: kb.ViewModel}))}"></ul>
+      <ul data-bind="template: {name: 'kbi_collection_node', data: kbi.nvm('root', true, kb.collectionObservable(collection, {view_model: kb.ViewModel}))}"></ul>
     span <strong>Note:</strong> the kb.CollectionObservable requires the view_model option because by default it stores the collection models rather than generating kb.ViewModels.
   p
     span Let's use Backbone-Relational to generate some relations and then render the relations:
     pre.
       <!-- Step 3: Rendering a BackboneRelational using kb.CollectionObservable -->
-      <ul id='backbone_relational' class='kbi' data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel('root', true, $data)}"></ul>
+      <ul id='backbone_relational' class='kbi' data-bind="template: {name: 'kbi_collection_node', data: kbi.nvm('root', true, $data)}"></ul>
       <script type='text/javascript'>
         var Person = Backbone.RelationalModel.extend({});
         var House = Backbone.RelationalModel.extend({
@@ -861,7 +874,7 @@ block step4
             <label>URL</label>
             <input type='text' data-bind="value: url">
           </fieldset>
-          <ul class='kbi' data-bind="template: {name: 'kbi_collection_node', data: new kbi.NodeViewModel('root', true, collection)}"></ul>
+          <ul class='kbi' data-bind="template: {name: 'kbi_collection_node', data: kbi.nvm('root', true, collection)}"></ul>
         </li>
       </ul>
 

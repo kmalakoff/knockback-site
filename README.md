@@ -11,19 +11,12 @@ Knockback.js provides Knockout.js magic for Backbone.js Models and Collections.
 
 ### Website: http://kmalakoff.github.com/knockback/
 
-You can get the library here:
+Please download the libraries: [Knockback.js][1], [Knockout.js][2], [Backbone.js][3], and [Underscore.js][4].
 
-* [Development version][1]
-* [Production version][2]
-
-[1]: https://github.com/kmalakoff/knockback/raw/master/knockback.js
-[2]: https://github.com/kmalakoff/knockback/raw/master/knockback.min.js
-
-You can find Knockout [here][3], Backbone.js [here][4], and Underscore.js [here][5].
-
-[3]: https://github.com/SteveSanderson/knockout/downloads/
-[4]: http://documentcloud.github.com/backbone/
-[5]: http://documentcloud.github.com/underscore/
+[1]: http://kmalakoff.github.com/knockback/
+[2]: https://github.com/SteveSanderson/knockout/downloads/
+[3]: http://documentcloud.github.com/backbone/
+[4]: http://documentcloud.github.com/underscore/
 
 Building the web site
 -----------------------
