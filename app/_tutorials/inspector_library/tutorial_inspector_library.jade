@@ -29,6 +29,11 @@ block overview
   ul
     li For each model-typed attribute, provide a collapsable node with the index model and when opened, allow each model attribute to be inspected bytype
 
+  h3 Inspector Visualization
+  p Here is what the inspector could look like for a house model that has a location (simple-typed attribute) and multiple occupants (collection-typed attribute) who each has an id (simple-typed attribute), a name (simple-typed attribute), and who know which house they are living in (model-typed attribute):
+  img.screen_shot(src='images/tutorial_inspector/screen_shot_overview.png')
+  br
+
   h3 HTML Templates
 
   p Given the recursiveness of the design, I chose to implement this functionality using two reusable HTML templates: one for a model node that generates HTML for each of its attributes and one for a collection node that generates HTML for each for its models:
@@ -311,6 +316,7 @@ block step1
           <!-- APPLICATION STYLING -->
           <style type='text/css'>
           #content {width: 800px; margin: 0 auto; background-color: #F5E0FF; border-radius: 5px;}
+          #content > ul.kbi > li.kbi {margin-left: 0px;}
           h1 {text-align: center; font-size: 2em; color: #fff; background-color: #CC66FF; border-radius: 5px;}
           </style>
 
@@ -413,6 +419,7 @@ block step1
           <!-- APPLICATION STYLING -->
           <style type='text/css'>
           #content {width: 800px; margin: 0 auto; background-color: #F5E0FF; border-radius: 5px;}
+          #content > ul.kbi > li.kbi {margin-left: 0px;}
           h1 {text-align: center; font-size: 2em; color: #fff; background-color: #CC66FF; border-radius: 5px;}
           </style>
 
@@ -833,7 +840,10 @@ block step4
       # General-purpose collection for fetched JSON when you do not have a specialized implementation
       class kbi.FetchedCollection extends Backbone.Collection
         model: kbi.FetchedModel
-        parse: (response) -> return response.results
+        parse: (response) -> return _.map(response.results, (result) ->
+          model = new kbi.FetchedModel()
+          return model.set(model.parse(result))
+        )
   div(data-for='js')
     h4 Create /javascripts/models/kbi_fetched.js:
     pre.
@@ -861,9 +871,14 @@ block step4
       // General-purpose collection for fetched JSON when you do not have a specialized implementation
       kbi.FetchedCollection = Backbone.Collection.extend({
         model: kbi.FetchedModel,
-        parse: function(response) { return response.results; }
+        parse: function(response) {
+          return _.map(response.results, function(result) {
+            var model = new kbi.FetchedModel();
+            return model.set(model.parse(result));
+          });
+        }
       });
-  p Quite simply, when parsing the data, kbi.FetchedModel generates kbi.FetchedModel when it encounters a JSON object, generates a kbi.FetchedCollection when it encounters a JSON array, and otherwise, it just stores the simple type in the attribute.
+  p When parsing the data, kbi.FetchedModel generates kbi.FetchedModel when it encounters a JSON object, generates a kbi.FetchedCollection when it encounters a JSON array, and otherwise, it just stores the simple type in the attribute.
   p
     span We can use the kbi.FetchedCollection and a kb.CollectionObservable to render a tree of the data returned from a Twitter query as follows:
     pre.
@@ -970,22 +985,21 @@ block content
     p This tutorial shows how to create an inspector for a Backbone.Model or a Backbone.Collection that you can embed in your website for debugging purposes. For a model, the inspector allows you to view and edit its attributes including nested models and collections; for a collection, the inspector allows you to view and edit its models.
 
     p
-      span Although the inspector can be useful as presented in this tutorial, this version is simple and stripped down for learning purposes; for example, it does not treat changing of model ids as a special case, there are no special editors for time/date/color attribute types, etc. For the latest full implementation:
-      ul
-        li: a(href='https://github.com/kmalakoff/knockback-inspector/') View the GitHub project
+      span <strong>Note:</strong> because this is an intermediate tutorial, you should already have reviewed the
+      a(href='tutorial_getting_started.html')  Getting Started Tutorial
+      span  before attempting this one.
 
-      span Please download the project, try the demos in /test/index.html, and follow along with each step in this tutorial in the /tutorials folder.
-    p Also, please feel free to contribute to the GitHub project with your own ideas or with some of the proposals in the "Future Enhancements" section.
+    h3 Try out the Knockback-Inspector:
+    iframe(style='width: 100%; height: 400px', src='http://jsfiddle.net/kmalakoff/FRhEV/embedded/result,js,html,css,resources/', allowfullscreen='allowfullscreen', frameborder='0')
 
     p
-      strong Note: because this is an intermediate tutorial, you should already have reviewed the
-      a(href='tutorial_getting_started.html')  Getting Started Tutorial
-      strong  before attempting this one.
-
-    h2 Inspector Visualization
-    p Here is what the inspector could look like for a house model that has a location (simple-typed attribute) and multiple occupants (collection-typed attribute) who each has an id (simple-typed attribute), a name (simple-typed attribute), and who know which house they are living in (model-typed attribute):
-    img.screen_shot(src='images/tutorial_inspector/screen_shot_overview.png')
-    br
+    p
+      span Although the inspector can be useful as presented in this tutorial, this version is simple and stripped down for learning purposes (the tutorial may not match the live demo).
+    p
+      span Please download
+      a(href='https://github.com/kmalakoff/knockback-inspector/')  the Knockout-Inspector project from GitHub
+      span  and follow along with each step of this tutorial in the /tutorials/step folder.
+    p <strong>Let's begin...</strong>
 
     div.accordion#sections
       div.accordion-group
