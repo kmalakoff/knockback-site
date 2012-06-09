@@ -27,7 +27,7 @@ Installing:
 2. install bundler: http://gembundler.com
 3. install gems: (sudo) 'bundle install'
 4. install node.js: http://nodejs.org
-5. install node packages: (sudo) 'npm install'
+5. install node packages: 'npm install'
 
 Commands:
 
