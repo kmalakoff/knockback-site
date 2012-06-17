@@ -23,7 +23,7 @@ mixin pageNavbar(active_label, include_code_language_selector)
   div.navbar.page
     div.navbar-inner
       div.container
-        a.brand.kb Knockback.js
+        a.brand.kb(href='https://github.com/kmalakoff/knockback') Knockback.js
         ul.nav
           each item in ITEMS
             each url, label in item

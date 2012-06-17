@@ -191,7 +191,7 @@ block library_architecture
         h3 kbi_core.js/.coffee
         p Provides the kbi namespace and the kbi.VERSION semantic versioning string.
         h3 kbi_string_template_engine.js/.coffee
-        p Implements kbi.StringTemplateSource and kbi.StringTemplateEngine to expose the 'kbi_model_node' and 'kbi_collection_node' templates to Knockout.js.
+        p Implements kbi.TemplateSource and kbi.TemplateEngine to expose the 'kbi_model_node' and 'kbi_collection_node' templates to Knockout.js.
         h3 kbi_fetched.js/.coffee
         p Implements the kbi.FetchedModel and the kbi.FetchedCollection classes providing a Backbone.Model and a Backbone.Collection with the parse function that can be used to inspect a JSON server response when you do not have your own specialized implementations.
         h3 kbi_node_view_model.js/.coffee
@@ -239,9 +239,9 @@ block library_architecture
             </li>
         p Because Knockout.js pushes a new binding context on the stack during the iteration through the attribute_names, $data is mapped to the attribute name and the attribute itself can be accessed in the parent context using $parent.node[$data])
         h3 kbi_collection_node_view.js/.coffee
-        p Provides kbi.CollectionNodeView which holds an HTML string that is used by the kbi.StringTemplateEngine whenever Knockout.js requests the 'kbi_collection_node' template.
+        p Provides kbi.CollectionNodeView which holds an HTML string that is used by the kbi.TemplateEngine whenever Knockout.js requests the 'kbi_collection_node' template.
         h3 kbi_model_node_view.js/.coffee
-        p Provides kbi.ModelNodeView which holds an HTML string that is used by the kbi.StringTemplateEngine whenever Knockout.js requests the 'kbi_model_node' template.
+        p Provides kbi.ModelNodeView which holds an HTML string that is used by the kbi.TemplateEngine whenever Knockout.js requests the 'kbi_model_node' template.
     p OK. Let's start...
 
 ////////////////
@@ -697,47 +697,47 @@ block step2
     h4 Create /src/lib/kbi_string_template_engine.coffee:
     pre.
       # template source
-      class kbi.StringTemplateSource
+      class kbi.TemplateSource
         constructor: (@template_string) ->
         text: (value) -> return @template_string
 
       # template engine
-      class kbi.StringTemplateEngine extends ko.nativeTemplateEngine
+      class kbi.TemplateEngine extends ko.nativeTemplateEngine
         constructor: ->
           @allowTemplateRewriting = false
 
         makeTemplateSource: (template) ->
           switch (template)
-            when 'kbi_model_node' then return new kbi.StringTemplateSource(kbi.ModelNodeView)
-            when 'kbi_collection_node' then return new kbi.StringTemplateSource(kbi.CollectionNodeView)
+            when 'kbi_model_node' then return new kbi.TemplateSource(kbi.ModelNodeView)
+            when 'kbi_collection_node' then return new kbi.TemplateSource(kbi.CollectionNodeView)
             else return ko.nativeTemplateEngine.prototype.makeTemplateSource.apply(this, arguments)  div(data-for='js')
 
   div(data-for='js')
     h4 Create /javascripts/lib/kbi_string_template_engine.js:
     pre.
       // template source
-      kbi.StringTemplateSource = function(template_string) { this.template_string = template_string; };
-      kbi.StringTemplateSource.prototype.text = function(value) { return this.template_string; };
+      kbi.TemplateSource = function(template_string) { this.template_string = template_string; };
+      kbi.TemplateSource.prototype.text = function(value) { return this.template_string; };
 
       // template engine
-      kbi.StringTemplateEngine = function() { this.allowTemplateRewriting = false; };
-      kbi.StringTemplateEngine.prototype = new ko.nativeTemplateEngine();
-      kbi.StringTemplateEngine.prototype.makeTemplateSource = function(template) {
+      kbi.TemplateEngine = function() { this.allowTemplateRewriting = false; };
+      kbi.TemplateEngine.prototype = new ko.nativeTemplateEngine();
+      kbi.TemplateEngine.prototype.makeTemplateSource = function(template) {
         switch (template) {
           case 'kbi_model_node':
-            return new kbi.StringTemplateSource(kbi.ModelNodeView);
+            return new kbi.TemplateSource(kbi.ModelNodeView);
           case 'kbi_collection_node':
-            return new kbi.StringTemplateSource(kbi.CollectionNodeView);
+            return new kbi.TemplateSource(kbi.CollectionNodeView);
           default:
             return ko.nativeTemplateEngine.prototype.makeTemplateSource.apply(this, arguments);
         }
       };
   p
-    span The kbi.StringTemplateSource class simply stores a string and returns it when text() is called.
+    span The kbi.TemplateSource class simply stores a string and returns it when text() is called.
   p
-    span The kbi.StringTemplateEngine class is derived from ko.nativeTemplateEngine, uses this.allowTemplateRewriting to tell Knockout that the template source is very simple, and implements a makeTemplateSource() function to look up the template by name.
+    span The kbi.TemplateEngine class is derived from ko.nativeTemplateEngine, uses this.allowTemplateRewriting to tell Knockout that the template source is very simple, and implements a makeTemplateSource() function to look up the template by name.
 
-  h3 Register kbi.StringTemplateEngine with Knockout
+  h3 Register kbi.TemplateEngine with Knockout
   p
     span Setting the template engine is done in the index.html file rather than the library so you can hook up your own template engine implementation as you need depending on which template engine you are using.
   p
@@ -746,10 +746,10 @@ block step2
       <!-- KNOCKOUT INITIALIZATION -->
       <script type='text/javascript'>
         // set the template engine so Knockout can find 'kbi_model_node' and 'kbi_collection_node' templates
-        ko.setTemplateEngine(new kbi.StringTemplateEngine());
+        ko.setTemplateEngine(new kbi.TemplateEngine());
       </script>
   p
-    span <strong>Note:</strong> if you are integrating Knockback-Inspector into your own application and you are not using the default Knockout template engine, you will to write a register your own template engine with Knockout. You can use kbi.StringTemplateEngine as a starting point.
+    span <strong>Note:</strong> if you are integrating Knockback-Inspector into your own application and you are not using the default Knockout template engine, you will to write a register your own template engine with Knockout. You can use kbi.TemplateEngine as a starting point.
 
   h2 Hooking up the library
   p Finally, add all of the javascript files to index.html and try it out!
