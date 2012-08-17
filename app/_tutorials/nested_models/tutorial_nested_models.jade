@@ -1,0 +1,69 @@
+extends ../../_layout/_layout_template
+
+include ../../_layout/_layout_mixins
+
+block title
+  title Tutorial: Relational Models
+
+block includes
+  link(rel='stylesheet', href='stylesheets/tutorial.css')
+  include ../../_demos/_demos_include_knockback_scripts
+  script(type='application/javascript', src='vendor/javascripts/backbone-relational-0.5.0.js')
+
+block navbar
+  mixin pageNavbar('Relational Models', true)
+
+block content
+  section
+    h1 Tutorial: Nested Models
+    div
+      span Because Backbone.Models can have attributes than contain nested Backbone.Models or Backbone.Collections, there are times where you need to specialize the ViewModel you want to use; for example, in a model/collection hierachy with relationships. When you do need to, you can use the `mappings` option when creating a 
+      a(href='docs_kb_view_model.html') kb.ViewModel
+      span  or 
+      a(href='docs_kb_collection_observable.html') kb.CollectionObservable.
+
+    h2 Specifying Mappings Paths for kb.CollectionObservables
+    p In the following example, we specify bindings so the collection view models (path: 'models') use a PersonViewModel; whereas, the 'friends' relationship (path: 'models.friends.models') uses FriendViewModel. 
+      
+    div.container-fluid
+      div.row-fluid
+        div.span8
+          h4 View (HTML):
+          pre
+            include kbnm_collection_observables.html.txt
+
+          h4 ViewModel and Bindings:
+          pre(data-for='cs')
+            include kbnm_collection_observables.coffee
+
+          pre(data-for='js')
+            include ../../../public/tutorials/nested_models/kbnm_collection_observables.js
+
+        div.span4
+          h4 Live Result
+          div.demos_result_box
+            include kbnm_collection_observables.html
+            script(type='application/javascript', src='tutorials/nested_models/kbnm_collection_observables.js')
+
+    h2 Specifying Mappings Paths for ViewMoels
+    p In the following example, we specify bindings so the collection view models (path: 'models') use a PersonViewModel; whereas, the 'friends' relationship (path: 'models.friends.models') uses FriendViewModel. 
+      
+    div.container-fluid
+      div.row-fluid
+        div.span8
+          h4 View (HTML):
+          pre
+            include kbnm_view_models.html.txt
+
+          h4 ViewModel and Bindings:
+          pre(data-for='cs')
+            include kbnm_view_models.coffee
+
+          pre(data-for='js')
+            include ../../../public/tutorials/nested_models/kbnm_view_models.js
+
+        div.span4
+          h4 Live Result
+          div.demos_result_box
+            include kbnm_view_models.html
+            script(type='application/javascript', src='tutorials/nested_models/kbnm_view_models.js')

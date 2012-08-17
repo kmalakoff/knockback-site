@@ -1,3 +1,4 @@
 &lt;div id='kboo_default'&gt;
-  &lt;div data-bind=&quot;text: name&quot;&gt;&lt;/div&gt;
+  &lt;p&gt;Name: &lt;input data-bind=&quot;value: name&quot;/&gt;&lt;/p&gt;
+  &lt;p&gt;Name with default: &lt;span data-bind=&quot;text: name_with_default&quot;&gt;&lt;/span&gt;&lt;/p&gt;
 &lt;/div&gt;

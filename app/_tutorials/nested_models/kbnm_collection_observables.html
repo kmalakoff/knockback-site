@@ -1,0 +1,8 @@
+<div id='kbnm_collection_observables' data-bind="foreach: people">
+  <p>Type: <span data-bind="text: type"></span></p>
+  <p>Name: <input data-bind="value: name"/></p>
+
+  <div data-bind="foreach: friends">
+    <p>Friend Type: <span data-bind="text: type"></span> <span class="pull-right" >Name: <span data-bind="text: name"></span></span></p>
+  </div>
+</div>

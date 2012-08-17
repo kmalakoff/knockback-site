@@ -1,3 +1,0 @@
-&lt;div id='kboo_read_only'&gt;
-  &lt;input data-bind=&quot;value: number_wrapper&quot;/&gt;
-&lt;/div&gt;

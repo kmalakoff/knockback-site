@@ -8,6 +8,7 @@ PROJECT_ROOT = File.expand_path('../..', __FILE__)
 ASSETS_ROOT = "#{PROJECT_ROOT}/app/assets"
 VENDOR_ROOT = "#{PROJECT_ROOT}/vendor"
 TUTORIALS_ROOT = "#{PROJECT_ROOT}/app/_tutorials"
+GETTING_STARTED_ROOT = "#{PROJECT_ROOT}/app/_getting_started"
 
 # set up structure
 `cd #{PROJECT_ROOT}; mkdir public` if !File.exists?('public')
@@ -96,5 +97,6 @@ Dir.entries(VENDOR_ROOT).each{|filename| recursiveFilteredCopy(VENDOR_ROOT, file
 Dir.entries(ASSETS_ROOT).each{|filename| recursiveFilteredCopy(ASSETS_ROOT, filename, 'public', ['.styl', '.coffee'])}
 
 setupDemo(TUTORIALS_ROOT, 'public/tutorials')
+setupDemo(GETTING_STARTED_ROOT, 'public/getting_started')
 
 `cd #{PROJECT_ROOT}; node_modules/.bin/jade --out public app`

@@ -3,24 +3,24 @@ extends ../../_layout/_layout_template
 include ../../_layout/_layout_mixins
 
 block title
-  title Tutorial: kb.Observable Options
+  title Tutorial: kb.Observable
 
 block includes
   link(rel='stylesheet', href='stylesheets/tutorial.css')
   include ../../_demos/_demos_include_knockback_scripts
 
 block navbar
-  mixin pageNavbar('kb.Observable Options', true)
+  mixin pageNavbar('kb.Observable', true)
 
 block content
   section
-    h1 Tutorial: kb.Observable Options
+    h1 Tutorial: kb.Observable
     p
       a(href='index.html') Knockback.js
       span  provides ways to customize a kb.Observable when it is created. This tutorial provides working examples of using these options.
 
     p
-    h3 {read: function(), write: function(value)}
+    h2 Create Options: {read: function(), write: function(value)}
     p Instead of performing a simple Backbone.Model get or set to synchronize with a kb.Observable, you can provide a custom read or write method like for a ko.observable.
     p
       strong Note:
@@ -48,41 +48,24 @@ block content
             script(type='application/javascript', src='tutorials/kb_observable_options/kboo_read_write_view_model_bindings.js')
 
     p
-    h3 {read_only: boolean}
-    p If you want to block an Backbone.Model's attribute from being updated, you can provide a read_only option. Knockback will throw an Error is the observable attempts to update the attribute.
-    div.container-fluid
-      div.row-fluid
-        div.span8
-
-          h4 Views:
-          pre
-            include kboo_read_only_view.html.txt
-
-          h4 ViewModel and Bindings:
-          pre(data-for='cs')
-            include kboo_read_only_view_model_bindings.coffee
-
-          pre(data-for='js')
-            include ../../../public/tutorials/kb_observable_options/kboo_read_only_view_model_bindings.js
-
-        div.span4
-          h4 Live Result
-          div.demos_result_box
-            include kboo_read_only_view.html
-            script(type='application/javascript', src='tutorials/kb_observable_options/kboo_read_only_view_model_bindings.js')
-            p
-
-    p
-    h3 {localizer: constructor(value)}
+    h2 Create Options: {localizer: constructor(value)}
     p
       span Instead of a read and/or write option, you can provide a kb.LocalizedObservable derived class for custom localized of an attribute. Please see the 
       a(href='tutorial_kb_localized_observable.html#localized_input')  kb.LocalizedObservable tutorial
-      span  for an example.
+      span  an explaination of the following:
 
-  //
+    h4 ViewModel and Bindings:
+    pre(data-for='cs')
+      include kboo_localizer_view_model_bindings.coffee
+
+    pre(data-for='js')
+      include ../../../public/tutorials/kb_observable_options/kboo_localizer_view_model_bindings.js
+
     p
-    h3 {default: function() or value}
-    p If you want to block an Backbone.Model's attribute from being updated, you can provide a read_only option. Knockback will throw an Error is the observable attempts to update the attribute.
+    h2 Create Options: {default: value or observable}
+    p
+      span You can pass a default function or parameter to provide a value when there is no value available.
+
     div.container-fluid
       div.row-fluid
         div.span8
@@ -103,5 +86,4 @@ block content
           div.demos_result_box
             include kboo_default_view.html
             script(type='application/javascript', src='tutorials/kb_observable_options/kboo_default_view_model_bindings.js')
-            p
 

@@ -23,7 +23,7 @@ block api_descriptions
   pre(data-for='cs').
     ContactViewModel = (model) ->
       @name = kb.observable(model, 'name')
-      @number = kb.observable(model, {key:'number', read_only: true})
+      @number = kb.observable(model, {key:'number')
       @
 
     model = new Contact({name: 'Ringo', number: '555-555-5556'})
@@ -32,7 +32,7 @@ block api_descriptions
   pre(data-for='js').
     var ContactViewModel = function(model) {
       this.name = kb.observable(model, 'name');
-      this.number = kb.observable(model, { key: 'number', read_only: true });
+      this.number = kb.observable(model, { key: 'number'});
     };
     var model = new Contact({
       name: 'Ringo',
@@ -43,7 +43,7 @@ block api_descriptions
   h4 Tutorials
     ul
       li
-        a(href='tutorial_kb_observable_options.html') kb.Observable Options
+        a(href='tutorial_kb_observable.html') kb.Observable
 
   h3#factory kb.observable(model, mapping_info, [owner]) <span class='label label-info'>factory</span>
   div Used to create a new instance
@@ -60,8 +60,6 @@ block api_descriptions
             span.type { function() }:
           li write
             span.type { function(value) }:
-          li read_only
-            span.type { boolean }:
           li localizer
             span.type { constructor(value) }:
           li default
@@ -77,7 +75,7 @@ block api_descriptions
   h4 Tutorials
     ul
       li
-        a(href='tutorial_kb_observable_options.html') kb.Observable Options
+        a(href='tutorial_kb_observable.html') kb.Observable
 
   h3#constructor constructor(model, mapping_info, [owner]) <span class='label label-warning'>observable returned</span>
   div Used to create a new instance
@@ -95,8 +93,6 @@ block api_descriptions
             span.type { function() }:
           li write
             span.type { function(value) }:
-          li read_only
-            span.type { boolean }:
           li localizer
             span.type { constructor(value) }:
           li default
@@ -112,7 +108,7 @@ block api_descriptions
   h4 Tutorials
     ul
       li
-        a(href='tutorial_kb_observable_options.html') kb.Observable Options
+        a(href='tutorial_kb_observable.html') kb.Observable
 
   h3#destroy destroy()
   div Used to release the memory of the object

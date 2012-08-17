@@ -1,0 +1,78 @@
+extends ../../_layout/_layout_template
+
+include ../../_layout/_layout_mixins
+
+block title
+  title Getting Started: Knockback.js Important Details
+
+block includes
+  link(rel='stylesheet', href='stylesheets/tutorial.css')
+  include ../../_demos/_demos_include_knockback_scripts
+
+block navbar
+  mixin pageNavbar('Getting Started', true)
+
+block content
+  section
+    h1 Getting Started with Knockback.js: Knockback.js Important Details
+
+    p
+    h2 Inheritance
+    p Some Knockback classes are meant to be inherited. Specifically:
+    ul
+      li
+        a(href='docs_kb_view_model.html') kb.ViewModel
+      li
+        a(href='docs_kb_localized_observable.html') kb.LocalizedObservable
+      li
+        a(href='docs_kb_ref_countable.html') kb.RefCountable
+    p When using CoffeeScript, you can derive from a super class using: <pre>class YourClass extends SuperClass </br>  # extensions </pre> or when using JavaScript, you can derive from a super class using: <pre>var YourClass = SuperClass.extend({ </br>  /* extensions */</br>})</pre>
+    p For example:
+
+    div.container-fluid
+      div.row-fluid
+        div.span8
+          h4 View (HTML):
+          pre
+            include kb_view_model_inheritance.html.txt
+
+          h4 ViewModel and Bindings:
+          pre(data-for='cs')
+            include kb_view_model_inheritance.coffee
+
+          pre(data-for='js')
+            include ../../../public/getting_started/knockback_important_details/kb_view_model_inheritance.js
+
+        div.span4
+          h4 Live Result
+          div.demos_result_box
+            include kb_view_model_inheritance.html
+            script(type='application/javascript', src='getting_started/knockback_important_details/kb_view_model_inheritance.js')
+
+    p
+    h2 Classes vs Factory Functions
+    p You may have noticed that there is both kb.viewModel(model, options) and kb.ViewModel. The reason is that to reduce the need of using `new` and to be more familiar with Knockout, there are factory methods that create the underlying classes.
+    p A factory function uses new to create a new instance:
+    pre(data-for='cs').
+      Knockback.viewModel = (model, options) -> return new Knockback.ViewModel(model, options)
+
+    pre(data-for='js').
+      Knockback.viewModel = function(model, options) { return new Knockback.ViewModel(model, options); };
+    div.alert.alert-error
+      span Be careful to differentiate the <span class='label label-info'>factory</span> from the class when using
+      a(href='docs_kb_utils.html#observable_instance_of')  kb.utils.observableInstanceOf(observable, class)
+
+    p
+    h2 Specifying Mappings Paths for Nested Models
+    p 
+      span Because Backbone.Models can have attributes than contain nested Backbone.Models or Backbone.Collections, there are times where you need to specialize the ViewModel you want to use; for example, in a model/collection hierachy with relationships. When you do need to, you can use the `mappings` option when creating a 
+      a(href='docs_kb_view_model.html') kb.ViewModel
+      span  or 
+      a(href='docs_kb_collection_observable.html') kb.CollectionObservable.
+
+    p
+      span Please take a look at the 
+      a(href='tutorial_nested_models.html') Nested Model Tutorial
+      span for an example.
+
+

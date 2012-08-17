@@ -74,12 +74,10 @@ block api_descriptions
             span.type { [strings] }:
           li requires
             span.type { [strings] }:
-          li children
-            span.type { function(model, key, options) | {key: function(model, key, options)} }:
-          li create
-            span.type { function(model, key, options) }:
-          li read_only
-            span.type { boolean }:
+          li mappings
+            span.type { object_with_paths: constructor(model, options) | {create: function(model, options)} | {models_only: boolean} }:
+          li store
+            span.type { kb.Store }:
 
   h4 Example:
   pre(data-for='cs').
@@ -103,12 +101,10 @@ block api_descriptions
             span.type { [strings] }:
           li requires
             span.type { [strings] }:
-          li children
-            span.type { function(model, key, options) | {key: function(model, key, options)} }:
-          li create
-            span.type { function(model, key, options) }:
-          li read_only
-            span.type { boolean }:
+          li mappings
+            span.type { object_with_paths: constructor(model, options) | {create: function(model, options)} | {models_only: boolean} }:
+          li store
+            span.type { kb.Store }:
 
   h4 Example:
   pre(data-for='cs').

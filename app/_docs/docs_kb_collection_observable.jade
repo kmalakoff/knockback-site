@@ -41,11 +41,13 @@ block api_descriptions
       li
         strong options: <span class='label label-inverse'>optional</span>
         ul
+          li models_only
+            span.type { boolean }:
           li view_model
             span.type { constructor(model, options) }:
-          li view_model_create
-            span.type { function(model, options) }:
           li create
+            span.type { function(model, options) }:
+          li mappings
             span.type { function(model, options) }:
           li sort_attribute
             span.type { string }:
@@ -53,10 +55,8 @@ block api_descriptions
             span.type { function(models | view_models, model_to_add | view_model_to_add) }:
           li defer
             span.type { boolean }:
-          //li store
-          //  span.type { function(model, options) }:
-          //li store_skip_resolve
-          //  span.type { boolean }:
+          li store
+            span.type { kb.Store }:
   h4 Example:
   pre(data-for='cs').
     todos = kb.collectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))
@@ -75,22 +75,22 @@ block api_descriptions
       li
         strong options: <span class='label label-inverse'>optional</span>
         ul
+          li models_only
+            span.type { boolean }:
           li view_model
             span.type { constructor(model, options) }:
-          li view_model_create
-            span.type { function(model, options) }:
           li create
             span.type { function(model, options) }:
+          li mappings
+            span.type { object_with_paths: constructor(model, options) | {create: function(model, options)} | {models_only: boolean} }:
           li sort_attribute
             span.type { string }:
           li sorted_index
             span.type { function(models | view_models, model_to_add | view_model_to_add) }:
           li defer
             span.type { boolean }:
-          //li store
-          //  span.type { function(model, options) }:
-          //li store_skip_resolve
-          //  span.type { boolean }:
+          li store
+            span.type { kb.Store }:
   h4 Example:
   pre(data-for='cs').
     todos = new kb.CollectionObservable(new Backbone.Collection([{name: 'name1'}, {name: 'name2'}]))

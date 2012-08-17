@@ -1,0 +1,126 @@
+extends ../../_layout/_layout_template
+
+include ../../_layout/_layout_mixins
+
+block title
+  title Getting Started: Dependent Library Basics
+
+block includes
+  link(rel='stylesheet', href='stylesheets/tutorial.css')
+  include ../../_demos/_demos_include_knockback_scripts
+
+block navbar
+  mixin pageNavbar('Getting Started', true)
+
+block content
+  section
+    h1 Getting Started with Knockback.js: Dependent Library Basics
+
+    p
+    h2 Backbone.js
+    p
+      span Backbone is an amazing
+      a(href='http://en.wikipedia.org/wiki/Model_view_controller')  Model_View_Controller (MVC)
+      span -
+      a(href='http://documentcloud.github.com/backbone/#FAQ-mvc') inspired
+      span  library that handles data (Model/Collection) synchronization with a RESTful server for
+      a(href='http://en.wikipedia.org/wiki/Object-relational_mapping ')  Object_Relational_Mapping (ORM)
+      span , page routing, etc. Unfortunately, their Views becomecomplex to maintain when dynamic Model and View synchronization is required (which is why Knockback exists).
+    div These are the basic Model components from Backbone used by Knockback:
+    pre(data-for='cs').
+      // Model
+      earth = new Backbone.Model({first_name: 'Planet', last_name: 'Earth'})
+      mars = new Backbone.Model({first_name: 'Planet', last_name: 'Mars'})
+
+      // Collection
+      planets = new Backbone.Collection([earth, mars])
+
+    pre(data-for='js').
+      // Model
+      var earth = new Backbone.Model({first_name: 'Planet', last_name: 'Earth'});
+      var mars = new Backbone.Model({first_name: 'Planet', last_name: 'Mars'});
+
+      // Collection
+      var planets = new Backbone.Collection([earth, mars]);
+
+    div This is a Backbone router that can be used by your app:
+    p Router:
+    pre(data-for='cs').
+      class PageRouter extends Backbone.Router
+        routes:
+          "earth":    "switchToEarth"     // #earth
+          "mars":     "switchToMars"      // #mars
+
+        switchToEarth: -> # do something
+        switchToMars: -> # do something
+
+      # instantiate the router and start listening for URL changes
+      page_router = new PageRouter()
+      Backbone.history.start()
+
+    pre(data-for='js').
+      var PageRouter = Backbone.Router.extend({
+        routes: {
+          "earth":    "switchToEarth",     // #earth
+          "mars":     "switchToMars"      // #mars
+        },
+
+        switchToEarth: function() { /* do something */ },
+        switchToMars: function() { /* do something */ }
+      });
+
+      // instantiate the router and start listening for URL changes
+      var page_router = new PageRouter()
+      Backbone.history.start()
+
+    h2 Knockout.js
+    p
+      span Knockout follows the
+      a(href='http://en.wikipedia.org/wiki/Model_View_ViewModel')  Model_View_ViewModel (MVVM)
+      span  design pattern meaning you specify a ViewModel (Controller) in addition to your data (Model) which encapsulates specific data and logic for your HTML/Template (View).
+
+    div.container-fluid
+      div.row-fluid
+        div.span8
+          h4 View (HTML):
+          pre
+            include ko_basic.html.txt
+
+          h4 ViewModel and Bindings:
+          pre(data-for='cs')
+            include ko_basic.coffee
+
+          pre(data-for='js')
+            include ../../../public/getting_started/dependent_library_basics/ko_basic.js
+
+        div.span4
+          h4 Live Result
+          div.demos_result_box
+            include ko_basic.html
+            script(type='application/javascript', src='getting_started/dependent_library_basics/ko_basic.js')
+
+    h4 Knockout.js ViewModel Instances
+    p In Knockout.js, ViewModels need to be unique instances so often you use a simple function with 'new' to create an instance to bind. Here are some equivalents:
+
+    pre(data-for='cs').
+      # Form 1: Simple function-based class
+      ViewModel = (model) ->
+        @first_name = ko.observable(model.first_name)
+        @ # note: need to return this/@ since CoffeeScript returns the last argument automatically (which is not what we want)
+
+      view_model = new ViewModel({first_name: "Hello"})
+
+      # Form 2: CoffeeScript class (allows for inheritance)
+      class ViewModel
+        constructor: (mode) ->
+          @first_name = ko.observable(model.first_name)
+
+      view_model = new ViewModel({first_name: "Hello"})
+
+    pre(data-for='js').
+      // Simple function-based class
+      var ViewModel = function(model) {
+        this.first_name = ko.observable(model.first_name);
+      };
+
+      var view_model = new ViewModel({first_name: "Hello"});

@@ -5,7 +5,7 @@ var model = new Backbone.Model({
 
 var ViewModel = kb.ViewModel.extend({
   constructor: function(model) {
-    ViewModel.__super__.constructor.apply(this, arguments);
+    kb.ViewModel.prototype.constructor.apply(this, arguments);
     this.full_name = ko.computed((function() {
       return "" + (this.first_name()) + " " + (this.last_name());
     }), this);

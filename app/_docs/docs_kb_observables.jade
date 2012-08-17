@@ -23,10 +23,10 @@ block api_descriptions
   pre(data-for='cs').
     ContactViewModel = (model) ->
       @attribute_observables = kb.observables(model, {
-        name:     {key: 'name', read_only: true}
+        name:     {key: 'name'}
         number:   'number'
         date:     {key:'date', localizer: LongDateLocalizer}
-        name2:    {key: 'name', read_only: true}
+        name2:    {key: 'name'}
       }, this)
       @
 
@@ -36,10 +36,10 @@ block api_descriptions
   pre(data-for='js').
     var ContactViewModel = function(model) {
       this.attribute_observables = kb.observables(model, {
-        name:     {key: 'name', read_only: true}
+        name:     {key: 'name'}
         number:   'number'
         date:     {key:'date', localizer: LongDateLocalizer}
-        name2:    {key: 'name', read_only: true}
+        name2:    {key: 'name'}
       }, this);
     };
 
@@ -60,10 +60,6 @@ block api_descriptions
       li
         strong view_model: <span class='label label-inverse'>optional</span> the view model target to set the properties for each mapped attribute (the kb.Observables instance itself will always have the generated observables set in its properties) '
 
-      li
-        strong options: <span class='label label-inverse'>optional</span>
-        span.type { boolean for read_only | {read_only: boolean} }:
-        span  the view model target to set the properties for each mapped attribute (the kb.Observables instance itself will always have the generated observables set in its properties)
   h4 Example:
   pre(data-for='cs').
     view_model = {}
@@ -88,10 +84,6 @@ block api_descriptions
         strong view_model: <span class='label label-inverse'>optional</span>
         span  the view model target to set the properties for each mapped attribute (the kb.Observables instance itself will always have the generated observables set in its properties)
 
-      li
-        strong options: <span class='label label-inverse'>optional</span>
-        span.type  { boolean for read_only | {read_only: boolean} }:
-        span  the view model target to set the properties for each mapped attribute (the kb.Observables instance itself will always have the generated observables set in its properties)
   h4 Example:
   pre(data-for='cs').
     view_model = {}

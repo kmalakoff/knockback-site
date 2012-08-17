@@ -1,0 +1,59 @@
+extends ../../_layout/_layout_template
+
+include ../../_layout/_layout_mixins
+
+block title
+  title Getting Started: Application Patterns
+
+block includes
+  link(rel='stylesheet', href='stylesheets/tutorial.css')
+  include ../../_demos/_demos_include_knockback_scripts
+
+block navbar
+  mixin pageNavbar('Getting Started', true)
+
+block content
+  section
+    h1 Combining Backbone.js and Knockout.js with Knockback.js
+    p As you should see by now, Backbone.js provides great models and collections ORM functionality plus single-page app routing,  Knockout.js provides very dynamic bindings between data and views using ViewModels, and Knockback.js provides the layer between the Backbone ORM and Knockout.js ViewModels.
+
+    p Because Backbone.Views and Knockout.js ViewModels provide traditional MVC Controller functionality, it is your choice on how to structure your application and whether your continue to use Backbone.Views. 
+
+    p As for applicatin structure, personally, I use ViewModels directly as in the 'Roll Your Own' section rather than using Backbone.Views since they become redundant with Knockback.js. Also, rather than using kb.ViewModel (which can be great for rapid prototyping!), I create a hand-crafted ViewModels for each View scenario to minimize the number of generated ko.observables and to provide tailored ViewModel functionality for specific View scenarios. 
+
+    h4 Simple Apps: Roll Your Own
+
+    p TODO
+
+    h4 Large Apps: Consider Brunch
+
+    p If you are making a large single page app, you may choose to use a framework like <a href='http://http://brunch.io'>Brunch</a> which helps you manage the relationships between Backbone.Routes and Backbone.Views. For example setting up your project like:
+
+    h4 Routing:
+    pre.
+      module.exports = class Router extends Backbone.Router
+        routes:
+          '' : 'home'
+
+        home: ->
+          application.homeView.model(new Backbone.Model({name: 'Bob'}))
+          @activateView(application.homeView)
+
+        activateView: (view) ->
+          view.render() unless view.el
+          $('body').empty().append(view.el)
+    h4 View Model:
+    pre.
+      module.exports = class HomeView extends View
+        initialize: (model) ->
+          @view_model = kb.viewModel(model)
+          @model = _.bind(@view_model, @view_model.model) # allow the model to be changed directly on the view model
+
+        afterRender: ->
+          ko.applyBindings(@view_model, @el[0])
+
+        destroy: ->
+          kb.utils.release(@view_model); @view_model = null
+    p This example shows how you can route to views, dynamically create the HTML element using render, bind a view model, and change the Backbone.Model while re-using a kb.ViewModel. In this case, you would need to provide your own way of choosing the correct Backbone.Model for the Backbone.View and managing the lifecycle of the Backbone.View.
+
+    p <strong>Note:</strong> I am not avocating this as the optimal approach, but more showing how you may choose to keep using Backbone.Views for their element management functionality while leveraging Brunch's structure. 
