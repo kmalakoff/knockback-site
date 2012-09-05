@@ -13,7 +13,7 @@ class PersonViewModel extends kb.ViewModel
 
 view_model = {
   people: kb.collectionObservable(new Backbone.Collection([bob, fred]), {
-    mappings:
+    factories:
       'models': PersonViewModel
       'models.friends.models': FriendViewModel
   })

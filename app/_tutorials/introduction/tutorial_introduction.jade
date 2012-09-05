@@ -1,0 +1,17 @@
+extends ../../_layout/_layout_template
+
+include ../../_layout/_layout_mixins
+
+block title
+  title Tutorial Introduction
+
+block includes
+  link(rel='stylesheet', href='stylesheets/tutorial.css')
+  include ../../_demos/_demos_include_knockback_scripts
+
+block navbar
+  mixin pageNavbar('Getting Started', true)
+
+block content
+  section
+    h1 Tutorial: Introduction

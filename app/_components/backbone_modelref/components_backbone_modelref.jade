@@ -10,7 +10,7 @@ block includes
   include ../../_demos/_demos_include_knockback_scripts
 
 block navbar
-  mixin pageNavbar('Tutorials', true)
+  mixin pageNavbar('Compatible Components', true)
 
 ////////////////
 // Overview
@@ -204,7 +204,7 @@ block library_architecture
               span  in order to be able to iterate through all of the attributes in a Backbone.Model with Knockout, we will store their names in an array.
             li
               strong Attribute Types:
-              span  in order to select the correct attribute rendering in the template, we provide a helper function called 'attributeType()' that returns the string 'simple', 'model', or 'collection'
+              span  in order to select the correct attribute rendering in the template, we provide a helper function called 'kb.utils.valueType()' that returns the string kb.TYPE_SIMPLE, kb.TYPE_MODEL, or kb.TYPE_COLLECTION
 
         p
           span Updating the pseudo-HTML for the model node:
@@ -218,18 +218,18 @@ block library_architecture
               <!-- ko if: opened -->
                 <!-- ko foreach: attribute_names -->
 
-                  <!-- ko if: ($parent.attributeType($data) == 'simple') -->
+                  <!-- ko if: (kb.utils.valueType($parent.node[$data]) == kb.TYPE_SIMPLE) -->
                     <fieldset>
                       <label data-bind="text: $data"> </label>
                       <input type='text' data-bind="value: $parent.node[$data]">
                     </fieldset>
                   <!-- /ko -->
 
-                  <!-- ko if: ($parent.attributeType($data) == 'model') -->
+                  <!-- ko if: (kb.utils.valueType($parent.node[$data]) == kb.TYPE_MODEL) -->
                     <ul data-bind="template: {name: 'kbi_model_node', data: kbi.nvm($data, false, $parent.node[$data])}"></ul>
                   <!-- /ko -->
 
-                  <!-- ko if: ($parent.attributeType($data) == 'collection') -->
+                  <!-- ko if: (kb.utils.valueType($parent.node[$data]) == kb.TYPE_COLLECTION) -->
                     <ul data-bind="template: {name: 'kbi_collection_node', data: kbi.nvm($data+'[]', true, $parent.node[$data])}"></ul>
                   <!-- /ko -->
 
@@ -497,9 +497,10 @@ block step2
     h3 Create /src/view_models/kbi_node_view_model.coffee:
     pre.
       class kbi.NodeViewModel
-        constructor: (@name, opened, node) ->
+        constructor: (@name, opened, @node) ->
           @opened = ko.observable(opened)
-          @node = ko.utils.unwrapObservable(node)
+          if ko.utils.unwrapObservable(node) instanceof kb.ViewModel
+            @node = ko.utils.unwrapObservable(node) # store unwrapped view model
 
       # factory
       kbi.nodeViewModel = kbi.nvm = (name, opened, node) -> return new kbi.NodeViewModel(name, opened, node)
@@ -510,7 +511,10 @@ block step2
       kbi.NodeViewModel = function(name, opened, node) {
         this.name = name;
         this.opened = ko.observable(opened);
-        this.node = ko.utils.unwrapObservable(node);
+        this.node = node;
+        if (ko.utils.unwrapObservable(node) instanceof kb.ViewModel) {
+          this.node = ko.utils.unwrapObservable(node); // store unwrapped view model
+        }
       };
 
       // factory
@@ -523,21 +527,15 @@ block step2
     span Next, we will add the attribute functionality used for Backbone.Model's kb.ViewModels:
     pre(data-for='cs').
       class kbi.NodeViewModel
-        constructor: (@name, opened, node) ->
+        constructor: (@name, opened, @node) ->
           @opened = ko.observable(opened)
-          @node = ko.utils.unwrapObservable(node)
 
           # a kb.ViewModel indicates the node is a Backbone.Model
-          if (@node instanceof kb.ViewModel)
+          if (ko.utils.unwrapObservable(@node) instanceof kb.ViewModel)
+            @node = ko.utils.unwrapObservable(@node) # store unwrapped view model
             model = kb.utils.wrappedModel(@node)
             @attribute_names = ko.observableArray(if model then _.keys(model.attributes) else [])
           @
-
-        attributeType: (key) ->
-          attribute_connector = @node[key]
-          return 'model' if (ko.utils.unwrapObservable(attribute_connector) instanceof kb.ViewModel)
-          return 'collection' if kb.utils.observableInstanceOf(attribute_connector, kb.CollectionAttributeConnector)
-          return 'simple'
 
       # factory
       kbi.nodeViewModel = kbi.nvm = (name, opened, node) -> return new kbi.NodeViewModel(name, opened, node)
@@ -545,28 +543,19 @@ block step2
       kbi.NodeViewModel = function(name, opened, node) {
         this.name = name;
         this.opened = ko.observable(opened);
-        this.node = ko.utils.unwrapObservable(node);
+        this.node = node;
 
         // a kb.ViewModel indicates the node is a Backbone.Model
-        if (this.node instanceof kb.ViewModel) {
+        if (ko.utils.unwrapObservable(node) instanceof kb.ViewModel) {
+          this.node = ko.utils.unwrapObservable(node); // store unwrapped view model
           var model = kb.utils.wrappedModel(this.node);
           this.attribute_names = ko.observableArray(model ? _.keys(model.attributes) : []);
         }
       };
 
-      kbi.NodeViewModel.prototype.attributeType = function(key) {
-        var attribute_connector = this.node[key];
-        if (ko.utils.unwrapObservable(attribute_connector) instanceof kb.ViewModel)
-          return 'model';
-        else if (kb.utils.observableInstanceOf(attribute_connector, kb.CollectionAttributeConnector))
-          return 'collection';
-        else
-          return 'simple';
-      };
-
       // factory
       kbi.nodeViewModel = kbi.nvm = function(name, opened, node) { return new kbi.NodeViewModel(name, opened, node); };
-    span The new code in the constructor just collects all of the attribute names and the attributeType(key) function just checks the property in the kb.ViewModel for its type rather than performing this check directly in the template.
+    span The new code in the constructor just collects all of the attribute names and the valueType(key) function just checks the property in the kb.ViewModel for its type rather than performing this check directly in the template.
 
   h2='Views'
   p
@@ -586,18 +575,18 @@ block step2
         <!-- ko if: opened -->
           <!-- ko foreach: attribute_names -->
 
-            <!-- ko if: ($parent.attributeType($data) == 'simple') -->
+            <!-- ko if: (kb.utils.valueType($parent.node[$data]) == kb.TYPE_SIMPLE) -->
               <fieldset class='kbi'>
                 <label data-bind="text: $data"> </label>
                 <input type='text' data-bind="value: $parent.node[$data]">
               </fieldset>
             <!-- /ko -->
 
-            <!-- ko if: ($parent.attributeType($data) == 'model') -->
+            <!-- ko if: (kb.utils.valueType($parent.node[$data]) == kb.TYPE_MODEL) -->
               <ul class='kbi' data-bind="template: {name: 'kbi_model_node', data: kbi.nvm($data, false, $parent.node[$data])}"></ul>
             <!-- /ko -->
 
-            <!-- ko if: ($parent.attributeType($data) == 'collection') -->
+            <!-- ko if: (kb.utils.valueType($parent.node[$data]) == kb.TYPE_COLLECTION) -->
               <ul class='kbi' data-bind="template: {name: 'kbi_collection_node', data: kbi.nvm($data+'[]', true, $parent.node[$data])}"></ul>
             <!-- /ko -->
 
@@ -617,18 +606,18 @@ block step2
         <!-- ko if: opened --> \
           <!-- ko foreach: attribute_names --> \
       \
-            <!-- ko if: ($parent.attributeType($data) == 'simple') --> \
+            <!-- ko if: (kb.utils.valueType($parent.node[$data]) == kb.TYPE_SIMPLE) --> \
               <fieldset class='kbi'> \
                 <label data-bind=\"text: $data\"> </label> \
                 <input type=\"text\" data-bind=\"value: $parent.node[$data]\"> \
               </fieldset> \
             <!-- /ko --> \
       \
-            <!-- ko if: ($parent.attributeType($data) == 'model') --> \
+            <!-- ko if: (kb.utils.valueType($parent.node[$data]) == kb.TYPE_MODEL) --> \
               <ul class='kbi' data-bind=\"template: {name: 'kbi_model_node', data: kbi.nvm($data, false, $parent.node[$data])}\"></ul> \
             <!-- /ko --> \
       \
-            <!-- ko if: ($parent.attributeType($data) == 'collection') --> \
+            <!-- ko if: (kb.utils.valueType($parent.node[$data]) == kb.TYPE_COLLECTION) --> \
               <ul class='kbi' data-bind=\"template: {name: 'kbi_collection_node', data: kbi.nvm($data+'[]', true, $parent.node[$data])}\"></ul> \
             <!-- /ko --> \
       \
@@ -639,7 +628,7 @@ block step2
   p
     span This template is similar to the last pseudo HTML in the Library Architecture section with a few changes to make it a polished template:
     ul
-      li The 'kbi' and 'model' classes have been added for css styling
+      li The 'kbi' and kb.TYPE_MODEL classes have been added for css styling
       li Knockout if control flow comments have been specified to render the correct template section based on the attribute type
       li Because 'foreach: attribute_names' creates a new binding context inside the loop, we can access the actual kbi.NodeViewModel using $parent and the attribute name using $data.
 
@@ -649,7 +638,7 @@ block step2
     pre.
       kbi.CollectionNodeView = """
       <li class='kbi' data-bind="css: {opened: opened, closed: !opened()}">
-        <div class='collection' data-bind="click: function(){ opened(!opened()) }">
+        <div class=kb.TYPE_COLLECTION data-bind="click: function(){ opened(!opened()) }">
           <span data-bind="text: (opened() ? '- ' : '+ ' )"></span>
           <span data-bind="text: name"></span>
         </div>
@@ -666,7 +655,7 @@ block step2
     pre.
       kbi.CollectionNodeView = " \
       <li class='kbi' data-bind=\"css: {opened: opened, closed: !opened()}\"> \
-        <div class='collection' data-bind=\"click: function(){ opened(!opened()) }\"> \
+        <div class=kb.TYPE_COLLECTION data-bind=\"click: function(){ opened(!opened()) }\"> \
           <span data-bind=\"text: (opened() ? '- ' : '+ ' )\"></span> \
           <span data-bind=\"text: name\"></span> \
         </div> \
@@ -681,7 +670,7 @@ block step2
   p
     span This template is similar to the last pseudo HTML in the Library Architecture section with a few changes to make it a polished template:
     ul
-      li The 'kbi' and 'collection' classes have been added for css styling
+      li The 'kbi' and kb.TYPE_COLLECTION classes have been added for css styling
       li Because the kb.CollectionObservable is actually a ko.observableArray, we can access its items (which contain kb.ViewModels for each Backbone.Model) using 'foreach: node'
       li Because 'foreach: node' creates a new binding context inside the loop, we access each kb.ViewModel using $data.
 
@@ -893,8 +882,8 @@ block step4
         var   custom_url_model = new Backbone.Model({url: '', collection: new kbi.FetchedCollection()});
         var   view_model = kb.viewModel(custom_url_model);
         view_model.url.subscribe(function(url){
-          custom_url_model.get('collection').url = url;
-          custom_url_model.get('collection').fetch();
+          custom_url_model.get(kb.TYPE_COLLECTION).url = url;
+          custom_url_model.get(kb.TYPE_COLLECTION).fetch();
         });
 
         ko.applyBindings(view_model, $('#fetched_collection')[0]);
@@ -982,7 +971,7 @@ block content
 
     p
       span <strong>Note:</strong> because this is an intermediate tutorial, you should already have reviewed the
-      a(href='tutorial_getting_started.html')  Getting Started Tutorial
+      a(href='tutorial_introduction.html')  Tutorial Introduction
       span  before attempting this one.
 
     h3 Try out the Knockback-Inspector:

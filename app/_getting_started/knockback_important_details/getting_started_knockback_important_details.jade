@@ -14,20 +14,18 @@ block navbar
 
 block content
   section
-    h1 Getting Started with Knockback.js: Knockback.js Important Details
+    :markdown
+      Getting Started with Knockback.js: Knockback.js Important Details
+      ============================
 
-    p
-    h2 Inheritance
-    p Some Knockback classes are meant to be inherited. Specifically:
-    ul
-      li
-        a(href='docs_kb_view_model.html') kb.ViewModel
-      li
-        a(href='docs_kb_localized_observable.html') kb.LocalizedObservable
-      li
-        a(href='docs_kb_ref_countable.html') kb.RefCountable
-    p When using CoffeeScript, you can derive from a super class using: <pre>class YourClass extends SuperClass </br>  # extensions </pre> or when using JavaScript, you can derive from a super class using: <pre>var YourClass = SuperClass.extend({ </br>  /* extensions */</br>})</pre>
-    p For example:
+      #Inheritance
+      Some Knockback classes are meant to be inherited. Specifically:
+
+      * [kb.ViewModel]('docs_kb_view_model.html')
+      * [kb.LocalizedObservable]('docs_kb_localized_observable.html')
+
+      When using CoffeeScript, you can derive from a super class using: <pre>class YourClass extends SuperClass </br>  # extensions </pre> or when using JavaScript, you can derive from a super class using: <pre>var YourClass = SuperClass.extend({ </br>  /* extensions */</br>})</pre>
+      For example:
 
     div.container-fluid
       div.row-fluid
@@ -49,10 +47,12 @@ block content
             include kb_view_model_inheritance.html
             script(type='application/javascript', src='getting_started/knockback_important_details/kb_view_model_inheritance.js')
 
-    p
-    h2 Classes vs Factory Functions
-    p You may have noticed that there is both kb.viewModel(model, options) and kb.ViewModel. The reason is that to reduce the need of using `new` and to be more familiar with Knockout, there are factory methods that create the underlying classes.
-    p A factory function uses new to create a new instance:
+    :markdown
+
+      #Classes vs Factory Functions
+      You may have noticed that there is both kb.viewModel(model, options) and kb.ViewModel. The reason is that to reduce the need of using `new` and to be more familiar with Knockout, there are factory methods that create the underlying classes.
+
+      A factory function uses new to create a new instance:
     pre(data-for='cs').
       Knockback.viewModel = (model, options) -> return new Knockback.ViewModel(model, options)
 
@@ -62,17 +62,97 @@ block content
       span Be careful to differentiate the <span class='label label-info'>factory</span> from the class when using
       a(href='docs_kb_utils.html#observable_instance_of')  kb.utils.observableInstanceOf(observable, class)
 
-    p
-    h2 Specifying Mappings Paths for Nested Models
-    p 
-      span Because Backbone.Models can have attributes than contain nested Backbone.Models or Backbone.Collections, there are times where you need to specialize the ViewModel you want to use; for example, in a model/collection hierachy with relationships. When you do need to, you can use the `mappings` option when creating a 
-      a(href='docs_kb_view_model.html') kb.ViewModel
-      span  or 
-      a(href='docs_kb_collection_observable.html') kb.CollectionObservable.
+    :markdown
+      #Specifying Mappings Paths for Nested Models
 
-    p
-      span Please take a look at the 
-      a(href='tutorial_nested_models.html') Nested Model Tutorial
-      span for an example.
+      Because Backbone.Models can have attributes than contain nested Backbone.Models or Backbone.Collections, there are times where you need to specialize the ViewModel you want to use; for example, in a model/collection hierachy with relationships. When you do need to, you can use the `factories` option when creating a [kb.ViewModel]('doc/classes/kb/ViewModel.html') or [kb.CollectionObservable]('doc/classes/kb/CollectionObservable.html')
+
+      Please take a look at the [Nested Model Tutorial]('tutorial_nested_models.html') for an example.
+
+      #API Coding Conventions
+      Knockback uses the following conventions: ClassName, functionName, property_name, 'constant string', "dynamic string", CONSTANT_NAME
+
+    h3 API Indicators
+    ul
+      li <span class='label label-success'>class</span>: indicates a class function that needs to be called in the form kb.ClassName.functionName()
+
+      p
+      li <span class='label label-inverse'>optional</span>: indicates that function parameters or options can be left out
+
+      p
+      li <span class='label label-info'>factory</span>: indicates a factory function is being described. Please note that many of the Knockout classes have corresponding factory functions to reduce verbosity and to improve consistency with Knockout.js
+        p
+          span For example, 'ko.observable(model, 'name')' is equivalent to 'new ko.Observable(model, 'name')'
+        p
+          span Be careful to use the class if you call the
+          a(href='docs_kb_utils.html#observable_instance_of')  kb.utils.observableInstanceOf
+          span  utility function <span class='label label-important'>warning</span>
+      p
+      li <span class='label label-important'>dual purpose</span>: indicates that a function is both a getter and a setter.
+        p For example, this one gets the model: 'view_model.model()' whereas this one sets the model: 'view_model.model(model)'
+
+      p
+      li <span class='label label-warning'>observable returned</span>: indicates that an observable class is returned rather than 'this' from a constructor or function. This is used to so that they can be used like dual purpose functions and use Knockout's dependency tracking. If you derive from one of Knockback's observable classes, use
+        a(href='docs_kb_utils.html#wrapped_observable')  kb.utils.wrappedObservable(instance)
+        span  to return the observable instead of the class instance if you are overriding one of these special functions.
+
+    :markdown
+
+      #Knockout Observables Foundations
+
+      Many Knockback.js classes return Knockout.js observables so their dependencies/subscriptions can and should be managed like any Knockout observable. This is **very important if you choose to extend Knockback classes.
+
+      These classes return ko.observables instead of 'this':
+
+      * [kb.CollectionObservable]('doc/classes/kb/CollectionObservable.html')
+      * [kb.Observable]('doc/classes/kb/Observable.html')
+      * [kb.DefaultWrapper]('doc/classes/kb/DefaultWrapper.html')
+      * [kb.FormattedObservable]('doc/classes/kb/FormattedObservable.html')
+      * [kb.LocalizedObservable]('doc/classes/kb/LocalizedObservable.html')
+      * [kb.TriggeredObservable]('doc/classes/kb/TriggeredObservable.html')
+
+      Use ko.utils.wrappedObservable(this) or return the constructor result if you dervive from them:
+
+      ```
+      YourCollectionObservable = kb.CollectionObservable.extend({
+        constructor: function(collection, options) {
+          return kb.CollectionObservable.prototype.constructor.call(this, collection, { view_model: YourViewModel, options: options });
+        }
+      });
+      ```
+
+      or
+
+      ```
+      YourCollectionObservable = kb.CollectionObservable.extend({
+        constructor: function(collection, options) {
+          kb.CollectionObservable.prototype.constructor.call(this, collection, { view_model: YourViewModel, options: options });
+          return ko.utils.wrappedObservable(this);
+        }
+      });
+      ```
+
+      These classes return 'this':
+
+      * [kb.Factory]('doc/classes/kb/Factory.html')
+      * [kb.ModelWatcher]('doc/classes/kb/ModelWatcher.html')
+      * [kb.Store]('doc/classes/kb/Store.html')
+      * [kb.ViewModel]('doc/classes/kb/ViewModel.html')
+      * [kb.Statistics]('doc/classes/kb/Statistics.html')
 
 
+      #Namespace Aliasing
+
+      'kb' and 'Knockback' can be used interchangeably
+
+      #Backbone.Model Signatures
+
+      Knockback.js does not require Backbone.Models for attribute watching, but requires Backbone.Model-like signature.
+
+      The minimal Backbone.Model signature is:
+
+      * ***Backbone.Events***: 'bind(event, callback)', 'unbind(event, callback)', and 'trigger(event, params...)'
+      * ***Backbone.Model***: 'get(attribute_name)'
+      * ***Triggering***: 'change' and/or "change:attribute_name" events when the Backbone.Models-like instance's attributes change.
+
+      This fact is used when implementing a [Custom Locale Manager]('tutorial_locale_manager.html') and could be used to port another library like Spine.js to Knockback.js.

@@ -14,7 +14,7 @@ class PersonViewModel extends kb.ViewModel
     @type = ko.observable('person')
 
 view_model = new PersonViewModel(fred, {
-  mappings:
+  factories:
     'friends.models': FriendViewModel
     'friends.models.friends.models': FriendViewModel
 })

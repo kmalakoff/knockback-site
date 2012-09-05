@@ -16,7 +16,7 @@ var PersonViewModel = kb.ViewModel.extend({
 
 var view_model = {
   people: kb.collectionObservable(new Backbone.Collection([bob, fred]), {
-    mappings: {
+    factories: {
       'models': PersonViewModel,
       'models.friends.models': FriendViewModel
     }

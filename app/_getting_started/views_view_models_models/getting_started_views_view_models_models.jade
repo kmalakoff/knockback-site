@@ -1,0 +1,31 @@
+extends ../../_layout/_layout_template
+
+include ../../_layout/_layout_mixins
+
+block title
+  title Getting Started: Knockback.js Important Details
+
+block includes
+  link(rel='stylesheet', href='stylesheets/tutorial.css')
+  include ../../_demos/_demos_include_knockback_scripts
+
+block navbar
+  mixin pageNavbar('Getting Started', true)
+
+block content
+  section
+    :markdown
+      #The Relationships between Models and ViewModels and Views: Often One-To-Many
+
+      The distinction between Models and ViewModels is important:
+
+      *Backbone.Models encapsulate the data and operations on the data, are serialized/deserialized from/to the server, and are in short Models.
+      *ViewModels provide the attributes and logic to the templates often interacting with the Model data like Controllers. However, they may have their own data and logic that is purely View-related and that the server should never know about.
+
+      Besides providing a clean separation between data and display, this separation becomes important in a larger application. In a larger application, you often have different ways to present the same Model with different ViewModels. For example, a Model could have the following ViewModels:
+
+      * ***Thumbnail View***: the ViewModel could only expose a subset of the Model's attributes, dates/time may be in the shortest format possible, or maybe just an image would be provided to the template.
+      * ***Cell View***: the ViewModel could again expose a subset of only the most relevant summary attributes, routing information to a detailed summary view, etc.
+      * ***Editing View***: the ViewModel could expose almost all of the Model's attributes, localized labels for each, data and functions for the editing controls and functionality, routing information to specialized editing views, etc.
+
+      Important to understand that in a larger application the relationship between Models and ViewModels tends to be one-to-many. In this application, there is a one-to-many relationship from the Priority model through the the HeaderViewModel and TodoViewModel ViewModels because each one uses the Priority for rendering their priority colors and providing priority settings data to their tooltip, but the actions on selecting a priority in the tool tip differ.

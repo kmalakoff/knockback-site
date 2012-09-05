@@ -17,7 +17,7 @@ var PersonViewModel = kb.ViewModel.extend({
 });
 
 var view_model = new PersonViewModel(fred, {
-  mappings: {
+  factories: {
     'friends.models': FriendViewModel,
     'friends.models.friends.models': FriendViewModel
   }
