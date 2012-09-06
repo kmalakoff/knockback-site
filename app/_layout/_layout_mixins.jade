@@ -18,16 +18,30 @@ mixin pageNavbarWriteItem(label, url, active_label)
       a(href='#{url}') #{label}
 
 mixin pageNavbar(active_label, include_code_language_selector)
-  - var ITEMS = [{'Home': 'index.html'}, {'API': 'doc/index.html'}, {'Getting Started': [{'Overview': 'getting_started_introduction.html'}, {'Dependent Library Basics': 'getting_started_dependent_library_basics.html'}, {'Knockback Basics': 'getting_started_knockback_basics.html'}, {'Knockback Tips': 'getting_started_knockback_important_details.html'}]}, {'Compatible Components': [{'Backbone Relational': 'components_backbone_relational.html'}, {'Backbone ModelRef': 'components_backbone_modelref.html'}, {'Knockback Inspector': 'components_knockback_inspector.html'}, {'Knockback Navigators': 'components_knockback_navigators.html'}]}, {'Sample Applications': [{'Knockback Reference App': 'knockback_reference_app.html'}, {'Todos App': 'todos_app.html'}]}, {'Tutorials': [{'kb.ViewModel': 'tutorial_kb_view_model.html'}, {'kb.Observable': 'tutorial_kb_observable.html'}, {'kb.LocalizedObservable': 'tutorial_kb_localized_observable.html'}, {'Nested Models': 'tutorial_nested_models.html'}, {'Relational Models': 'tutorial_relational_models.html'}, {'Custom Locale Manager': 'tutorial_locale_manager.html'}]}, {'Release Notes': 'https://github.com/kmalakoff/knockback/wiki/Release-Notes'}]
+  - var ITEMS = [{'Home': 'index.html'}, {'API': 'doc/index.html'}, {'Getting Started': [{'Overview': 'getting_started_introduction.html'}, {'Dependent Library Basics': 'getting_started_dependent_library_basics.html'}, {'Knockback Basics': 'getting_started_knockback_basics.html'}, {'Knockback Important Details': 'getting_started_knockback_important_details.html'}]}, {'Components': [{'Backbone Relational': 'components_backbone_relational.html'}, {'Backbone ModelRef': 'components_backbone_modelref.html'}, {'Knockback Inspector': 'components_knockback_inspector.html'}, {'Knockback Navigators': 'components_knockback_navigators.html'}]}, {'Applications': [{'Knockback Reference App': 'app_knockback_reference.html'}, {'Todos App': 'app_todos.html'}]}, {'Tutorials': [{'kb.ViewModel': 'tutorial_kb_view_model.html'}, {'kb.Observable': 'tutorial_kb_observable.html'}, {'kb.LocalizedObservable': 'tutorial_kb_localized_observable.html'}, {'Nested Models': 'tutorial_nested_models.html'}, {'Relational Models': 'tutorial_relational_models.html'}, {'Custom Locale Manager': 'tutorial_locale_manager.html'}]}, {'Release Notes': 'https://github.com/kmalakoff/knockback/wiki/Release-Notes'}]
 
-  div.navbar.page
+  div.navbar.navbar-inverse.navbar-fixed-top
     div.navbar-inner
       div.container
-        a.brand.kb(href='https://github.com/kmalakoff/knockback') Knockback.js
-        ul.nav
-          each item in ITEMS
-            each url, label in item
-              mixin pageNavbarWriteItem(label, url, active_label)
-        if (include_code_language_selector)
-          include _layout_code_language_selector
+        a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
 
+        a.brand.kb(href='https://github.com/kmalakoff/knockback') Knockback.js
+
+        div.nav-collapse
+          ul.nav
+            each item in ITEMS
+              each url, label in item
+                mixin pageNavbarWriteItem(label, url, active_label)
+          if (include_code_language_selector)
+            div#script_language.pull-right
+              .separator
+                .selection.codestyle
+                  .option
+                    input.auto#cs-cs(type='radio',name='codestyle',value='cs')
+                    label(for='cs-cs') CS
+                  .option
+                    input#cs-js(type='radio',name='codestyle',value='js')
+                    label(for='cs-js') JS

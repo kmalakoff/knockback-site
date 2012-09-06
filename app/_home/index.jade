@@ -6,7 +6,7 @@ block title
   title Knockback.js Home
 
 block includes
-  link(rel='stylesheet', href='stylesheets/index.css')
+  link(rel='stylesheet', href='css/index.css')
 
 block navbar
   div.page.github_fork_me
@@ -20,56 +20,94 @@ block content
 
   section#content.animated.fadeIn
 
-    .cols.wrapped
-      .col: div.content
-        h2 Dependencies
-        p Knockback requires Knockout.js and Backbone.js (and therefore Underscore.js) to be already loaded on the page:
-        ul
-          li
-            a(href='https://github.com/SteveSanderson/knockout/downloads/') Knockout.js
-          li
-            a(href='http://documentcloud.github.com/underscore/') Underscore.js
-          li
-            a(href='http://documentcloud.github.com/backbone/') Backbone.js
-        p Optional dependencies:
-        ul
-          li
-            a(href='https://github.com/kmalakoff/backbone-modelref') Backbone-ModelRef
-            div  (for lazy loading)
-          li
-            a(href='https://github.com/PaulUithol/Backbone-relational/') Backbone-Relational
-            div  (for inter-model dependency management)
+    div.wrapped
 
-      .col: div.content
-        h2 Features
-        ul
-          li Localization
-          li Knockout.js' bindings and automagical update
-          li Backbone's sleek Model definition
-          li Dynamic collection sorting
-          li Two-way string formatting
-      .col: div.content
-        h2 Latest <small>0.16.0</small>
-        ul
-          li <a href='https://raw.github.com/kmalakoff/knockback/0.16.0/knockback.js'>Development</a> <small>71 KB</small>
-          li <a href='https://raw.github.com/kmalakoff/knockback/0.16.0/knockback.min.js'>Production</a> <small>42 KB</small>
-        p
-          span Please look at the
-          a(href='https://github.com/kmalakoff/knockback/wiki/Release-Notes')  release and upgrade notes
-          span  if you are migrating from an earlier version.
-        h2 Source
-        :markdown
-          You can find the source on [Github][0]. To provide feedback leave a message
-          or [create an issue][1].
-
-          [0]: https://github.com/kmalakoff/knockback
-          [1]: https://github.com/kmalakoff/knockback/issues
-
-    //
       .content
-        h2 Some background
-        p Both Knockout and Backbone have their strengths and weaknesses, but together they are amazing!
-        p At the same time you can have the strong ORM provided by Backbone and the dynamic view-models that Knockout.js offers.
+        h2 Background
+        p Both Knockout.js and Backbone.js have their strengths and weaknesses, but together they are amazing! With Knockback.js, you can use the strong ORM provided by Backbone and create dynamic views using Knockout bindings.
+
+      .row-fluid
+        .span4
+          h2 Features
+          ul
+            li Localization
+            li Knockout.js' bindings and automagical update
+            li Backbone's sleek Model definition
+            li Dynamic collection sorting
+            li Two-way string formatting
+        .span4
+          h2 Dependencies
+          p Knockback requires Knockout.js and Backbone.js (and therefore Underscore.js) to be already loaded on the page:
+          ul
+            li
+              a(href='https://github.com/SteveSanderson/knockout/downloads/') Knockout.js
+            li
+              a(href='http://documentcloud.github.com/underscore/') Underscore.js
+            li
+              a(href='http://documentcloud.github.com/backbone/') Backbone.js
+        .span4
+          h2 Components
+          p Knockback is compatible with the following components:
+          ul
+            li
+              a(href='https://github.com/PaulUithol/Backbone-relational/') Backbone-Relational
+            li
+              a(href='https://github.com/kmalakoff/backbone-modelref') Backbone-ModelRef
+            li
+              a(href='https://github.com/kmalakoff/knockback-inspector') Knockback-Inspector
+            li
+              a(href='https://github.com/kmalakoff/knockback-navigators/') Knockback-Navigators
+
+      .content.row
+        div.span7.wrapped
+          h2 Download Latest <small>0.16.1</small>
+          table.table
+            thead
+              tr
+                th
+                th <strong>Library</strong>
+                th <strong>Stack</strong>
+            tbody
+              tr
+                td Full
+                td
+                  ul
+                    li <a href='https://raw.github.com/kmalakoff/knockback/0.16.1/knockback.js'>Development</a> <small>69 KB</small>
+                    li <a href='https://raw.github.com/kmalakoff/knockback/0.16.1/knockback.min.js'>Production</a> <small>32 KB</small>
+                td
+                  ul
+                    li <a href='https://raw.github.com/kmalakoff/knockback/0.16.1/knockback-full-stack.js'>Development</a> <small>330 KB</small>
+                    li <a href='https://raw.github.com/kmalakoff/knockback/0.16.1/knockback-full-stack.min.js'>Production</a> <small>102 KB</small>
+              tr
+                td Core
+                td
+                  ul
+                    li <a href='https://raw.github.com/kmalakoff/knockback/0.16.1/knockback-core.js'>Development</a> <small>58 KB</small>
+                    li <a href='https://raw.github.com/kmalakoff/knockback/0.16.1/knockback-core.min.js'>Production</a> <small>27 KB</small>
+                td
+                  ul
+                    li <a href='https://raw.github.com/kmalakoff/knockback/0.16.1/knockback-core-stack.js'>Development</a> <small>319 KB</small>
+                    li <a href='https://raw.github.com/kmalakoff/knockback/0.16.1/knockback-core-stack.min.js'>Production</a> <small>98 KB</small>
+
+          p
+            div <strong>*Stack</strong> provides Underscore.js + Backbone.js + Knockout.js + Knockback.js in a single file.
+            br
+            div <strong>*Core</strong> removes advanced features that can be included separately: localization, formatting, triggering, defaults, and statistics.
+
+        div.span3
+          :markdown
+            Distributions
+            ---------
+            * [npm registry](http://search.npmjs.org/#/knockback)
+            * [NuGet Gallery](http://nuget.org/packages/Knockback.js)
+
+            Source
+            ---------
+            You can find the source on [Github](https://github.com/kmalakoff/knockback). To provide feedback leave a message or [create an issue](https://github.com/kmalakoff/knockback/issues).
+
+            Release Notes
+            ---------
+            Please look at the [release notes](https://github.com/kmalakoff/knockback/wiki/Release-Notes) if you are migrating from an earlier version.
 
     div#comparison_table
     p
@@ -212,32 +250,22 @@ block content
             If you consider localized labels as observed properties, then you can understand
             how Knockback provides internationalization to your applications.
 
-    .cols.wrapped
-      .col: div.content
-        h3 Projects Using Knockback.js
-        p
-          span Coming soon...
-          a(href='https://github.com/kmalakoff/knockback-site/issues')  submit yours now!
+    .wrapped
+      .row-fluid
+        .span4
+          :markdown
+            ##Projects
+            [Submit yours now](https://github.com/kmalakoff/knockback-site/issues)!
 
-      .col: div.content
-        h3 Frameworks
-        ul
-          li
-            a(href='https://github.com/thedrow/django-knockback') django-knockback
-        p
-        h3 Distributions
-        ul
-          li
-            a(href='http://search.npmjs.org/#/knockback') npm registry
-          li
-            a(href='http://nuget.org/packages/Knockback.js') NuGet Gallery
+        .span3
+          :markdown
+            ##Frameworks
+            * [django-knockback](https://github.com/thedrow/django-knockback)
 
-      .col: div.content
-        h3 Community Extensions
-        ul
-          li
-            a(href='https://github.com/kmalakoff/knockback-inspector') Knockback-Inspector
-
+        .span4
+          :markdown
+            ##Community Extensions
+            [Submit yours now](https://github.com/kmalakoff/knockback-site/issues)!
 
 block footer
   include ../_layout/_layout_knockback_credits

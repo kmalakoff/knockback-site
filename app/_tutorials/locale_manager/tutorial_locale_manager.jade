@@ -6,8 +6,8 @@ block title
   title Tutorial: Custom Locale Manager
 
 block includes
-  link(rel='stylesheet', href='stylesheets/tutorial.css')
-  include ../../_demos/_demos_include_knockback_scripts
+  link(rel='stylesheet', href='css/tutorial.css')
+  include ../../_layout/_layout_include_demo_scripts
 
 block navbar
   mixin pageNavbar('Locale Manager', true)
@@ -20,7 +20,7 @@ block content
       span  does not provide a Locale Manager implementation since it depends on how you want to store and where you want to manage your localized strings.
     p
       span If you choose to use
-      a(href='docs_kb_localized_observable.html')  kb.LocalizedObservable
+      a(href='doc/classes/kb/LocalizedObservable.html')  kb.LocalizedObservable
       span , it assumes that you assign your implementation to 'kb.locale_manager'.
 
     p
@@ -62,26 +62,28 @@ block content
       pre(data-for='cs') _.extend(LocaleManager.prototype, Backbone.Events)
       pre(data-for='js') _.extend(LocaleManager.prototype, Backbone.Events);
 
-    div.container-fluid
-      div.row-fluid
-        div.span8
-          h4 Views:
-          pre
-            include lm_simple_view.html.txt
+    div.row-fluid
+      div.span8
+        ul.nav.nav-tabs
+          li.active <a href="#lm_simple_view" data-toggle="tab">View (HTML)</a>
+          li <a href="#lm_simple_view_model" data-toggle="tab">ViewModel (CS/JS)</a>
+        div.tab-content
+          div.tab-pane.active#lm_simple_view
+            pre
+              include lm_simple_view.html.txt
+          div.tab-pane#lm_simple_view_model
+            pre(data-for='cs')
+              include lm_simple_view_model_bindings.coffee
 
-          h4 ViewModel and Bindings:
-          pre(data-for='cs')
-            include lm_simple_view_model_bindings.coffee
+            pre(data-for='js')
+              include ../../../public/tutorials/locale_manager/lm_simple_view_model_bindings.js
 
-          pre(data-for='js')
-            include ../../../public/tutorials/locale_manager/lm_simple_view_model_bindings.js
-
-        div.span4
-          h4 Live Result
-          div.demos_result_box
-            include lm_simple_view.html
-            script(type='application/javascript', src='tutorials/locale_manager/lm_simple_models.js')
-            script(type='application/javascript', src='tutorials/locale_manager/lm_simple_view_model_bindings.js')
+      div.span4
+        h4 Live Result
+        div.demos_result_box
+          include lm_simple_view.html
+          script(type='application/javascript', src='tutorials/locale_manager/lm_simple_models.js')
+          script(type='application/javascript', src='tutorials/locale_manager/lm_simple_view_model_bindings.js')
 
     p
     h3 An Advanced Implementation
@@ -102,25 +104,27 @@ block content
 
     p
       span If you need to create a large number of localized labels, you could use
-      a(href='docs_kb_observables.html')  kb.Observables
+      a(href='doc/classes/kb/ViewModel.html')  kb.ViewModel
       span  like:
 
-    div.container-fluid
-      div.row-fluid
-        div.span8
-          h4 Views:
-          pre
-            include lm_bulk_labels_view.html.txt
+    div.row-fluid
+      div.span8
+        ul.nav.nav-tabs
+          li.active <a href="#lm_bulk_labels_view" data-toggle="tab">View (HTML)</a>
+          li <a href="#lm_bulk_labels_view_model" data-toggle="tab">ViewModel (CS/JS)</a>
+        div.tab-content
+          div.tab-pane.active#lm_bulk_labels_view
+            pre
+              include lm_bulk_labels_view.html.txt
+          div.tab-pane#lm_bulk_labels_view_model
+            pre(data-for='cs')
+              include lm_bulk_labels_view_model_bindings.coffee
 
-          h4 ViewModel and Bindings:
-          pre(data-for='cs')
-            include lm_bulk_labels_view_model_bindings.coffee
+            pre(data-for='js')
+              include ../../../public/tutorials/locale_manager/lm_bulk_labels_view_model_bindings.js
 
-          pre(data-for='js')
-            include ../../../public/tutorials/locale_manager/lm_bulk_labels_view_model_bindings.js
-
-        div.span4
-          h4 Live Result
-          div.demos_result_box
-            include lm_bulk_labels_view.html
-            script(type='application/javascript', src='tutorials/locale_manager/lm_bulk_labels_view_model_bindings.js')
+      div.span4
+        h4 Live Result
+        div.demos_result_box
+          include lm_bulk_labels_view.html
+          script(type='application/javascript', src='tutorials/locale_manager/lm_bulk_labels_view_model_bindings.js')

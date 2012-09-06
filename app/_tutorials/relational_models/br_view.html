@@ -1,14 +1,14 @@
 <div id='br_relational_models'>
   <p>First Person:
-    <input data-bind="value: occupants()[0].name"/>
+    <input class='input-small pull-right' data-bind="value: occupants()[0].name"/>
     <div>(home: <span data-bind="text: occupants()[0].livesIn().location"></span>)</div>
   </p>
   <p>Second Person:
-    <input data-bind="value: occupants()[1].name"/>
+    <input class='input-small pull-right' data-bind="value: occupants()[1].name"/>
     <div>(home: <span data-bind="text: occupants()[1].livesIn().location"></span>)</div>
   </p>
 
-  <p>Location: <input data-bind="value: location"/></p>
+  <p>Location: <input class='input-small pull-right' data-bind="value: location"/></p>
   <p>
     Has these people living there:
     <ul data-bind="foreach: occupants">

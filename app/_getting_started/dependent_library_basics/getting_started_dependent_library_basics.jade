@@ -6,8 +6,8 @@ block title
   title Getting Started: Dependent Library Basics
 
 block includes
-  link(rel='stylesheet', href='stylesheets/tutorial.css')
-  include ../../_demos/_demos_include_knockback_scripts
+  link(rel='stylesheet', href='css/tutorial.css')
+  include ../../_layout/_layout_include_demo_scripts
 
 block navbar
   mixin pageNavbar('Getting Started', true)
@@ -79,25 +79,27 @@ block content
       a(href='http://en.wikipedia.org/wiki/Model_View_ViewModel')  Model_View_ViewModel (MVVM)
       span  design pattern meaning you specify a ViewModel (Controller) in addition to your data (Model) which encapsulates specific data and logic for your HTML/Template (View).
 
-    div.container-fluid
-      div.row-fluid
-        div.span8
-          h4 View (HTML):
-          pre
-            include ko_basic.html.txt
+    div.row-fluid
+      div.span8
+        ul.nav.nav-tabs
+          li.active <a href="#ko_basic_view" data-toggle="tab">View (HTML)</a>
+          li <a href="#ko_basic_view_model" data-toggle="tab">ViewModel (CS/JS)</a>
+        div.tab-content
+          div.tab-pane.active#ko_basic_view
+            pre
+              include ko_basic.html.txt
+          div.tab-pane#ko_basic_view_model
+            pre(data-for='cs')
+              include ko_basic.coffee
 
-          h4 ViewModel and Bindings:
-          pre(data-for='cs')
-            include ko_basic.coffee
+            pre(data-for='js')
+              include ../../../public/getting_started/dependent_library_basics/ko_basic.js
 
-          pre(data-for='js')
-            include ../../../public/getting_started/dependent_library_basics/ko_basic.js
-
-        div.span4
-          h4 Live Result
-          div.demos_result_box
-            include ko_basic.html
-            script(type='application/javascript', src='getting_started/dependent_library_basics/ko_basic.js')
+      div.span4
+        h4 Live Result
+        div.demos_result_box
+          include ko_basic.html
+          script(type='application/javascript', src='getting_started/dependent_library_basics/ko_basic.js')
 
     h4 Knockout.js ViewModel Instances
     p In Knockout.js, ViewModels need to be unique instances so often you use a simple function with 'new' to create an instance to bind. Here are some equivalents:

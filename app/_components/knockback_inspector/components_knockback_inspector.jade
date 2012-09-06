@@ -3,14 +3,14 @@ extends ../../_layout/_layout_template
 include ../../_layout/_layout_mixins
 
 block title
-  title Tutorial: Inspector Library
+  title Knockback-Inspector.js
 
 block includes
-  link(rel='stylesheet', href='stylesheets/tutorial.css')
-  include ../../_demos/_demos_include_knockback_scripts
+  link(rel='stylesheet', href='css/tutorial.css')
+  include ../../_layout/_layout_include_demo_scripts
 
 block navbar
-  mixin pageNavbar('Compatible Components', true)
+  mixin pageNavbar('Components', true)
 
 ////////////////
 // Overview
@@ -31,7 +31,7 @@ block overview
 
   h3 Inspector Visualization
   p Here is what the inspector could look like for a house model that has a location (simple-typed attribute) and multiple occupants (collection-typed attribute) who each has an id (simple-typed attribute), a name (simple-typed attribute), and who know which house they are living in (model-typed attribute):
-  img.screen_shot(src='images/tutorial_inspector/screen_shot_overview.png')
+  img.screen_shot(src='img/tutorial_inspector/screen_shot_overview.png')
   br
 
   h3 HTML Templates
@@ -103,12 +103,12 @@ block control_flow
   h3 Graph Generation
   P
     span By default, a
-    a(href='docs_kb_view_model.html')  kb.ViewModel
+    a(href='doc/classes/kb/ViewModel.html')  kb.ViewModel
     span will generate a kb.ViewModel for each of its nested models and a kb.collectionObservable for each of its nested collections when used like:
     pre kb.viewModel(my_model)
   P
     span Also, a
-    a(href='docs_kb_collection_observable.html')  kb.CollectionObservable
+    a(href='doc/classes/kb/CollectionObservable.html')  kb.CollectionObservable
     span can easily be configured to generate a kb.ViewModel for each of its models when configured like:
     pre kb.collectionObservable(my_collection, {view_model: kb.ViewModel})
   P What this means is that Knockback takes care of circular references between Backbone.Models or Backbone.Collections so you don't have to. In the case of circular references, you just need to be careful to handle cycles correctly when you traverse the nodes in the graph.
@@ -306,12 +306,9 @@ block step1
           <title>Knockback Inspector</title>
 
           <!-- DEPENDENCIES -->
-          <script src='vendor/jquery-1.7.2.js'></script>
-          <script src='vendor/knockout-latest.js'></script>
-          <script src='vendor/underscore-latest.js'></script>
-          <script src='vendor/backbone-latest.js'></script>
-          <script src='vendor/backbone-relational-latest.js'></script>
-          <script src='vendor/knockback-latest.js'></script>
+          <script src='vendor/jquery-1.8.0.js'></script>
+          <script src='vendor/knockback-core-stack-0.16.1.js'></script>
+          <script src='vendor/backbone-relational-0.6.0.js'></script>
 
           <!-- APPLICATION STYLING -->
           <style type='text/css'>
@@ -336,12 +333,12 @@ block step1
       pre.
         (sudo) npm install -g coffee-script
     li(data-for='cs')
-      span Update the project with the /src folder for each library component and an executable Cakefile to compile the coffeescripts from /src into /javascripts:
+      span Update the project with the /src folder for each library component and an executable Cakefile to compile the coffeejs from /src into /js:
       pre.
         - knockback-inspector
           - Cakefile
           - index.html
-          - javascripts
+          - js
           - src
             - lib
             - models
@@ -350,14 +347,14 @@ block step1
           - vendor
       span You can find information on how to set up a Cakefile for build and watch commands in
       a(href='http://arcturo.github.com/library/coffeescript/05_compiling.html')  The Little Book on CoffeeScript - Compiling
-      span . I slightly modified the book examples to compile to the output directory of /javascripts.
+      span . I slightly modified the book examples to compile to the output directory of /js.
       pre.
         {print} = require 'util'
         {spawn} = require 'child_process'
         path = require 'path'
 
-        task 'build', 'Build javascripts/ from src/', ->
-          coffee = spawn 'coffee', ['-c', '-o', 'javascripts', 'src']
+        task 'build', 'Build js/ from src/', ->
+          coffee = spawn 'coffee', ['-c', '-o', 'js', 'src']
           coffee.stderr.on 'data', (data) ->
             process.stderr.write data.toString()
           coffee.stdout.on 'data', (data) ->
@@ -366,7 +363,7 @@ block step1
             callback?() if code is 0
 
         task 'watch', 'Watch src/ for changes', ->
-          coffee = spawn 'coffee', ['-w', '-o', 'javascripts', 'src']
+          coffee = spawn 'coffee', ['-w', '-o', 'js', 'src']
           coffee.stderr.on 'data', (data) ->
             print 'Error'
             process.stderr.write data.toString()
@@ -378,13 +375,13 @@ block step1
       pre.
         @kbi or={}
         @kbi.VERSION = '0.1.0'
-      p Use 'cake build' or 'cake watch' to compile the CoffeeScript to /javascripts
+      p Use 'cake build' or 'cake watch' to compile the CoffeeScript to /js
     li(data-for='js')
-      span Update the project with the /javascripts folder for each library component:
+      span Update the project with the /js folder for each library component:
       pre.
         - knockback-inspector
           - index.html
-          - javascripts
+          - js
             - lib
             - models
             - view_models
@@ -396,7 +393,7 @@ block step1
         this.kbi || (this.kbi = {});
         this.kbi.VERSION = '0.1.0';
     li
-      p Finally, let's update the index.html file to include /javscripts/kbi_core.js, to display the version number using Knockback.js, and to add some styling:
+      p Finally, let's update the index.html file to include /javjs/kbi_core.js, to display the version number using Knockback.js, and to add some styling:
       pre.
         <!doctype html>
         <head>
@@ -405,15 +402,12 @@ block step1
           <title class='inspector_title' data-bind="text: title"></title>
 
           <!-- DEPENDENCIES -->
-          <script src='vendor/jquery-1.7.2.js'></script>
-          <script src='vendor/knockout-latest.js'></script>
-          <script src='vendor/underscore-latest.js'></script>
-          <script src='vendor/backbone-latest.js'></script>
-          <script src='vendor/backbone-relational-latest.js'></script>
-          <script src='vendor/knockback-latest.js'></script>
+          <script src='vendor/jquery-1.8.0.js'></script>
+          <script src='vendor/knockback-core-stack-0.16.1.js'></script>
+          <script src='vendor/backbone-relational-0.6.0.js'></script>
 
           <!-- KNOCKBACK-INSPECTOR LIBRARY -->
-          <script src='javascripts/lib/kbi_core.js'></script>
+          <script src='js/lib/kbi_core.js'></script>
 
           <!-- APPLICATION STYLING -->
           <style type='text/css'>
@@ -452,7 +446,7 @@ block step1
 
       p When you reload index.html, the browser title and header should display 'Knockback Inspector (0.1.0)' with formatting like:
       br
-      img.screen_shot(src='images/tutorial_inspector/screen_shot_step1.png')
+      img.screen_shot(src='img/tutorial_inspector/screen_shot_step1.png')
       br
 
 ////////////////
@@ -506,7 +500,7 @@ block step2
       kbi.nodeViewModel = kbi.nvm = (name, opened, node) -> return new kbi.NodeViewModel(name, opened, node)
   p kbi.nodeViewModel() and kbi.nvm() are factory functions to help reduce the verbosity of the code in the templates.
   div(data-for='js')
-    h3 Create /javascripts/view_models/kbi_node_view_model.js:
+    h3 Create /js/view_models/kbi_node_view_model.js:
     pre.
       kbi.NodeViewModel = function(name, opened, node) {
         this.name = name;
@@ -595,7 +589,7 @@ block step2
       </li>
       """
   div(data-for='js')
-    h4 Create /javascripts/views/kbi_model_node_view.js:
+    h4 Create /js/views/kbi_model_node_view.js:
     pre.
       kbi.ModelNodeView = "<li class='kbi' data-bind=\"css: {opened: opened, closed: !opened()}\"> \
         <div class='kbi model' data-bind=\"click: function(){ opened(!opened()); }\"> \
@@ -651,7 +645,7 @@ block step2
       </li>
       """
   div(data-for='js')
-    h4 Create /javascripts/views/kbi_collection_node_view.js:
+    h4 Create /js/views/kbi_collection_node_view.js:
     pre.
       kbi.CollectionNodeView = " \
       <li class='kbi' data-bind=\"css: {opened: opened, closed: !opened()}\"> \
@@ -702,7 +696,7 @@ block step2
             else return ko.nativeTemplateEngine.prototype.makeTemplateSource.apply(this, arguments)  div(data-for='js')
 
   div(data-for='js')
-    h4 Create /javascripts/lib/kbi_string_template_engine.js:
+    h4 Create /js/lib/kbi_string_template_engine.js:
     pre.
       // template source
       kbi.TemplateSource = function(template_string) { this.template_string = template_string; };
@@ -744,16 +738,16 @@ block step2
   p Finally, add all of the javascript files to index.html and try it out!
   pre.
     <!-- KNOCKBACK-INSPECTOR LIBRARY -->
-    <script src='javascripts/lib/kbi_core.js'></script>
-    <script src='javascripts/view_models/kbi_node_view_model.js'></script>
-    <script src='javascripts/views/kbi_collection_node_view.js'></script>
-    <script src='javascripts/views/kbi_model_node_view.js'></script>
-    <script src='javascripts/lib/kbi_string_template_engine.js'></script>
+    <script src='js/lib/kbi_core.js'></script>
+    <script src='js/view_models/kbi_node_view_model.js'></script>
+    <script src='js/views/kbi_collection_node_view.js'></script>
+    <script src='js/views/kbi_model_node_view.js'></script>
+    <script src='js/lib/kbi_string_template_engine.js'></script>
 
   p
     span You should see something like:
     br
-    img.screen_shot(src='images/tutorial_inspector/screen_shot_step2.png')
+    img.screen_shot(src='img/tutorial_inspector/screen_shot_step2.png')
     br
 
 ////////////////
@@ -796,7 +790,7 @@ block step3
   p
     span It just works!
     br
-    img.screen_shot(src='images/tutorial_inspector/screen_shot_step3.png')
+    img.screen_shot(src='img/tutorial_inspector/screen_shot_step3.png')
     br
 
 ////////////////
@@ -830,7 +824,7 @@ block step4
           return model.set(model.parse(result))
         )
   div(data-for='js')
-    h4 Create /javascripts/models/kbi_fetched.js:
+    h4 Create /js/models/kbi_fetched.js:
     pre.
       // General-purpose model for fetched JSON when you do not have a specialized implementation
       kbi.FetchedModel = Backbone.Model.extend({
@@ -899,7 +893,7 @@ block step4
   p
     span You should be able to change the twitter search query or enter any RESTful, public url that returns JSON with a results array.
     br
-    img.screen_shot(src='images/tutorial_inspector/screen_shot_step4.png')
+    img.screen_shot(src='img/tutorial_inspector/screen_shot_step4.png')
     br
 
 ////////////////
@@ -917,7 +911,7 @@ block step5
       spawn 'uglifyjs', ['-o', 'knockback-inspector.min.js', 'knockback-inspector.js']
       print "\#{(new Date).toLocaleTimeString()} - generated knockback-inspector.min.js\n"
 
-    task 'build', 'Build javascripts/ from src/', ->
+    task 'build', 'Build js/ from src/', ->
       coffee = spawn 'coffee', ['-c', '-j', 'knockback-inspector.js', 'src']
       coffee.stderr.on 'data', (data) ->
         process.stderr.write data.toString()
@@ -934,7 +928,7 @@ block step5
       coffee.stdout.on 'data', (data) ->
         print data.toString()
         callback?()
-  p The difference are that now we are using the -j (or --join) option without generating temporary files in the /javascripts directory and we implemented a callback to uglify the knockback-inspector.js whenever it changed.
+  p The difference are that now we are using the -j (or --join) option without generating temporary files in the /js directory and we implemented a callback to uglify the knockback-inspector.js whenever it changed.
   p <strong>Note:</strong> if you are using JavaScript, you can use the scripting language of your choice to concatenate and minimize the individual JavaScript files into 'knockback-inspector.min.js'.
 
 
@@ -965,7 +959,7 @@ block future_enhancements
 
 block content
   section
-    h1 Tutorial: Knockback Inspector Library
+    h1 Compatible Components: Knockback-Inspector.js
 
     p This tutorial shows how to create an inspector for a Backbone.Model or a Backbone.Collection that you can embed in your website for debugging purposes. For a model, the inspector allows you to view and edit its attributes including nested models and collections; for a collection, the inspector allows you to view and edit its models.
 

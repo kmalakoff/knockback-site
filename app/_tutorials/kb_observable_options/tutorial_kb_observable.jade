@@ -6,8 +6,8 @@ block title
   title Tutorial: kb.Observable
 
 block includes
-  link(rel='stylesheet', href='stylesheets/tutorial.css')
-  include ../../_demos/_demos_include_knockback_scripts
+  link(rel='stylesheet', href='css/tutorial.css')
+  include ../../_layout/_layout_include_demo_scripts
 
 block navbar
   mixin pageNavbar('kb.Observable', true)
@@ -26,31 +26,32 @@ block content
       strong Note:
       span  just like in Knockout.js, if you require access to the owning view model, it provided as 'this' in read and write methods if you provide it as a parameter to the kb.observable's create method: (model, options, owning_view_model)
 
-    div.container-fluid
-      div.row-fluid
-        div.span8
+    div.row-fluid
+      div.span8
+        ul.nav.nav-tabs
+          li.active <a href="#kboo_read_write_view" data-toggle="tab">View (HTML)</a>
+          li <a href="#kboo_read_write_view_model" data-toggle="tab">ViewModel (CS/JS)</a>
+        div.tab-content
+          div.tab-pane.active#kboo_read_write_view
+            pre
+              include kboo_read_write_view.html.txt
+          div.tab-pane#kboo_read_write_view_model
+            pre(data-for='cs')
+              include kboo_read_write_view_model_bindings.coffee
 
-          h4 Views:
-          pre
-            include kboo_read_write_view.html.txt
+            pre(data-for='js')
+              include ../../../public/tutorials/kb_observable_options/kboo_read_write_view_model_bindings.js
 
-          h4 ViewModel and Bindings:
-          pre(data-for='cs')
-            include kboo_read_write_view_model_bindings.coffee
-
-          pre(data-for='js')
-            include ../../../public/tutorials/kb_observable_options/kboo_read_write_view_model_bindings.js
-
-        div.span4
-          h4 Live Result
-          div.demos_result_box
-            include kboo_read_write_view.html
-            script(type='application/javascript', src='tutorials/kb_observable_options/kboo_read_write_view_model_bindings.js')
+      div.span4
+        h4 Live Result
+        div.demos_result_box
+          include kboo_read_write_view.html
+          script(type='application/javascript', src='tutorials/kb_observable_options/kboo_read_write_view_model_bindings.js')
 
     p
     h2 Create Options: {localizer: constructor(value)}
     p
-      span Instead of a read and/or write option, you can provide a kb.LocalizedObservable derived class for custom localized of an attribute. Please see the 
+      span Instead of a read and/or write option, you can provide a kb.LocalizedObservable derived class for custom localized of an attribute. Please see the
       a(href='tutorial_kb_localized_observable.html#localized_input')  kb.LocalizedObservable tutorial
       span  an explaination of the following:
 
@@ -66,24 +67,24 @@ block content
     p
       span You can pass a default function or parameter to provide a value when there is no value available.
 
-    div.container-fluid
-      div.row-fluid
-        div.span8
+    div.row-fluid
+      div.span8
+        ul.nav.nav-tabs
+          li.active <a href="#kboo_default_view" data-toggle="tab">View (HTML)</a>
+          li <a href="#kboo_default_view_model" data-toggle="tab">ViewModel (CS/JS)</a>
+        div.tab-content
+          div.tab-pane.active#kboo_default_view
+            pre
+              include kboo_default_view.html.txt
+          div.tab-pane#kboo_default_view_model
+            pre(data-for='cs')
+              include kboo_default_view_model_bindings.coffee
 
-          h4 Views:
-          pre
-            include kboo_default_view.html.txt
+            pre(data-for='js')
+              include ../../../public/tutorials/kb_observable_options/kboo_default_view_model_bindings.js
 
-          h4 ViewModel and Bindings:
-          pre(data-for='cs')
-            include kboo_default_view_model_bindings.coffee
-
-          pre(data-for='js')
-            include ../../../public/tutorials/kb_observable_options/kboo_default_view_model_bindings.js
-
-        div.span4
-          h4 Live Result
-          div.demos_result_box
-            include kboo_default_view.html
-            script(type='application/javascript', src='tutorials/kb_observable_options/kboo_default_view_model_bindings.js')
-
+      div.span4
+        h4 Live Result
+        div.demos_result_box
+          include kboo_default_view.html
+          script(type='application/javascript', src='tutorials/kb_observable_options/kboo_default_view_model_bindings.js')

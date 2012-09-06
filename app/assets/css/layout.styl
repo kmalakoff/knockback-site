@@ -1,0 +1,111 @@
+
+@import url('http://fonts.googleapis.com/css?family=Numans');
+@import url('http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic,700italic');
+@import 'nib'
+@import '../vendor/css/animate-custom.css';
+
+Chosen = "Numans"
+Monospaced = "Ubuntu Mono"
+
+links = #2BA8D9
+
+// Layout
+// ====
+body
+  background #eee
+  margin 0px
+  font-family Helvetica, Arial, sans-serif
+
+  > .container
+    padding-top 20px
+
+  div.page.github_fork_me
+    z-index 200
+    position fixed
+    top 0px
+    right 0px
+
+// Base
+// ====
+
+.animated
+  animation-fill-mode both
+
+.kb
+  font-family Chosen, 'Helvetica Neue', Helvetica, Arial, sans-serif
+
+a:link
+a:visited
+  color links
+  text-decoration none
+  transition color 200ms
+
+a:link
+  color links
+
+a:visited
+  color desaturate(links, 20)
+
+a:hover
+  color lighten(links, 10)
+a:active
+  color darken(links, 10)
+
+a:visited:hover
+  color lighten(desaturate(links, 30), 10)
+a:visited:active
+  color darken(desaturate(links, 30), 10)
+
+a:focus
+  text-decoration underline
+
+tt, kbd, samp
+  font-family Monospaced, monospaced
+
+// Header
+// ------
+
+header
+  position relative
+  font-size 70px
+  padding 20px 0 20px
+  font-family Chosen, 'Helvetica Neue', Helvetica, Arial, sans-serif
+  .lock
+    line-height 1em
+
+// Content
+// -------
+
+section#content
+  position relative
+  z-index 100
+  animation-delay 2s
+  line-height 1.2em
+  -webkit-font-smoothing antialiased
+
+  .kb
+    font-family Chosen, 'Helvetica Neue', Helvetica, Arial, sans-serif
+
+// Result
+// -------
+
+.demos_result_box
+  display block
+  padding 8.5px
+  margin 0 0 9px
+  font-size 12px
+  line-height 18px
+  background-color #EBD6FF
+  border 1px solid #ccc
+  border-radius 4px
+
+// Code
+// -------
+
+pre.prettyprint span
+  font-size 12px
+
+// Twitter-Bootstrap
+// -------
+.accordion-heading
+  background-color #E5E5E5

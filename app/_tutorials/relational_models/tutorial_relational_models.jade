@@ -6,9 +6,9 @@ block title
   title Tutorial: Relational Models
 
 block includes
-  link(rel='stylesheet', href='stylesheets/tutorial.css')
-  include ../../_demos/_demos_include_knockback_scripts
-  script(type='application/javascript', src='vendor/javascripts/backbone-relational-0.5.0.js')
+  link(rel='stylesheet', href='css/tutorial.css')
+  include ../../_layout/_layout_include_demo_scripts
+  script(type='application/javascript', src='vendor/js/backbone-relational-0.6.0.js')
 
 block navbar
   mixin pageNavbar('Relational Models', true)
@@ -25,55 +25,60 @@ block content
     h3 Manual Relations (Collection)
     p
 
-    div.container-fluid
-      div.row-fluid
-        div.span8
-          h4 Views:
-          pre
-            include rm_manual_view.html.txt
+    div.row-fluid
+      div.span8
+        ul.nav.nav-tabs
+          li.active <a href="#kbnm_view_models_view" data-toggle="tab">View (HTML)</a>
+          li <a href="#kbnm_view_models_view_model" data-toggle="tab">ViewModel (CS/JS)</a>
+        div.tab-content
+          div.tab-pane.active#kbnm_view_models_view
+            pre
+              include rm_manual_view.html.txt
+          div.tab-pane#kbnm_view_models_view_model
+            pre(data-for='cs')
+              include rm_manual_view_model_bindings.coffee
 
-          h4 ViewModel and Bindings:
-          pre(data-for='cs')
-            include rm_manual_view_model_bindings.coffee
+            pre(data-for='js')
+              include ../../../public/tutorials/relational_models/rm_manual_view_model_bindings.js
 
-          pre(data-for='js')
-            include ../../../public/tutorials/relational_models/rm_manual_view_model_bindings.js
-
-        div.span4
-          h4 Live Result
-          div.demos_result_box
-            include rm_manual_view.html
-            script(type='application/javascript', src='tutorials/relational_models/rm_manual_view_model_bindings.js')
+      div.span4
+        h4 Live Result
+        div.demos_result_box
+          include rm_manual_view.html
+          script(type='application/javascript', src='tutorials/relational_models/rm_manual_view_model_bindings.js')
 
     p
     h3 Backbone-Relational
     p
     p Let's look at an example from the Backbone-Relational site:
 
-    div.container-fluid
-      div.row-fluid
-        div.span8
-          h4 Views:
-          pre
-            include br_view.html.txt
+    div.row-fluid
+      div.span8
+        ul.nav.nav-tabs
+          li.active <a href="#br_view_model_view" data-toggle="tab">View (HTML)</a>
+          li <a href="#br_view_model_model" data-toggle="tab">Model (CS/JS)</a>
+          li <a href="#br_view_model_view_model" data-toggle="tab">ViewModel (CS/JS)</a>
+        div.tab-content
+          div.tab-pane.active#br_view_model_view
+            pre
+              include br_view.html.txt
+          div.tab-pane#br_view_model_model
+            pre(data-for='cs')
+              include br_models.coffee
 
-          h4 Models:
-          pre(data-for='cs')
-            include br_models.coffee
+            pre(data-for='js')
+              include ../../../public/tutorials/relational_models/br_models.js
 
-          pre(data-for='js')
-            include ../../../public/tutorials/relational_models/br_models.js
+          div.tab-pane#br_view_model_view_model
+            pre(data-for='cs')
+              include br_view_model_bindings.coffee
 
-          h4 ViewModel and Bindings:
-          pre(data-for='cs')
-            include br_view_model_bindings.coffee
+            pre(data-for='js')
+              include ../../../public/tutorials/relational_models/br_view_model_bindings.js
 
-          pre(data-for='js')
-            include ../../../public/tutorials/relational_models/br_view_model_bindings.js
-
-        div.span4
-          h4 Live Result
-          div.demos_result_box
-            include br_view.html
-            script(type='application/javascript', src='tutorials/relational_models/br_models.js')
-            script(type='application/javascript', src='tutorials/relational_models/br_view_model_bindings.js')
+      div.span4
+        h4 Live Result
+        div.demos_result_box
+          include br_view.html
+          script(type='application/javascript', src='tutorials/relational_models/br_models.js')
+          script(type='application/javascript', src='tutorials/relational_models/br_view_model_bindings.js')

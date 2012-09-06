@@ -1,5 +1,5 @@
 &lt;div id='kblo_read_write'&gt;
-  &lt;input data-bind=&quot;value: date&quot;/&gt;
+  &lt;input class='input-small pull-right' data-bind=&quot;value: date&quot;/&gt;
 
   &lt;p&gt;
     &lt;span&gt;Current Locale: &lt;span&gt;

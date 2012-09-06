@@ -20,8 +20,8 @@ def recursiveFilteredCopy(path, filename, dest, skipped_endings)
   pathed_source_file = "#{path}/#{filename}"
   if File.directory?(pathed_source_file)
     return if filename.start_with?('_')
-    filename = 'stylesheets' if filename == 'styles'
-    filename = 'javascripts' if filename == 'scripts'
+    filename = 'css' if filename == 'css'
+    filename = 'js' if filename == 'js'
     Dir.entries(pathed_source_file).each{|child_filename| recursiveFilteredCopy(pathed_source_file, child_filename, "#{dest}/#{filename}", skipped_endings)}
   else
     `cd #{PROJECT_ROOT}; mkdir #{dest}` if !File.exists?(dest)
@@ -35,8 +35,8 @@ def recursiveHTMLToEscapedText(path, filename, dest)
   pathed_source_file = "#{path}/#{filename}"
   if File.directory?(pathed_source_file)
     return if filename.start_with?('_')
-    filename = 'stylesheets' if filename == 'styles'
-    filename = 'javascripts' if filename == 'scripts'
+    filename = 'css' if filename == 'css'
+    filename = 'js' if filename == 'js'
     Dir.entries(pathed_source_file).each{|child_filename| recursiveHTMLToEscapedText(pathed_source_file, child_filename, "#{dest}/#{filename}")}
   else
     return unless (File.extname(pathed_source_file).downcase == '.html')    # only .html files
@@ -88,15 +88,15 @@ Dir.entries(VENDOR_ROOT).each{|filename| recursiveFilteredCopy(VENDOR_ROOT, file
 ####################################################
 # The Web Site
 ####################################################
-`cd #{PROJECT_ROOT}; mkdir public/stylesheets` if !File.exists?('public/stylesheets')
-`cd #{PROJECT_ROOT}; node_modules/.bin/stylus --use nib --out public/stylesheets app/assets/styles &`
+`cd #{PROJECT_ROOT}; mkdir public/css` if !File.exists?('public/css')
+`cd #{PROJECT_ROOT}; node_modules/.bin/stylus --use nib --out public/css app/assets/css &`
 
-`cd #{PROJECT_ROOT}; mkdir public/javascripts` if !File.exists?('public/javascripts')
-`cd #{PROJECT_ROOT}; node_modules/.bin/coffee --output public/javascripts app/assets/scripts`
+`cd #{PROJECT_ROOT}; mkdir public/js` if !File.exists?('public/js')
+`cd #{PROJECT_ROOT}; node_modules/.bin/coffee --output public/js app/assets/js`
 
 Dir.entries(ASSETS_ROOT).each{|filename| recursiveFilteredCopy(ASSETS_ROOT, filename, 'public', ['.styl', '.coffee'])}
 
 setupDemo(TUTORIALS_ROOT, 'public/tutorials')
 setupDemo(GETTING_STARTED_ROOT, 'public/getting_started')
 
-`cd #{PROJECT_ROOT}; node_modules/.bin/jade --out public app`
+`cd #{PROJECT_ROOT}; node_modules/.bin/jade --pretty --out public app`

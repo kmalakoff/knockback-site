@@ -6,8 +6,8 @@ block title
   title Tutorial: kb.ViewModel
 
 block includes
-  link(rel='stylesheet', href='stylesheets/tutorial.css')
-  include ../../_demos/_demos_include_knockback_scripts
+  link(rel='stylesheet', href='css/tutorial.css')
+  include ../../_layout/_layout_include_demo_scripts
 
 block navbar
   mixin pageNavbar('kb.ViewModel', true)
@@ -18,7 +18,7 @@ block content
     p
       a(href='index.html') Knockback.js
       span  has a helper called
-      a(href='docs_kb_view_model.html')  kb.ViewModel
+      a(href='doc/classes/kb/ViewModel.html')  kb.ViewModel
       span  to automatically generate observables for each attribute
     p Most likely you will use the kb.viewModel(model) <span class='label label-info'>factory</span> method to create a kb.ViewModel.
 
@@ -29,47 +29,51 @@ block content
     p
     p If Knockback encounters a attribute that is a Backbone.Model, it automatically creates a kb.ViewModel for it. Because the model can change behind the scenes, you must access the view model using the 'attribute_name()' syntax rather than as a simple property.
 
-    div.container-fluid
-      div.row-fluid
-        div.span8
-          h4 Views:
-          pre
-            include kbvm_bb_model_view.html.txt
+    div.row-fluid
+      div.span8
+        ul.nav.nav-tabs
+          li.active <a href="#kbvm_bb_model_view" data-toggle="tab">View (HTML)</a>
+          li <a href="#kbvm_bb_model_view_model" data-toggle="tab">ViewModel (CS/JS)</a>
+        div.tab-content
+          div.tab-pane.active#kbvm_bb_model_view
+            pre
+              include kbvm_bb_model_view.html.txt
+          div.tab-pane#kbvm_bb_model_view_model
+            pre(data-for='cs')
+              include kbvm_bb_model_view_model_bindings.coffee
 
-          h4 ViewModel and Bindings:
-          pre(data-for='cs')
-            include kbvm_bb_model_view_model_bindings.coffee
+            pre(data-for='js')
+              include ../../../public/tutorials/kb_view_model/kbvm_bb_model_view_model_bindings.js
 
-          pre(data-for='js')
-            include ../../../public/tutorials/kb_view_model/kbvm_bb_model_view_model_bindings.js
-
-        div.span4
-          h4 Live Result
-          div.demos_result_box
-            include kbvm_bb_model_view.html
-            script(type='application/javascript', src='tutorials/kb_view_model/kbvm_bb_model_view_model_bindings.js')
+      div.span4
+        h4 Live Result
+        div.demos_result_box
+          include kbvm_bb_model_view.html
+          script(type='application/javascript', src='tutorials/kb_view_model/kbvm_bb_model_view_model_bindings.js')
 
     p
     h3 Attribute Type: Backbone.Collection
     p
     p If Knockback encounters a attribute that is a Backbone.Collection, it automatically creates a kb.CollectionObservable for it and a kb.ViewModel for each of it's models. Because the collection can change behind the scenes, you must access the collection observable using the 'attribute_name()' syntax rather than as a simple property.
 
-    div.container-fluid
-      div.row-fluid
-        div.span8
-          h4 Views:
-          pre
-            include kbvm_bb_collection_view.html.txt
+    div.row-fluid
+      div.span8
+        ul.nav.nav-tabs
+          li.active <a href="#kbvm_bb_collection_view" data-toggle="tab">View (HTML)</a>
+          li <a href="#kbvm_bb_collection_view_model" data-toggle="tab">ViewModel (CS/JS)</a>
+        div.tab-content
+          div.tab-pane.active#kbvm_bb_collection_view
+            pre
+              include kbvm_bb_collection_view.html.txt
+          div.tab-pane#kbvm_bb_collection_view_model
+            pre(data-for='cs')
+              include kbvm_bb_collection_view_model_bindings.coffee
 
-          h4 ViewModel and Bindings:
-          pre(data-for='cs')
-            include kbvm_bb_collection_view_model_bindings.coffee
+            pre(data-for='js')
+              include ../../../public/tutorials/kb_view_model/kbvm_bb_collection_view_model_bindings.js
 
-          pre(data-for='js')
-            include ../../../public/tutorials/kb_view_model/kbvm_bb_collection_view_model_bindings.js
-
-        div.span4
-          h4 Live Result
-          div.demos_result_box
-            include kbvm_bb_collection_view.html
-            script(type='application/javascript', src='tutorials/kb_view_model/kbvm_bb_collection_view_model_bindings.js')
+      div.span4
+        h4 Live Result
+        div.demos_result_box
+          include kbvm_bb_collection_view.html
+          script(type='application/javascript', src='tutorials/kb_view_model/kbvm_bb_collection_view_model_bindings.js')

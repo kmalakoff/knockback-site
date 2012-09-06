@@ -6,9 +6,8 @@ block title
   title Tutorial: kb.LocalizedObservable
 
 block includes
-  link(rel='stylesheet', href='stylesheets/tutorial.css')
-  include ../../_demos/_demos_include_knockback_scripts
-  include ../../_demos/_demos_include_globalize_scripts
+  link(rel='stylesheet', href='css/tutorial.css')
+  include ../../_layout/_layout_include_demo_scripts
 
 block navbar
   mixin pageNavbar('kb.LocalizedObservable', true)
@@ -23,12 +22,12 @@ block content
       span  tutorial for usage examples).
     p
       span The
-      a(href='docs_kb_Localized_observable.html')  kb.LocalizedObservable
+      a(href='doc/classes/kb/LocalizedObservable.html')  kb.LocalizedObservable
       span  watches the 'kb.locale_manager' instance for changes and updates itself accordingly.
 
     p
       span <span class='label label-important'>warning</span> This is one of the few cases where you are likely to derive from a Knockback class and where you need to know about <span class='label label-warning'>observable returned</span>. Basically, when you derive your own type of kb.LocalizedObservable, you need to return the wrapped observable rather than the instance itself from the constructor using
-      a(href='docs_kb_utils.html#wrapped_observable') kb.utils.wrappedObservable
+      a(href='doc/classes/kb/utils.html#wrapped_observable') kb.utils.wrappedObservable
 
     p
       span We'll use the following Locale Manager for these examples:
@@ -43,61 +42,65 @@ block content
     p
     p If you want to simply localize some read-only text based on a nested string id, you typically use a ko.Observable to access the attribute with the string id and use a localizer that simply looks up the string in the kb.locale_manager.
 
-    div.container-fluid
-      div.row-fluid
-        div.span8
-          h4 Custom kb.LocalizedObservable:
-          pre(data-for='cs')
-            include kblo_string_id_models.coffee
-          pre(data-for='js')
-            include ../../../public/tutorials/kb_localized_observable/kblo_string_id_models.js
+    div.row-fluid
+      div.span8
+        ul.nav.nav-tabs
+          li.active <a href="#kblo_string_id_custom" data-toggle="tab">Custom kb.LocalizedObservable (CS/JS)</a>
+          li <a href="#kblo_string_id_view" data-toggle="tab">View (HTML)</a>
+          li <a href="#kblo_string_id_view_model" data-toggle="tab">ViewModel (CS/JS)</a>
+        div.tab-content
+          div.tab-pane.active#kblo_string_id_custom
+            pre(data-for='cs')
+              include kblo_string_id_models.coffee
+            pre(data-for='js')
+              include ../../../public/tutorials/kb_localized_observable/kblo_string_id_models.js
+          div.tab-pane#kblo_string_id_view
+            pre
+              include kblo_string_id_view.html.txt
+          div.tab-pane#kblo_string_id_view_model
+            pre(data-for='cs')
+              include kblo_string_id_view_model_bindings.coffee
 
-          h4 Views:
-          pre
-            include kblo_string_id_view.html.txt
+            pre(data-for='js')
+              include ../../../public/tutorials/kb_localized_observable/kblo_string_id_view_model_bindings.js
 
-          h4 ViewModel and Bindings:
-          pre(data-for='cs')
-            include kblo_string_id_view_model_bindings.coffee
-
-          pre(data-for='js')
-            include ../../../public/tutorials/kb_localized_observable/kblo_string_id_view_model_bindings.js
-
-        div.span4
-          h4 Live Result
-          div.demos_result_box
-            include kblo_string_id_view.html
-            script(type='application/javascript', src='tutorials/kb_localized_observable/kblo_string_id_models.js')
-            script(type='application/javascript', src='tutorials/kb_localized_observable/kblo_string_id_view_model_bindings.js')
+      div.span4
+        h4 Live Result
+        div.demos_result_box
+          include kblo_string_id_view.html
+          script(type='application/javascript', src='tutorials/kb_localized_observable/kblo_string_id_models.js')
+          script(type='application/javascript', src='tutorials/kb_localized_observable/kblo_string_id_view_model_bindings.js')
 
     p
     h3#localized_input Localized Input
     p
     p If you want to simply label an input field, you can use a read-only localized observable that only looks up the string in the kb.locale_manager.
 
-    div.container-fluid
-      div.row-fluid
-        div.span8
-          h4 Custom kb.LocalizedObservable:
-          pre(data-for='cs')
-            include kblo_localized_input_models.coffee
-          pre(data-for='js')
-            include ../../../public/tutorials/kb_localized_observable/kblo_localized_input_models.js
+    div.row-fluid
+      div.span8
+        ul.nav.nav-tabs
+          li.active <a href="#kblo_localized_input_custom" data-toggle="tab">Custom kb.LocalizedObservable (CS/JS)</a>
+          li <a href="#kblo_localized_input_view" data-toggle="tab">View (HTML)</a>
+          li <a href="#kblo_localized_input_view_model" data-toggle="tab">ViewModel (CS/JS)</a>
+        div.tab-content
+          div.tab-pane.active#kblo_localized_input_custom
+            pre(data-for='cs')
+              include kblo_localized_input_models.coffee
+            pre(data-for='js')
+              include ../../../public/tutorials/kb_localized_observable/kblo_localized_input_models.js
+          div.tab-pane#kblo_localized_input_view
+            pre
+              include kblo_localized_input_view.html.txt
+          div.tab-pane#kblo_localized_input_view_model
+            pre(data-for='cs')
+              include kblo_localized_input_view_model_bindings.coffee
 
-          h4 Views:
-          pre
-            include kblo_localized_input_view.html.txt
+            pre(data-for='js')
+              include ../../../public/tutorials/kb_localized_observable/kblo_localized_input_view_model_bindings.js
 
-          h4 ViewModel and Bindings:
-          pre(data-for='cs')
-            include kblo_localized_input_view_model_bindings.coffee
-
-          pre(data-for='js')
-            include ../../../public/tutorials/kb_localized_observable/kblo_localized_input_view_model_bindings.js
-
-        div.span4
-          h4 Live Result
-          div.demos_result_box
-            include kblo_localized_input_view.html
-            script(type='application/javascript', src='tutorials/kb_localized_observable/kblo_localized_input_models.js')
-            script(type='application/javascript', src='tutorials/kb_localized_observable/kblo_localized_input_view_model_bindings.js')
+      div.span4
+        h4 Live Result
+        div.demos_result_box
+          include kblo_localized_input_view.html
+          script(type='application/javascript', src='tutorials/kb_localized_observable/kblo_localized_input_models.js')
+          script(type='application/javascript', src='tutorials/kb_localized_observable/kblo_localized_input_view_model_bindings.js')

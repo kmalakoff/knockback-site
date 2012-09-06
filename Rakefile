@@ -17,7 +17,7 @@ task :watch do
   begin
     exec "cd #{PROJECT_ROOT}; ruby script/watch.rb"
   rescue LoadError
-    puts "build failed: ensure you have run the initialization scripts 'bundle install' and 'npm install'"
+    puts "build failed: ensure you have run the initialization js 'bundle install' and 'npm install'"
     exit
   end
 end
@@ -47,9 +47,9 @@ task :package do
     # fork { exec "cd #{PROJECT_ROOT} ruby script/clean.rb; ruby script/build.rb; jammit -c config/assets_min.yaml -o #{PROJECT_ROOT}" }
     Process.waitall
     # config = YAML::load( File.open( 'config/assets_min.yaml' ) )
-    # config['javascripts'].each{|key, value| transfer_header(key.chomp('.min')+'.js', key+'.js')}
+    # config['js'].each{|key, value| transfer_header(key.chomp('.min')+'.js', key+'.js')}
   rescue LoadError
-    puts "build failed: ensure you have run the initialization scripts 'bundle install' and 'npm install'"
+    puts "build failed: ensure you have run the initialization js 'bundle install' and 'npm install'"
     exit
   end
 end
