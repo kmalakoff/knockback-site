@@ -36,7 +36,7 @@ mixin pageNavbar(active_label, include_code_language_selector)
               each url, label in item
                 mixin pageNavbarWriteItem(label, url, active_label)
           if (include_code_language_selector)
-            div#script_language.pull-right
+            div#script_language
               .separator
                 .selection.codestyle
                   .option
