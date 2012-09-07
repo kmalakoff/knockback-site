@@ -1,0 +1,73 @@
+extends ../../_layout/_layout_template
+
+include ../../_layout/_layout_mixins
+
+block title
+  title Tutorial: kb.CollectionObservable
+
+block includes
+  link(rel='stylesheet', href='css/tutorial.css')
+  include ../../_layout/_layout_include_demo_scripts
+
+block navbar
+  mixin pageNavbar('kb.CollectionObservable', true)
+
+block content
+  :markdown
+    #Tutorial: kb.CollectionObservable
+
+    [Knockback.js](index.html) provides an [kb.CollectionObservable](doc/classes/kb/CollectionObservable.html) that watches Backbone.Collections when models are added, removed, and changed. In addition, kb.CollectionObservables can be used to sort models independently from the Backbone.Collection order, binding HTML select elements, and [rendering/editing model relationships](tutorial_relational_models.html).
+
+    ##Sorting Models
+
+    You can sort models using an [attribute name](doc/classes/kb/CollectionObservable.html#sortAttribute-instance) or by providing a [sorted_index function](doc/classes/kb/CollectionObservable.html#sortedIndex-instance).
+
+  div.row-fluid
+    div.span8
+      ul.nav.nav-tabs
+        li.active <a href="#kbco_sorting_view" data-toggle="tab">View (HTML)</a>
+        li <a href="#kbco_sorting_view_model" data-toggle="tab">ViewModel (CS/JS)</a>
+      div.tab-content
+        div.tab-pane.active#kbco_sorting_view
+          pre
+            include kbco_sorting_view.html.txt
+        div.tab-pane#kbco_sorting_view_model
+          pre(data-for='cs')
+            include kbco_sorting_view_model_bindings.coffee
+
+          pre(data-for='js')
+            include ../../../public/tutorials/kb_collection_observable/kbco_sorting_view_model_bindings.js
+
+    div.span4
+      h4 Live Result
+      div.demos_result_box
+        include kbco_sorting_view.html
+        script(type='application/javascript', src='tutorials/kb_collection_observable/kbco_sorting_view_model_bindings.js')
+  :markdown
+    ##HTML Select Statements
+
+    You can use kb.CollectionObservables to bind HTML select statements using [Knockout.js selectOptions](http://knockoutjs.com/).
+
+    One key constraint is that in order for Knockout.js select bindings to work, the same ViewModel instance needs to be included in each kb.CollectionObservable. You can use [shareOptions](doc/classes/kb/CollectionObservable.html#shareOptions-instance) to share the kb.Store and hence ViewModels between kb.CollectionObservables.
+
+  div.row-fluid
+    div.span8
+      ul.nav.nav-tabs
+        li.active <a href="#kbco_html_select_view" data-toggle="tab">View (HTML)</a>
+        li <a href="#kbco_html_select_view_model" data-toggle="tab">ViewModel (CS/JS)</a>
+      div.tab-content
+        div.tab-pane.active#kbco_html_select_view
+          pre
+            include kbco_html_select_view.html.txt
+        div.tab-pane#kbco_html_select_view_model
+          pre(data-for='cs')
+            include kbco_html_select_view_model_bindings.coffee
+
+          pre(data-for='js')
+            include ../../../public/tutorials/kb_collection_observable/kbco_html_select_view_model_bindings.js
+
+    div.span4
+      h4 Live Result
+      div.demos_result_box
+        include kbco_html_select_view.html
+        script(type='application/javascript', src='tutorials/kb_collection_observable/kbco_html_select_view_model_bindings.js')

@@ -1,0 +1,118 @@
+extends ../../_layout/_layout_template
+
+include ../../_layout/_layout_mixins
+
+block title
+  title Tutorial: kb.Observable
+
+block includes
+  link(rel='stylesheet', href='css/tutorial.css')
+  include ../../_layout/_layout_include_demo_scripts
+
+block navbar
+  mixin pageNavbar('kb.Observable', true)
+
+block content
+  :markdown
+    #Tutorial: kb.Observable
+
+    [Knockback.js](index.html) provides ways to customize a kb.Observable when it is created. This tutorial provides working examples of using these options.
+
+    ##Create Options: {read: function(), write: function(value)}
+    Instead of performing a simple Backbone.Model get or set to synchronize with a kb.Observable, you can provide a custom read or write method like for a ko.observable.
+
+    **Note**: just like in Knockout.js, if you require access to the owning view model, it provided as 'this' in read and write methods if you provide it as a parameter to the kb.observable's create method: (model, options, owning_view_model)
+
+  div.row-fluid
+    div.span8
+      ul.nav.nav-tabs
+        li.active <a href="#kboo_read_write_view" data-toggle="tab">View (HTML)</a>
+        li <a href="#kboo_read_write_view_model" data-toggle="tab">ViewModel (CS/JS)</a>
+      div.tab-content
+        div.tab-pane.active#kboo_read_write_view
+          pre
+            include kboo_read_write_view.html.txt
+        div.tab-pane#kboo_read_write_view_model
+          pre(data-for='cs')
+            include kboo_read_write_view_model_bindings.coffee
+
+          pre(data-for='js')
+            include ../../../public/tutorials/kb_observable/kboo_read_write_view_model_bindings.js
+
+    div.span4
+      h4 Live Result
+      div.demos_result_box
+        include kboo_read_write_view.html
+        script(type='application/javascript', src='tutorials/kb_observable/kboo_read_write_view_model_bindings.js')
+
+  :markdown
+    ##Create Options: {localizer: constructor(value)}
+
+    Instead of a read and/or write option, you can provide a kb.LocalizedObservable derived class for custom localized of an attribute. Please see the [kb.LocalizedObservable tutorial](tutorial_kb_localized_observable.html#localized_input) an explaination of the following:
+
+    ###ViewModel and Bindings:
+
+  pre(data-for='cs')
+    include kboo_localizer_view_model_bindings.coffee
+
+  pre(data-for='js')
+    include ../../../public/tutorials/kb_observable/kboo_localizer_view_model_bindings.js
+
+  :markdown
+    ##Create Options: {default: value or observable}
+
+    You can pass a default function or parameter to provide a value when there is no value available.
+
+  div.row-fluid
+    div.span8
+      ul.nav.nav-tabs
+        li.active <a href="#kboo_default_view" data-toggle="tab">View (HTML)</a>
+        li <a href="#kboo_default_view_model" data-toggle="tab">ViewModel (CS/JS)</a>
+      div.tab-content
+        div.tab-pane.active#kboo_default_view
+          pre
+            include kboo_default_view.html.txt
+        div.tab-pane#kboo_default_view_model
+          pre(data-for='cs')
+            include kboo_default_view_model_bindings.coffee
+
+          pre(data-for='js')
+            include ../../../public/tutorials/kb_observable/kboo_default_view_model_bindings.js
+
+    div.span4
+      h4 Live Result
+      div.demos_result_box
+        include kboo_default_view.html
+        script(type='application/javascript', src='tutorials/kb_observable/kboo_default_view_model_bindings.js')
+
+  :markdown
+    ##Dynamic Attribute Types
+
+    Since Knockback.js version 0.16.0, a kb.Observable can be created using the correct type before the attribute is loaded using the [factories options](doc/classes/kb/ViewModel.html#constructor-instance) and change types when the attribute value changes.
+
+  pre(data-for='cs').
+    model = new Backbone.Model({reused: null})
+    view_model = kb.viewModel(model)
+    # view_model.reused is a ko.observable
+    # view_model.reused.valueType() is kb.TYPE_SIMPLE
+
+    model.set({reused: new Backbone.Model()})
+    # view_model.reused is a kb.ViewModel
+    # view_model.reused.valueType() is kb.TYPE_MODEL
+
+    model.set({reused: new Backbone.Collection()})
+    # view_model.reused is a kb.CollectionObservable
+    # view_model.reused.valueType() is kb.TYPE_COLLECTION
+  pre(data-for='js').
+    var model = new Backbone.Model({reused: null});
+    var view_model = kb.viewModel(model);
+    // view_model.reused is a ko.observable
+    // view_model.reused.valueType() is kb.TYPE_SIMPLE
+
+    model.set({reused: new Backbone.Model()})
+    // view_model.reused is a kb.ViewModel
+    // view_model.reused.valueType() is kb.TYPE_MODEL
+
+    model.set({reused: new Backbone.Collection()})
+    // view_model.reused is a kb.CollectionObservable
+    // view_model.reused.valueType() is kb.TYPE_COLLECTION

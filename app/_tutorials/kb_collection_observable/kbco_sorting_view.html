@@ -1,0 +1,17 @@
+<div id='kbco_sorting' >
+  <legend>Sort Attribute
+    <select data-bind="options: sort_attributes, selectedOptions: sort_attribute"></select>
+  </legend>
+  <div data-bind="foreach: people">
+    <div class='row-fluid'>
+      <div class='span5'>
+        <span>First: </span>
+        <input class='input-small' data-bind="value: first"/>
+      </div>
+      <div class='offset1 span5'>
+        <span>Last: </span>
+        <input class='input-small' data-bind="value: last"/>
+      </div>
+    </div>
+  </div>
+</div>

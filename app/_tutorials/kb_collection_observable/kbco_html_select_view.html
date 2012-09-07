@@ -1,0 +1,9 @@
+<div id='kbco_html_select'>
+  <select multiple="multiple" data-bind="options: people, optionsText: 'name', selectedOptions: selected_people"></select>
+  <div>
+    <span>Selected people: </span>
+    <!-- ko foreach: selected_people -->
+    <span data-bind="text: name"></span>
+    <!-- /ko -->
+  </div>
+</div>
