@@ -1,0 +1,104 @@
+extends ../../_layout/_layout_template
+
+include ../../_layout/_layout_mixins
+
+block title
+  title Getting Started: Memory and Lifecycle Management
+
+block includes
+  link(rel='stylesheet', href='css/tutorial.css')
+  include ../../_layout/_layout_include_demo_scripts
+
+block navbar
+  mixin pageNavbar('Getting Started', true)
+
+block content
+  section
+    :markdown
+      # Auto-Releasing View Models
+      When an element is created, Knockback provides functions to auto-release ViewModels using Knockout's dispose node callback:
+
+    pre(data-for='cs').
+      # binds a callback to the node that releases the view model when the node is removed using ko.removeNode
+      ko.utils.domNodeDisposal.addDisposeCallback(node, -> kb.release(view_model) );
+    pre(data-for='js').
+      // binds a callback to the node that releases the view model when the node is removed using ko.removeNode
+      ko.utils.domNodeDisposal.addDisposeCallback(node, function() { kb.release(view_model)} );
+    :markdown
+      There are three ways to do this in Knockback:
+
+    pre(data-for='cs').
+      # Auto-released Template
+      el = kb.renderAutoReleasedTemplate('template_name', view_model, options)
+
+      # OR: When applying bindings
+      kb.applyBindings(view_model, el)
+
+      # OR: Manually
+      kb.releaseOnNodeRemove(view_model, el)
+    pre(data-for='js').
+      // Auto-released Template
+      var el = kb.renderAutoReleasedTemplate('template_name', view_model, options);
+
+      // OR: When applying bindings
+      kb.applyBindings(view_model, el);
+
+      // OR: Manually
+      kb.releaseOnNodeRemove(view_model, el);
+    :markdown
+      This means you can use a Backbone.Router as follows and not need to explicitly call kb.release() because ko.removeNode calls it for you:
+
+    pre(data-for='cs').
+      window.RouterBackboneJS = Backbone.Router.extend({
+        constructor: ->
+          Backbone.Router.prototype.constructor.apply(@, arguments)
+
+          @route('', null, =>
+            ko.removeNode(@active_el) if @active_el # remove previous
+
+            @active_el = kb.renderAutoReleasedTemplate('home', new HomeViewModel())
+            $('body').append(@active_el)
+          )
+
+          @route('things', null, =>
+            ko.removeNode(@active_el) if @active_el # remove previous
+
+            @active_el = kb.renderAutoReleasedTemplate('things_page', new ThingsPageViewModel())
+            $('body').append(@active_el)
+          )
+
+          @route('things/:id', null, (id) =>
+            ko.removeNode(@active_el) if @active_el # remove previous
+
+            @active_el = kb.renderAutoReleasedTemplate('thing_page', new ThingCellViewModel(things_collection.get(id)))
+            $('body').append(@active_el)
+          )
+      })
+    pre(data-for='js').
+      window.RouterBackboneJS = Backbone.Router.extend({
+
+        constructor: function() {
+          Backbone.Router.prototype.constructor.apply(this, arguments);
+
+          this.route('', null, function() {
+            if (this.active_el) { ko.removeNode(this.active_el); } // remove previous
+
+            this.active_el = kb.renderAutoReleasedTemplate('home', new HomeViewModel());
+            $('body').append(this.active_el);
+          });
+
+          this.route('things', null, function() {
+            if (this.active_el) { ko.removeNode(this.active_el); } // remove previous
+
+            this.active_el = kb.renderAutoReleasedTemplate('things_page', new ThingsPageViewModel());
+            $('body').append(this.active_el);
+          });
+
+          this.route('things/:id', null, function(id) {
+            if (this.active_el) { ko.removeNode(this.active_el); } // remove previous
+
+            this.active_el = kb.renderAutoReleasedTemplate('thing_page', new ThingCellViewModel(things_collection.get(id)));
+            $('body').append(this.active_el);
+          });
+        }
+      });
