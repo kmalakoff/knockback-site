@@ -24,8 +24,8 @@ block content
 
       Besides providing a clean separation between data and display, this separation becomes important in a larger application. In a larger application, you often have different ways to present the same Model with different ViewModels. For example, a Model could have the following ViewModels:
 
-      * ***Thumbnail View***: the ViewModel could only expose a subset of the Model's attributes, dates/time may be in the shortest format possible, or maybe just an image would be provided to the template.
-      * ***Cell View***: the ViewModel could again expose a subset of only the most relevant summary attributes, routing information to a detailed summary view, etc.
-      * ***Editing View***: the ViewModel could expose almost all of the Model's attributes, localized labels for each, data and functions for the editing controls and functionality, routing information to specialized editing views, etc.
+      * **Thumbnail View**: the ViewModel could only expose a subset of the Model's attributes, dates/time may be in the shortest format possible, or maybe just an image would be provided to the template.
+      * **Cell View**: the ViewModel could again expose a subset of only the most relevant summary attributes, routing information to a detailed summary view, etc.
+      * **Editing View**: the ViewModel could expose almost all of the Model's attributes, localized labels for each, data and functions for the editing controls and functionality, routing information to specialized editing views, etc.
 
       Important to understand that in a larger application the relationship between Models and ViewModels tends to be one-to-many. In this application, there is a one-to-many relationship from the Priority model through the the HeaderViewModel and TodoViewModel ViewModels because each one uses the Priority for rendering their priority colors and providing priority settings data to their tooltip, but the actions on selecting a priority in the tool tip differ.
