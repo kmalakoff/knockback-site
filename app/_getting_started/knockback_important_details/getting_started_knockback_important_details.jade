@@ -18,10 +18,12 @@ block content
       Getting Started with Knockback.js: Knockback.js Important Details
       ============================
 
+    :markdown
       #Inheritance
-      Some Knockback classes are meant to be inherited. Specifically:
+      Some Knockback classes are meant to be inherited from. Specifically:
 
       * [kb.ViewModel](doc/classes/kb/ViewModel.html)
+      * [kb.CollectionObservable](doc/classes/kb/CollectionObservable.html)
       * [kb.LocalizedObservable](doc/classes/kb/LocalizedObservable.html)
 
       When using CoffeeScript, you can derive from a super class using:
@@ -63,28 +65,18 @@ block content
           script(type='application/javascript', src='getting_started/knockback_important_details/kb_view_model_inheritance.js')
 
     :markdown
-
-      #Classes vs Factory Functions
-      You may have noticed that there is both kb.viewModel(model, options) and kb.ViewModel. The reason is that to reduce the need of using `new` and to be more familiar with Knockout, there are factory methods that create the underlying classes.
-
-      A factory function uses new to create a new instance:
-    pre(data-for='cs').
-      Knockback.viewModel = (model, options) -> return new Knockback.ViewModel(model, options)
-
-    pre(data-for='js').
-      Knockback.viewModel = function(model, options) { return new Knockback.ViewModel(model, options); };
-
-    :markdown
       #Specifying Mappings Paths for Nested Models
 
       Because Backbone.Models can have attributes than contain nested Backbone.Models or Backbone.Collections, there are times where you need to specialize the ViewModel you want to use; for example, in a model/collection hierachy with relationships. When you do need to, you can use the `factories` option when creating a [kb.ViewModel](doc/classes/kb/ViewModel.html) or [kb.CollectionObservable](doc/classes/kb/CollectionObservable.html)
 
-      Please take a look at the [Nested Model Tutorial](tutorial_nested_models.html) for an example.
+    pre(data-for='cs')
+      include kbgs_collection_observables.coffee
 
-      #API Coding Conventions
-      Knockback uses the following conventions: ClassName, functionName, property_name, 'constant string', "dynamic string", CONSTANT_NAME
+    pre(data-for='js')
+      include ../../../public/getting_started/knockback_important_details/kbgs_collection_observables.js
 
     :markdown
+      Please take a look at the [Nested Model Tutorial](tutorial_nested_models.html) for more details.
 
       #Knockout Observables Foundations
 
@@ -128,13 +120,9 @@ block content
       * [kb.ViewModel](doc/classes/kb/ViewModel.html)
       * [kb.Statistics](doc/classes/kb/Statistics.html)
 
-      #Namespace Aliasing
-
-      'kb' and 'Knockback' can be used interchangeably
-
       #Backbone.Model Signatures
 
-      Knockback.js does not require Backbone.Models for attribute watching, but requires Backbone.Model-like signature.
+      Knockback.js does not require Backbone.Models or Backbone.ModelRefs for attribute watching, but requires only Backbone.Model-like signature.
 
       The minimal Backbone.Model signature is:
 

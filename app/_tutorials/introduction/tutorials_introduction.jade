@@ -1,0 +1,30 @@
+extends ../../_layout/_layout_template
+
+include ../../_layout/_layout_mixins
+
+block title
+  title Tutorials Overview
+
+block includes
+  link(rel='stylesheet', href='css/tutorial.css')
+
+block navbar
+  mixin pageNavbar('Tutorials', false)
+
+block content
+  section
+    :markdown
+      #Knockback.js Tutorials
+
+      We have prepared some tutorials to help explain introduct Knockback.js concepts and to provide solutions to common problems.
+
+      ##Tutorials
+
+      You can find the various 'Tutorials' in the navigation bar above:
+
+      * [kb.Observable](tutorial_kb_observable.html): shows how to create and customize an observable for a single Model attribute
+      * [kb.ViewModel](tutorial_kb_view_model.html): show how to create and customize ViewModel that holds observables for some or all of a Model's attributes.
+      * [Nested Models](tutorial_nested_models.html): shows how to choose the ViewModel used for a Model stored in another Model's attributes.
+      * [Relational Models](tutorial_relational_models.html): shows how to display and manipulate collections of Models stored in a Model's attributes. You can manage relationships by hand or using a compatible component like Backbone-Relational.js.
+      * [kb.LocalizedObservable](tutorial_kb_localized_observable.html): shows how to add observables that automatically change when a global locale for your application changes.
+      * [Custom Locale Manager](tutorial_locale_manager.html) - shows how to store translated strings by locale in a simple locale manager and notify observers when the locale changes.

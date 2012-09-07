@@ -16,7 +16,7 @@ block content
     Compatible Components: Knockback-Navigators.js
     ====================
 
-    KnockbackNavigators.js provides page navigators, a pane navigator, and transition animations to help you make dynamic, single-page applications. They are platform-agnostic so you can even use them without using Knockback.js or Knockout.js!
+    Knockback-Navigators.js provides page navigators, a pane navigator, and transition animations to help you make dynamic, single-page applications. They are platform-agnostic so you can even use them without using Knockback.js or Knockout.js!
 
     [Try the demo](http://kmalakoff.github.com/knockback-navigators/)
 
@@ -223,7 +223,7 @@ block content
     -----------------------
 
     # Auto-Releasing View Models
-    KnockbackNavigators.js uses an implicit memory management model based on Knockback.js conventions (based on Knockout.js functionality). When an element is created, Knockback binds Knockout's dispose node callback:
+    Knockback-Navigators.js uses an implicit memory management model based on Knockback.js conventions (based on Knockout.js functionality). When an element is created, Knockback binds Knockout's dispose node callback:
 
     ```
     // binds a callback to the node that releases the view model when the node is removed using ko.removeNode
@@ -244,7 +244,7 @@ block content
     ```
 
     # Notifications
-    KnockbackNavigators.js provides hooks to receive notifications when an element is activated and deactivated so you can have fine-grained control (for example, to stop background page processing) when your element is detached ($(el).detach()) rather than removed (ko.removeNode(el)). It uses two conventions to provide the notifications:
+    Knockback-Navigators.js provides hooks to receive notifications when an element is activated and deactivated so you can have fine-grained control (for example, to stop background page processing) when your element is detached ($(el).detach()) rather than removed (ko.removeNode(el)). It uses two conventions to provide the notifications:
 
     ```
     // created manually or through page_navigator.loadPaga({el: el, view_model: view_model})

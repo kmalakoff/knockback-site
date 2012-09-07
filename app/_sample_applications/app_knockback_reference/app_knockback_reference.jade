@@ -31,9 +31,9 @@ block content
       #Memory Management
       Knockback.js requires you to release your view models using 'kb.release(view_model)'. The reason for this is that kb.CollectionObservables and kb.ViewModels may have cicular references that need to be broken. Also, kb.release walks your ViewModel properties so it ensures all ko.observables, kb.observables, and the like to be properly released to avoid memory leaks.
 
-      That said, you can largely automate this using the approach from [KnockbackNavigators.js](https://github.com/kmalakoff/knockback-navigators)!
+      That said, you can largely automate this using the approach from [Knockback-Navigators.js](https://github.com/kmalakoff/knockback-navigators)!
 
-      KnockbackNavigators.js uses an implicit memory management model based on Knockback.js conventions (based on Knockout.js functionality). When an element is created, Knockback binds Knockout's dispose node callback:
+      Knockback-Navigators.js uses an implicit memory management model based on Knockback.js conventions (based on Knockout.js functionality). When an element is created, Knockback binds Knockout's dispose node callback:
 
       ```
       // binds a callback to the node that releases the view model when the node is removed using ko.removeNode
@@ -104,7 +104,7 @@ block content
 
       #Advanced Routing
 
-      You can use [KnockbackNavigators.js](https://github.com/kmalakoff/knockback-navigators) to provide more exciting and interesting functionality. Here's an example with transitions and non-cached pages:
+      You can use [Knockback-Navigators.js](https://github.com/kmalakoff/knockback-navigators) to provide more exciting and interesting functionality. Here's an example with transitions and non-cached pages:
 
       ```
       window.RouterBackboneJSExtendedNoCache = Backbone.Router.extend({
@@ -273,7 +273,7 @@ block content
 
       #Extended Features
 
-      In addition to a the Tutorial reference application, you can find more advanced implementations that use [KnockbackNavigators.js](https://github.com/kmalakoff/knockback-navigators) for page and embedded pane transitions (under DemoMode):
+      In addition to a the Tutorial reference application, you can find more advanced implementations that use [Knockback-Navigators.js](https://github.com/kmalakoff/knockback-navigators) for page and embedded pane transitions (under DemoMode):
 
       * Panes: adds sliding panes with embedded cells for each relationship instead of simple buttons.
       * Page Animations: adds transition animations without history when navigating between pages.
