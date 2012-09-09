@@ -1,0 +1,11 @@
+&lt;div id='kbco_share_options'&gt;
+  &lt;div data-bind=&quot;text: name&quot;&gt;&lt;/div&gt;
+  &lt;select multiple=&quot;multiple&quot; data-bind=&quot;options: available_things, optionsText: 'name', selectedOptions: my_things&quot;&gt;&lt;/select&gt;
+
+  &lt;p&gt;
+    &lt;span&gt;My Things:&lt;/span&gt;
+    &lt;!-- ko foreach: my_things --&gt;
+    &lt;span data-bind=&quot;text: name&quot;&gt;&lt;/span&gt;
+    &lt;!-- /ko --&gt;
+  &lt;/p&gt;
+&lt;/div&gt;

@@ -1,0 +1,17 @@
+&lt;div id='kbco_filtering' &gt;
+  &lt;legend&gt;Filter Name
+   &lt;select data-bind=&quot;options: available_names, selectedOptions: filtered_names&quot;&gt;&lt;/select&gt;
+  &lt;/legend&gt;
+  &lt;div data-bind=&quot;foreach: people&quot;&gt;
+    &lt;div class='row-fluid'&gt;
+      &lt;div class='span5'&gt;
+        &lt;span&gt;First: &lt;/span&gt;
+        &lt;input class='input-small' data-bind=&quot;value: first&quot;/&gt;
+      &lt;/div&gt;
+      &lt;div class='offset1 span5'&gt;
+        &lt;span&gt;Last: &lt;/span&gt;
+        &lt;input class='input-small' data-bind=&quot;value: last&quot;/&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;

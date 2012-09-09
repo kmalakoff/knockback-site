@@ -16,7 +16,7 @@ block content
   :markdown
     #Tutorial: kb.CollectionObservable
 
-    [Knockback.js](index.html) provides an [kb.CollectionObservable](doc/classes/kb/CollectionObservable.html) that watches Backbone.Collections when models are added, removed, and changed. In addition, kb.CollectionObservables can be used to sort models independently from the Backbone.Collection order, binding HTML select elements, and [rendering/editing model relationships](tutorial_relational_models.html).
+    [Knockback.js](index.html) provides an [kb.CollectionObservable](doc/classes/kb/CollectionObservable.html) that watches Backbone.Collections when models are added, removed, and changed. In addition, kb.CollectionObservables can be used to sort models independently from the Backbone.Collection order, to bind HTML select elements, to render/edit [model relationships](tutorial_relational_models.html), and to filter collections.
 
     ##Sorting Models
 
@@ -43,12 +43,38 @@ block content
       div.demos_result_box
         include kbco_sorting_view.html
         script(type='application/javascript', src='tutorials/kb_collection_observable/kbco_sorting_view_model_bindings.js')
+
+  :markdown
+    ##Filtering Models
+
+    You can use kb.CollectionObservables to filter both ViewModels or Models (using the 'models_only' option) using the filters constructor option. Filters can be individual ids (observable or simple) or arrays of ids, functions, or arrays of functions.
+
+  div.row-fluid
+    div.span8
+      ul.nav.nav-tabs
+        li.active <a href="#kbco_filtering_view" data-toggle="tab">View (HTML)</a>
+        li <a href="#kbco_filtering_view_model" data-toggle="tab">ViewModel (CS/JS)</a>
+      div.tab-content
+        div.tab-pane.active#kbco_filtering_view
+          pre
+            include kbco_filtering_view.html.txt
+        div.tab-pane#kbco_filtering_view_model
+          pre(data-for='cs')
+            include kbco_filtering_view_model_bindings.coffee
+
+          pre(data-for='js')
+            include ../../../public/tutorials/kb_collection_observable/kbco_filtering_view_model_bindings.js
+
+    div.span4
+      h4 Live Result
+      div.demos_result_box
+        include kbco_filtering_view.html
+        script(type='application/javascript', src='tutorials/kb_collection_observable/kbco_filtering_view_model_bindings.js')
+
   :markdown
     ##HTML Select Statements
 
     You can use kb.CollectionObservables to bind HTML select statements using [Knockout.js selectOptions](http://knockoutjs.com/).
-
-    One key constraint is that in order for Knockout.js select bindings to work, the same ViewModel instance needs to be included in each kb.CollectionObservable. You can use [shareOptions](doc/classes/kb/CollectionObservable.html#shareOptions-instance) to share the kb.Store and hence ViewModels between kb.CollectionObservables.
 
   div.row-fluid
     div.span8
@@ -71,3 +97,30 @@ block content
       div.demos_result_box
         include kbco_html_select_view.html
         script(type='application/javascript', src='tutorials/kb_collection_observable/kbco_html_select_view_model_bindings.js')
+
+  :markdown
+    One important constraint is that in order for [Knockout.js select bindings](http://knockoutjs.com/documentation/selectedOptions-binding.html) to work, the same ViewModel instance needs to be included in each kb.CollectionObservable. You can use [shareOptions](doc/classes/kb/CollectionObservable.html#shareOptions-instance) to share the kb.Store and hence ViewModels between kb.CollectionObservables.
+
+    Here is an adapted sample from [Knockback Reference App](http://kmalakoff.github.com/knockback-reference-app).
+
+  div.row-fluid
+    div.span8
+      ul.nav.nav-tabs
+        li.active <a href="#kbco_share_options_view" data-toggle="tab">View (HTML)</a>
+        li <a href="#kbco_share_options_view_model" data-toggle="tab">ViewModel (CS/JS)</a>
+      div.tab-content
+        div.tab-pane.active#kbco_share_options_view
+          pre
+            include kbco_share_options_view.html.txt
+        div.tab-pane#kbco_share_options_view_model
+          pre(data-for='cs')
+            include kbco_share_options_view_model_bindings.coffee
+
+          pre(data-for='js')
+            include ../../../public/tutorials/kb_collection_observable/kbco_share_options_view_model_bindings.js
+
+    div.span4
+      h4 Live Result
+      div.demos_result_box
+        include kbco_share_options_view.html
+        script(type='application/javascript', src='tutorials/kb_collection_observable/kbco_share_options_view_model_bindings.js')

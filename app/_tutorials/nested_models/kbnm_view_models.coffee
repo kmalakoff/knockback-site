@@ -3,15 +3,15 @@ fred = new Backbone.Model({name: "Fred", friends: new Backbone.Collection([bob])
 bob.set({friends: new Backbone.Collection([fred])})
 
 FriendViewModel = (model, options) ->
+  @type = 'friend'
   @name = kb.observable(model, 'name')
-  @type = ko.observable('friend')
   @friends = kb.collectionObservable(model.get('friends'), kb.utils.optionsPathJoin(options, 'friends'))
   @
 
 class PersonViewModel extends kb.ViewModel
   constructor: (model, options) ->
+    @type = 'person'
     super
-    @type = ko.observable('person')
 
 view_model = new PersonViewModel(fred, {
   factories:
