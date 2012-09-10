@@ -11,7 +11,7 @@
     <tbody>
     <!-- ko foreach: projects -->
       <tr>
-        <td><a data-bind="attr: {href: 'http://angularjs.org/' + site()}, text: name"target="_blank"></a></td>
+        <td><a data-bind="attr: {href: site}, text: name"target="_blank"></a></td>
         <td data-bind="text: description"></td>
         <td>
           <a data-bind="attr: {href: '#edit/' + id()}"><i class="icon-pencil"></i></a>

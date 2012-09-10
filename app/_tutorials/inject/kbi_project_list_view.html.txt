@@ -11,7 +11,7 @@
     &lt;tbody&gt;
     &lt;!-- ko foreach: projects --&gt;
       &lt;tr&gt;
-        &lt;td&gt;&lt;a data-bind=&quot;attr: {href: 'http://angularjs.org/' + site()}, text: name&quot;target=&quot;_blank&quot;&gt;&lt;/a&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;a data-bind=&quot;attr: {href: site}, text: name&quot;target=&quot;_blank&quot;&gt;&lt;/a&gt;&lt;/td&gt;
         &lt;td data-bind=&quot;text: description&quot;&gt;&lt;/td&gt;
         &lt;td&gt;
           &lt;a data-bind=&quot;attr: {href: '#edit/' + id()}&quot;&gt;&lt;i class=&quot;icon-pencil&quot;&gt;&lt;/i&gt;&lt;/a&gt;
