@@ -1,0 +1,29 @@
+&lt;script type=&quot;text/x-jquery-tmpl&quot; id=&quot;detail.html&quot;&gt;
+  &lt;form name=&quot;myForm&quot;&gt;
+    &lt;div class=&quot;control-group&quot; ng-class=&quot;{error: myForm.name.$invalid}&quot;&gt;
+      &lt;label&gt;Name&lt;/label&gt;
+      &lt;input type=&quot;text&quot; name=&quot;name&quot; ng-model=&quot;project.name&quot; required&gt;
+      &lt;span ng-show=&quot;myForm.name.$error.required&quot; class=&quot;help-inline&quot;&gt;
+          Required&lt;/span&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;control-group&quot; ng-class=&quot;{error: myForm.site.$invalid}&quot;&gt;
+      &lt;label&gt;Website&lt;/label&gt;
+      &lt;input type=&quot;url&quot; name=&quot;site&quot; ng-model=&quot;project.site&quot; required&gt;
+      &lt;span ng-show=&quot;myForm.site.$error.required&quot; class=&quot;help-inline&quot;&gt;
+          Required&lt;/span&gt;
+      &lt;span ng-show=&quot;myForm.site.$error.url&quot; class=&quot;help-inline&quot;&gt;
+          Not a URL&lt;/span&gt;
+    &lt;/div&gt;
+
+    &lt;label&gt;Description&lt;/label&gt;
+    &lt;textarea name=&quot;description&quot; ng-model=&quot;project.description&quot;&gt;&lt;/textarea&gt;
+
+    &lt;br&gt;
+    &lt;a href=&quot;#&quot; class=&quot;btn&quot;&gt;Cancel&lt;/a&gt;
+    &lt;button ng-click=&quot;save()&quot; ng-disabled=&quot;isClean() || myForm.$invalid&quot;
+            class=&quot;btn btn-primary&quot;&gt;Save&lt;/button&gt;
+    &lt;button ng-click=&quot;destroy()&quot;
+            ng-show=&quot;project._id&quot; class=&quot;btn btn-danger&quot;&gt;Delete&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/script&gt;

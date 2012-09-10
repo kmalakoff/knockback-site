@@ -1,0 +1,23 @@
+<script type="text/x-jquery-tmpl" id="list.html">
+  <input type="text" ng-model="search" class="search-query" placeholder="Search">
+  <table>
+    <thead>
+    <tr>
+      <th>Project</th>
+      <th>Description</th>
+      <th><a href="#new"><i class="icon-plus-sign"></i></a></th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- ko foreach: projects -->
+      <tr>
+        <td><a data-bind="attr: {href: 'http://angularjs.org/' + site()}, text: name"target="_blank"></a></td>
+        <td data-bind="text: description"></td>
+        <td>
+          <a data-bind="attr: {href: '#edit/' + id()}"><i class="icon-pencil"></i></a>
+        </td>
+      </tr>
+    <!-- /ko -->
+    </tbody>
+  </table>
+</script>

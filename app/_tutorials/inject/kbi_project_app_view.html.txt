@@ -1,0 +1,4 @@
+&lt;div kb-app data-bind=&quot;kb-inject: ProjectAppController&quot;&gt;
+  &lt;h2&gt;JavaScript Projects&lt;/h2&gt;
+  &lt;div class='embed' data-bind=&quot;PageNavigatorPanes: {loaded: loaded}&quot;&gt;&lt;/div&gt;
+&lt;div&gt;

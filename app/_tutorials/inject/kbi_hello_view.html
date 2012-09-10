@@ -1,0 +1,6 @@
+<div kb-app data-bind="kb-inject: {yourName: ko.observable('')}">
+  <label>Name:</label>
+  <input type="text" data-bind="value: yourName, valueUpdate: 'keyup'" placeholder="Enter a name here">
+  <hr>
+  <h1 data-bind="text: 'Hello ' + yourName() + '!'"></h1>
+</div>

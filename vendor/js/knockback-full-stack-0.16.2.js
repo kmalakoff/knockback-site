@@ -5960,7 +5960,7 @@ ko.exportSymbol('nativeTemplateEngine', ko.nativeTemplateEngine);
   Dependencies: Knockout.js, Backbone.js, and Underscore.js.
 */
 
-var Backbone, KB_TYPE_ARRAY, KB_TYPE_COLLECTION, KB_TYPE_MODEL, KB_TYPE_SIMPLE, KB_TYPE_UNKNOWN, addStatisticsEvent, arraySlice, arraySplice, collapseOptions, kb, ko, legacyWarning, throwMissing, throwUnexpected, _, _argumentsAddKey, _unwrapModels, _wrappedKey,
+var Backbone, KB_TYPE_ARRAY, KB_TYPE_COLLECTION, KB_TYPE_MODEL, KB_TYPE_SIMPLE, KB_TYPE_UNKNOWN, addStatisticsEvent, arraySlice, arraySplice, collapseOptions, kb, ko, legacyWarning, onReady, throwMissing, throwUnexpected, _, _argumentsAddKey, _unwrapModels, _wrappedKey,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 kb = (function() {
@@ -7371,16 +7371,16 @@ kb.CollectionObservable = (function() {
   }
 
   CollectionObservable.prototype.destroy = function() {
-    var collection, observable;
+    var array, collection, observable;
     observable = kb.utils.wrappedObservable(this);
     collection = this._col();
     if (collection) {
       collection.unbind('all', this.__kb._onCollectionChange);
-      this._clear(true);
+      array = observable();
+      array.splice(0, array.length);
     }
     kb.release(this.filters);
-    this.filters = null;
-    this.create_options = null;
+    this.filters = this._col = this.sorted_index_fn = this._mapper = this.create_options = null;
     kb.utils.wrappedDestroy(this);
     return !kb.statistics || kb.statistics.unregister('CollectionObservable', this);
   };
@@ -7496,14 +7496,14 @@ kb.CollectionObservable = (function() {
   };
 
   CollectionObservable.prototype._onModelResort = function(model) {
-    var new_index, observable, previous_index, sorted_view_models, view_model;
+    var new_index, observable, previous_index, sorted_index_fn, sorted_view_models, view_model;
     observable = kb.utils.wrappedObservable(this);
     view_model = this.models_only ? model : this.viewModelByModel(model);
     previous_index = observable.indexOf(view_model);
-    if (this.sorted_index_fn) {
+    if ((sorted_index_fn = this.sorted_index_fn())) {
       sorted_view_models = _.clone(observable());
       sorted_view_models.splice(previous_index, 1);
-      new_index = this.sorted_index_fn(sorted_view_models, view_model);
+      new_index = sorted_index_fn(sorted_view_models, view_model);
     } else {
       new_index = this._col().indexOf(model);
     }
@@ -7553,20 +7553,6 @@ kb.CollectionObservable = (function() {
     this.in_edit++;
     collection.reset(models);
     this.in_edit--;
-    return this;
-  };
-
-  CollectionObservable.prototype._clear = function(silent) {
-    var array, observable;
-    observable = kb.utils.wrappedObservable(this);
-    if (silent) {
-      array = observable();
-      array.splice(0, array.length);
-    } else {
-      this.in_edit++;
-      observable.removeAll();
-      this.in_edit--;
-    }
     return this;
   };
 
@@ -7626,6 +7612,59 @@ kb.sortedIndexWrapAttr = kb.siwa = function(attribute_name, wrapper_constructor)
     });
   };
 };
+
+/*
+  knockback-inject.js
+  (c) 2011, 2012 Kevin Malakoff.
+  Knockback.Inject is freely distributable under the MIT license.
+  See the following for full license details:
+    https://github.com/kmalakoff/knockback/blob/master/LICENSE
+*/
+
+
+ko.bindingHandlers['kb-inject'] = {
+  'init': function(element, value_accessor, all_bindings_accessor, view_model) {
+    var data;
+    data = ko.utils.unwrapObservable(value_accessor());
+    return ko.computed(function() {
+      if (_.isFunction(data)) {
+        return data(view_model, element, value_accessor, all_bindings_accessor);
+      } else if (_.isObject(data)) {
+        return _.extend(view_model, data);
+      }
+    });
+  }
+};
+
+kb.injectApps = function(root) {
+  var app_el, app_els, getAppElements, _i, _len;
+  app_els = [];
+  getAppElements = function(el) {
+    var child_el, _i, _len, _ref;
+    if (el.attributes && _.find(el.attributes, function(attr) {
+      return attr.name === 'kb-app';
+    })) {
+      app_els.push(el);
+    }
+    _ref = el.childNodes;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      child_el = _ref[_i];
+      getAppElements(child_el);
+    }
+  };
+  getAppElements(root || document);
+  for (_i = 0, _len = app_els.length; _i < _len; _i++) {
+    app_el = app_els[_i];
+    kb.applyBindings({}, app_el);
+  }
+};
+
+(onReady = function() {
+  if (!document.body) {
+    return setTimeout(onReady, 1);
+  }
+  kb.injectApps();
+})();
 
 /*
   knockback_default_wrapper.js

@@ -1,0 +1,18 @@
+<div kb-app>
+  <h2>Todo</h2>
+  <div data-bind="kb-inject: TodoCtrl">
+    <span data-bind="text: remaining() + ' of ' + todos().length + ' remaining'"></span>
+    [ <a href="" data-bind="click: archive">archive</a> ]
+    <ul class="unstyled" data-bind="foreach: todos">
+      <li>
+        <input type="checkbox" data-bind="checked: done">
+        <span data-bind="css: {done: done}, text: text"></span>
+      </li>
+    </ul>
+    <form>
+      <input type="text" data-bind="value: todoText"  size="30"
+             placeholder="add new todo here">
+      <button class="btn-primary" data-bind="click: addTodo">add</button>
+    </form>
+  </div>
+</div>

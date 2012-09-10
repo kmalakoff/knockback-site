@@ -1,0 +1,18 @@
+&lt;div kb-app&gt;
+  &lt;h2&gt;Todo&lt;/h2&gt;
+  &lt;div data-bind=&quot;kb-inject: TodoCtrl&quot;&gt;
+    &lt;span data-bind=&quot;text: remaining() + ' of ' + todos().length + ' remaining'&quot;&gt;&lt;/span&gt;
+    [ &lt;a href=&quot;&quot; data-bind=&quot;click: archive&quot;&gt;archive&lt;/a&gt; ]
+    &lt;ul class=&quot;unstyled&quot; data-bind=&quot;foreach: todos&quot;&gt;
+      &lt;li&gt;
+        &lt;input type=&quot;checkbox&quot; data-bind=&quot;checked: done&quot;&gt;
+        &lt;span data-bind=&quot;css: {done: done}, text: text&quot;&gt;&lt;/span&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;form&gt;
+      &lt;input type=&quot;text&quot; data-bind=&quot;value: todoText&quot;  size=&quot;30&quot;
+             placeholder=&quot;add new todo here&quot;&gt;
+      &lt;button class=&quot;btn-primary&quot; data-bind=&quot;click: addTodo&quot;&gt;add&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
