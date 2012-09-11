@@ -1,7 +1,7 @@
 ProjectListViewModel = (projects) ->
   @filter = ko.observable('')
   @projects = kb.collectionObservable(projects, {
-    view_model: ProjectDetailViewModel
+    view_model: ProjectViewModel
     sort_attribute: 'name'
     filters: (model) =>
       filter = @filter()

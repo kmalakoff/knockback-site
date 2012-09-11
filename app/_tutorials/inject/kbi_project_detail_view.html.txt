@@ -20,10 +20,10 @@
     &lt;textarea name=&quot;description&quot; data-bind=&quot;value: description&quot;&gt;&lt;/textarea&gt;
 
     &lt;br&gt;
-    &lt;a href=&quot;#&quot; class=&quot;btn&quot;&gt;Cancel&lt;/a&gt;
+    &lt;a class=&quot;btn&quot; data-bind=&quot;click: loadUrlFn('')&quot;&gt;Cancel&lt;/a&gt;
     &lt;button data-bind=&quot;click: save, disabled: isClean() || myForm.$invalid&quot;
             class=&quot;btn btn-primary&quot;&gt;Save&lt;/button&gt;
-    &lt;button data-bind=&quot;click: delete&quot;
+    &lt;button data-bind=&quot;click: onDelete&quot;
             class=&quot;btn btn-danger&quot;&gt;Delete&lt;/button&gt;
   &lt;/form&gt;
 &lt;/script&gt;

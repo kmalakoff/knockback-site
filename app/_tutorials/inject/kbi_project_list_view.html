@@ -1,23 +1,25 @@
 <script type="text/x-jquery-tmpl" id="list.html">
-  <input type="text" class="search-query" placeholder="Search" data-bind="value: filter, valueUpdate: 'keyup'">
-  <table>
-    <thead>
-    <tr>
-      <th>Project</th>
-      <th>Description</th>
-      <th><a href="#new"><i class="icon-plus-sign"></i></a></th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- ko foreach: projects -->
+  <div>
+    <input type="text" class="search-query" placeholder="Search" data-bind="value: filter, valueUpdate: 'keyup'">
+    <table>
+      <thead>
       <tr>
-        <td><a data-bind="attr: {href: site}, text: name"target="_blank"></a></td>
-        <td data-bind="text: description"></td>
-        <td>
-          <a data-bind="attr: {href: '#edit/' + id()}"><i class="icon-pencil"></i></a>
-        </td>
+        <th>Project</th>
+        <th>Description</th>
+        <th><a data-bind="click: loadUrlFn('new')"><i class="icon-plus-sign"></i></a></th>
       </tr>
-    <!-- /ko -->
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+      <!-- ko foreach: projects -->
+        <tr>
+          <td><a data-bind="attr: {href: site}, text: name"target="_blank"></a></td>
+          <td data-bind="text: description"></td>
+          <td>
+            <a data-bind="click: loadUrlFn('edit/' + id())"><i class="icon-pencil"></i></a>
+          </td>
+        </tr>
+      <!-- /ko -->
+      </tbody>
+    </table>
+  </div>
 </script>

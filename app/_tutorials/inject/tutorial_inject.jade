@@ -20,6 +20,14 @@ block content
 
     The following examples show how you might port Angular.js samples to Knockback to help you compare approaches. There's no magic here, just a kb-app attribute and a custom kb-inject Knockout bindings to add observables to your ViewModel.
 
+    There are a few helpers to get us started:
+
+    pre(data-for='cs')
+      include kbi_helpers.coffee
+
+    pre(data-for='js')
+      include ../../../public/tutorials/inject/kbi_helpers.js
+
     ##Hello Example
 
   div.row-fluid
@@ -70,10 +78,11 @@ block content
     You can use knockback-navigators-0.1.0.css and knockback-page-navigator-panes-0.1.0.js and knockback-sample-transitions-0.1.0.js
 
   script(type='application/javascript', src='tutorials/inject/kbi_helpers.js')
+  script(type='application/javascript', src='tutorials/inject/kbi_project_model.js')
+  script(type='application/javascript', src='tutorials/inject/kbi_project_collection.js')
   script(type='application/javascript', src='tutorials/inject/kbi_project_app_controller.js')
   script(type='application/javascript', src='tutorials/inject/kbi_project_list_view_model.js')
-  script(type='application/javascript', src='tutorials/inject/kbi_project_create_view_model.js')
-  script(type='application/javascript', src='tutorials/inject/kbi_project_detail_view_model.js')
+  script(type='application/javascript', src='tutorials/inject/kbi_project_view_model.js')
   include kbi_project_list_view.html
   include kbi_project_detail_view.html
 
@@ -84,9 +93,9 @@ block content
         li <a href="#kbi_project_list_view" data-toggle="tab">List View (HTML)</a>
         li <a href="#kbi_project_detail_view" data-toggle="tab">Detail View (HTML)</a>
         li <a href="#kbi_project_app_controller" data-toggle="tab">App Controller (CS/JS)</a>
+        li <a href="#kbi_project_collection" data-toggle="tab">Project ORM (CS/JS)</a>
         li <a href="#kbi_project_list_view_model" data-toggle="tab">List ViewModel (CS/JS)</a>
-        li <a href="#kbi_project_create_view_model" data-toggle="tab">Create ViewModel (CS/JS)</a>
-        li <a href="#kbi_project_detail_view_model" data-toggle="tab">Detail ViewModel (CS/JS)</a>
+        li <a href="#kbi_project_view_model" data-toggle="tab">Project ViewModel (CS/JS)</a>
       div.tab-content
         div.tab-pane.active#kbi_project_app_view
           pre
@@ -102,21 +111,23 @@ block content
             include kbi_project_app_controller.coffee
           pre(data-for='js')
             include ../../../public/tutorials/inject/kbi_project_app_controller.js
+        div.tab-pane#kbi_project_collection
+          pre(data-for='cs')
+            include kbi_project_model.coffee
+            include kbi_project_collection.coffee
+          pre(data-for='js')
+            include ../../../public/tutorials/inject/kbi_project_model.js
+            include ../../../public/tutorials/inject/kbi_project_collection.js
         div.tab-pane#kbi_project_list_view_model
           pre(data-for='cs')
             include kbi_project_list_view_model.coffee
           pre(data-for='js')
             include ../../../public/tutorials/inject/kbi_project_list_view_model.js
-        div.tab-pane#kbi_project_create_view_model
+        div.tab-pane#kbi_project_view_model
           pre(data-for='cs')
-            include kbi_project_create_view_model.coffee
+            include kbi_project_view_model.coffee
           pre(data-for='js')
-            include ../../../public/tutorials/inject/kbi_project_create_view_model.js
-        div.tab-pane#kbi_project_detail_view_model
-          pre(data-for='cs')
-            include kbi_project_detail_view_model.coffee
-          pre(data-for='js')
-            include ../../../public/tutorials/inject/kbi_project_detail_view_model.js
+            include ../../../public/tutorials/inject/kbi_project_view_model.js
 
     div.span4
       h4 Live Result
