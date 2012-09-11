@@ -1,6 +1,6 @@
 <div kb-app>
   <h2>Todo</h2>
-  <div data-bind="kb-inject: TodoCtrl">
+  <div data-bind="inject: TodoCtrl">
     <span data-bind="text: remaining() + ' of ' + todos().length + ' remaining'"></span>
     [ <a href="" data-bind="click: archive">archive</a> ]
     <ul class="unstyled" data-bind="foreach: todos">
