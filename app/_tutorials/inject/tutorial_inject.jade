@@ -67,7 +67,15 @@ block content
   :markdown
     ##Project Example
 
-    use knockback-navigators-0.1.0.css and knockback-page-navigator-panes-0.1.0.js and knockback-sample-transitions-0.1.0.js
+    You can use knockback-navigators-0.1.0.css and knockback-page-navigator-panes-0.1.0.js and knockback-sample-transitions-0.1.0.js
+
+  script(type='application/javascript', src='tutorials/inject/kbi_helpers.js')
+  script(type='application/javascript', src='tutorials/inject/kbi_project_app_controller.js')
+  script(type='application/javascript', src='tutorials/inject/kbi_project_list_view_model.js')
+  script(type='application/javascript', src='tutorials/inject/kbi_project_create_view_model.js')
+  script(type='application/javascript', src='tutorials/inject/kbi_project_detail_view_model.js')
+  include kbi_project_list_view.html
+  include kbi_project_detail_view.html
 
   div.row-fluid
     div.span8
@@ -76,6 +84,7 @@ block content
         li <a href="#kbi_project_list_view" data-toggle="tab">List View (HTML)</a>
         li <a href="#kbi_project_detail_view" data-toggle="tab">Detail View (HTML)</a>
         li <a href="#kbi_project_app_controller" data-toggle="tab">App Controller (CS/JS)</a>
+        li <a href="#kbi_project_list_view_model" data-toggle="tab">List ViewModel (CS/JS)</a>
         li <a href="#kbi_project_create_view_model" data-toggle="tab">Create ViewModel (CS/JS)</a>
         li <a href="#kbi_project_detail_view_model" data-toggle="tab">Detail ViewModel (CS/JS)</a>
       div.tab-content
@@ -93,6 +102,11 @@ block content
             include kbi_project_app_controller.coffee
           pre(data-for='js')
             include ../../../public/tutorials/inject/kbi_project_app_controller.js
+        div.tab-pane#kbi_project_list_view_model
+          pre(data-for='cs')
+            include kbi_project_list_view_model.coffee
+          pre(data-for='js')
+            include ../../../public/tutorials/inject/kbi_project_list_view_model.js
         div.tab-pane#kbi_project_create_view_model
           pre(data-for='cs')
             include kbi_project_create_view_model.coffee
@@ -107,12 +121,7 @@ block content
     div.span4
       h4 Live Result
       div.demos_result_box
-        script(type='application/javascript', src='tutorials/inject/kbi_project_app_controller.js')
-        script(type='application/javascript', src='tutorials/inject/kbi_project_create_view_model.js')
-        script(type='application/javascript', src='tutorials/inject/kbi_project_detail_view_model.js')
         include kbi_project_app_view.html
-        include kbi_project_list_view.html
-        include kbi_project_detail_view.html
 
     script(type='application/javascript').
       kb.injectApps();

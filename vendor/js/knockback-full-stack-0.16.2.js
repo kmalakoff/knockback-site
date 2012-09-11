@@ -6042,7 +6042,7 @@ kb = (function() {
     });
   };
 
-  kb.renderAutoReleasedTemplate = function(template, view_model, options) {
+  kb.renderTemplate = function(template, view_model, options) {
     var el, observable;
     if (options == null) {
       options = {};
@@ -6055,6 +6055,14 @@ kb = (function() {
     kb.releaseOnNodeRemove(view_model, el);
     observable.dispose();
     return el;
+  };
+
+  kb.renderAutoReleasedTemplate = function(template, view_model, options) {
+    if (options == null) {
+      options = {};
+    }
+    legacyWarning('kb.renderAutoReleasedTemplate', '0.16.2', 'Please use kb.renderTemplate instead');
+    return this.renderTemplate(template, view_model, options = {});
   };
 
   kb.applyBindings = function(view_model, node) {
@@ -7324,7 +7332,7 @@ kb.CollectionObservable = (function() {
     this._col = ko.observable();
     this.collection(collection);
     this._mapper = ko.dependentObservable(function() {
-      var add_index, filters, model, models, sorted_index_fn, view_model, view_models, _i, _len;
+      var filters, model, models, sorted_index_fn, view_model, view_models, _i, _len;
       if (_this.in_edit) {
         return;
       }
@@ -7348,12 +7356,11 @@ kb.CollectionObservable = (function() {
           for (_i = 0, _len = models.length; _i < _len; _i++) {
             model = models[_i];
             view_model = _this._createViewModel(model);
-            add_index = sorted_index_fn(view_models, view_model);
-            view_models.splice(add_index, 0, view_model);
+            view_models.splice(sorted_index_fn(view_models, view_model), 0, view_model);
           }
         } else {
           if (_this.models_only) {
-            view_models = filters.length ? models : _.clone(models);
+            view_models = filters.length ? models : models.slice();
           } else {
             view_models = _.map(models, function(model) {
               return _this._createViewModel(model);
@@ -7624,27 +7631,28 @@ kb.sortedIndexWrapAttr = kb.siwa = function(attribute_name, wrapper_constructor)
 
 ko.bindingHandlers['kb-inject'] = {
   'init': function(element, value_accessor, all_bindings_accessor, view_model) {
-    var data;
+    var data, wrapper;
     data = ko.utils.unwrapObservable(value_accessor());
-    return ko.computed(function() {
+    wrapper = ko.computed(function() {
       if (_.isFunction(data)) {
         return data(view_model, element, value_accessor, all_bindings_accessor);
       } else if (_.isObject(data)) {
         return _.extend(view_model, data);
       }
     });
+    return wrapper.dispose();
   }
 };
 
 kb.injectApps = function(root) {
-  var app_el, app_els, getAppElements, _i, _len;
-  app_els = [];
+  var app, apps, getAppElements, options, _i, _len;
+  apps = [];
   getAppElements = function(el) {
-    var child_el, _i, _len, _ref;
-    if (el.attributes && _.find(el.attributes, function(attr) {
+    var attr, child_el, _i, _len, _ref;
+    if (el.attributes && (attr = _.find(el.attributes, function(attr) {
       return attr.name === 'kb-app';
-    })) {
-      app_els.push(el);
+    }))) {
+      apps.push([el, attr]);
     }
     _ref = el.childNodes;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -7653,9 +7661,20 @@ kb.injectApps = function(root) {
     }
   };
   getAppElements(root || document);
-  for (_i = 0, _len = app_els.length; _i < _len; _i++) {
-    app_el = app_els[_i];
-    kb.applyBindings({}, app_el);
+  for (_i = 0, _len = apps.length; _i < _len; _i++) {
+    app = apps[_i];
+    if (app[1].value) {
+      options = ko.utils.buildEvalWithinScopeFunction("{" + app[1].value + "}", 0)();
+    }
+    options || (options = {});
+    options.view_model || (options.view_model = {});
+    if (options.beforeBinding) {
+      options.beforeBinding(options.view_model, app[0], options);
+    }
+    kb.applyBindings(options.view_model, app[0], {});
+    if (options.afterBinding) {
+      options.afterBinding(options.view_model, app[0], options);
+    }
   }
 };
 

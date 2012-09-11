@@ -1,5 +1,5 @@
 &lt;script type=&quot;text/x-jquery-tmpl&quot; id=&quot;list.html&quot;&gt;
-  &lt;input type=&quot;text&quot; ng-model=&quot;search&quot; class=&quot;search-query&quot; placeholder=&quot;Search&quot;&gt;
+  &lt;input type=&quot;text&quot; class=&quot;search-query&quot; placeholder=&quot;Search&quot; data-bind=&quot;value: filter, valueUpdate: 'keyup'&quot;&gt;
   &lt;table&gt;
     &lt;thead&gt;
     &lt;tr&gt;

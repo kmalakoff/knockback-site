@@ -29,7 +29,7 @@ block content
 
     pre(data-for='cs').
       # Auto-released Template
-      el = kb.renderAutoReleasedTemplate('template_name', view_model, options)
+      el = kb.renderTemplate('template_name', view_model, options)
 
       # OR: When applying bindings
       kb.applyBindings(view_model, el)
@@ -38,7 +38,7 @@ block content
       kb.releaseOnNodeRemove(view_model, el)
     pre(data-for='js').
       // Auto-released Template
-      var el = kb.renderAutoReleasedTemplate('template_name', view_model, options);
+      var el = kb.renderTemplate('template_name', view_model, options);
 
       // OR: When applying bindings
       kb.applyBindings(view_model, el);
@@ -56,21 +56,21 @@ block content
           @route('', null, =>
             ko.removeNode(@active_el) if @active_el # remove previous
 
-            @active_el = kb.renderAutoReleasedTemplate('home', new HomeViewModel())
+            @active_el = kb.renderTemplate('home', new HomeViewModel())
             $('body').append(@active_el)
           )
 
           @route('things', null, =>
             ko.removeNode(@active_el) if @active_el # remove previous
 
-            @active_el = kb.renderAutoReleasedTemplate('things_page', new ThingsPageViewModel())
+            @active_el = kb.renderTemplate('things_page', new ThingsPageViewModel())
             $('body').append(@active_el)
           )
 
           @route('things/:id', null, (id) =>
             ko.removeNode(@active_el) if @active_el # remove previous
 
-            @active_el = kb.renderAutoReleasedTemplate('thing_page', new ThingCellViewModel(things_collection.get(id)))
+            @active_el = kb.renderTemplate('thing_page', new ThingCellViewModel(things_collection.get(id)))
             $('body').append(@active_el)
           )
       })
@@ -83,21 +83,21 @@ block content
           this.route('', null, function() {
             if (this.active_el) { ko.removeNode(this.active_el); } // remove previous
 
-            this.active_el = kb.renderAutoReleasedTemplate('home', new HomeViewModel());
+            this.active_el = kb.renderTemplate('home', new HomeViewModel());
             $('body').append(this.active_el);
           });
 
           this.route('things', null, function() {
             if (this.active_el) { ko.removeNode(this.active_el); } // remove previous
 
-            this.active_el = kb.renderAutoReleasedTemplate('things_page', new ThingsPageViewModel());
+            this.active_el = kb.renderTemplate('things_page', new ThingsPageViewModel());
             $('body').append(this.active_el);
           });
 
           this.route('things/:id', null, function(id) {
             if (this.active_el) { ko.removeNode(this.active_el); } // remove previous
 
-            this.active_el = kb.renderAutoReleasedTemplate('thing_page', new ThingCellViewModel(things_collection.get(id)));
+            this.active_el = kb.renderTemplate('thing_page', new ThingCellViewModel(things_collection.get(id)));
             $('body').append(this.active_el);
           });
         }

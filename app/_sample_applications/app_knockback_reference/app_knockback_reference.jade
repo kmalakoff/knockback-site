@@ -44,7 +44,7 @@ block content
 
       ```
       // Auto-released Template
-      var el = kb.renderAutoReleasedTemplate('template_name', view_model, options);
+      var el = kb.renderTemplate('template_name', view_model, options);
 
       // OR: When applying bindings
       kb.applyBindings(view_model, el);
@@ -58,7 +58,7 @@ block content
       In the reference application, I manually create the statistics view model:
 
       ```
-      var statistics_el = kb.renderAutoReleasedTemplate('statistics', new StatisticsViewModel());
+      var statistics_el = kb.renderTemplate('statistics', new StatisticsViewModel());
       $('body').append(statistics_el);
       ...
       ko.releaseNode(statistics_el);
@@ -78,16 +78,16 @@ block content
           Backbone.Router.prototype.constructor.apply(this, arguments);
           this.active_el = null;
           this.route('', null, function() {
-            return _this.loadPage(kb.renderAutoReleasedTemplate('home', {}));
+            return _this.loadPage(kb.renderTemplate('home', {}));
           });
 
           this.route('things', null, function() {
-            return _this.loadPage(kb.renderAutoReleasedTemplate('things_page', new ThingsPageViewModel()));
+            return _this.loadPage(kb.renderTemplate('things_page', new ThingsPageViewModel()));
           });
 
           this.route('things/:id', null, function(id) {
             var model = app.collections.things.get(id) || new Backbone.ModelRef(app.collections.things, id);
-            return _this.loadPage(kb.renderAutoReleasedTemplate('thing_page', new ThingCellViewModel(model)));
+            return _this.loadPage(kb.renderTemplate('thing_page', new ThingCellViewModel(model)));
           });
         },
 
@@ -113,14 +113,14 @@ block content
 
           this.route('', null, page_navigator.dispatcher(function() {
             return page_navigator.loadPage({
-              create: function() { return kb.renderAutoReleasedTemplate('home', {}); },
+              create: function() { return kb.renderTemplate('home', {}); },
               transition: { name: 'FadeIn', duration: 1000 }
             });
           }));
 
           this.route('things', null, page_navigator.dispatcher(function() {
             return page_navigator.loadPage({
-              create: function() { return kb.renderAutoReleasedTemplate('things_page', new ThingsPageViewModel()); },
+              create: function() { return kb.renderTemplate('things_page', new ThingsPageViewModel()); },
               transition: 'NavigationSlide'
             });
           }));
@@ -128,7 +128,7 @@ block content
           this.route('things/:id', null, page_navigator.dispatcher(function(id) {
             var model = app.collections.things.get(id) || new Backbone.ModelRef(app.collections.things, id);
             page_navigator.loadPage({
-              create: function() { return kb.renderAutoReleasedTemplate('thing_page', new ThingCellViewModel(model)); },
+              create: function() { return kb.renderTemplate('thing_page', new ThingCellViewModel(model)); },
               transition: 'CoverVertical'
             });
           }));

@@ -3,6 +3,11 @@ ProjectCreateViewModel = kb.ViewModel.extend({
     model = new Backbone.Model()
     kb.ViewModel.prototype.constructor.call(@, model, {requires: ['name', 'site', 'description']})
 
-    @save = => projects.add(model).save()
+    @delete = => # destroy is reserved for ViewModel lifecycle
+      window.location.hash = ''
+    @save = =>
+      projects.add(model)
+      model.save()
+      window.location.hash = ''
     @
 })

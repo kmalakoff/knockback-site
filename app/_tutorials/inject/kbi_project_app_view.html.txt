@@ -1,4 +1,4 @@
-&lt;div kb-app&gt;
+&lt;div kb-app=&quot;afterBinding: projectAppStartRouting&quot;&gt;
   &lt;h2&gt;JavaScript Projects&lt;/h2&gt;
   &lt;div data-bind=&quot;kb-inject: ProjectAppController&quot;&gt;&lt;/div&gt;
 &lt;div&gt;

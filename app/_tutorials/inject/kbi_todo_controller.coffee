@@ -15,9 +15,3 @@ TodoCtrl = (view_model) ->
 
   view_model.archive = ->
     view_model.todos.remove((todo) -> return todo.done())
-
-ko.bindingHandlers['classes'] =
-  update: (element, value_accessor) ->
-    for key, state of ko.utils.unwrapObservable(value_accessor())
-      if state then $(element).addClass(key) else $(element).removeClass(key)
-    @

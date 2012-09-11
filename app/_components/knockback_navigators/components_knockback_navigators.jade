@@ -57,12 +57,12 @@ block content
 
     ###Dynamic Pages using Knockback.js
 
-    You can dynamic pages either by hand or using Knockback.js's 'kb.renderAutoReleasedTemplate(template_name, view_model, options)' function.
+    You can dynamic pages either by hand or using Knockback.js's 'kb.renderTemplate(template_name, view_model, options)' function.
 
     ```
     ...
     router.route('', null, page_navigator.dispatcher(function(){
-      page_navigator.loadPage( kb.renderAutoReleasedTemplate('page', new PageViewModel(pages.get('main'))) );
+      page_navigator.loadPage( kb.renderTemplate('page', new PageViewModel(pages.get('main'))) );
     }));
     ...
     ```
@@ -72,7 +72,7 @@ block content
     ```
     ...
     router.route('', null, page_navigator.dispatcher(function(){
-      create: function() { return kb.renderAutoReleasedTemplate('page', new PageViewModel(pages.get('page1'))) }
+      create: function() { return kb.renderTemplate('page', new PageViewModel(pages.get('page1'))) }
     }));
     ...
     ```
@@ -87,7 +87,7 @@ block content
     ...
     router.route('', null, page_navigator.dispatcher(function(){
       page_navigator.loadPage({
-        el: kb.renderAutoReleasedTemplate('page', new PageViewModel(pages.get('main'))),
+        el: kb.renderTemplate('page', new PageViewModel(pages.get('main'))),
         transition: 'FadeIn'
       });
     }));
@@ -100,7 +100,7 @@ block content
     ...
     router.route('', null, page_navigator.dispatcher(function(){
       page_navigator.loadPage({
-        el: kb.renderAutoReleasedTemplate('page', new PageViewModel(pages.get('main'))),
+        el: kb.renderTemplate('page', new PageViewModel(pages.get('main'))),
         transition: {name: 'FadeIn', duration: 1000}
       });
     }));
@@ -234,7 +234,7 @@ block content
 
     ```
     // Auto-released Template
-    var el = kb.renderAutoReleasedTemplate('template_name', view_model, options);
+    var el = kb.renderTemplate('template_name', view_model, options);
 
     // OR: When applying bindings
     kb.applyBindings(view_model, el);
