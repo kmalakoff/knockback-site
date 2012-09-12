@@ -1,0 +1,48 @@
+extends ../../_layout/_layout_template
+
+include ../../_layout/_layout_mixins
+
+block title
+  title Tutorial: Application Injection (like Angular.js)
+
+block includes
+  link(rel='stylesheet', href='css/tutorial.css')
+  include ../../_layout/_layout_include_demo_scripts
+
+block navbar
+  mixin pageNavbar('Tutorials', true)
+
+block content
+  :markdown
+    ##Todo Example
+
+  div.row-fluid
+    div.span8
+      ul.nav.nav-tabs
+        li.active <a href="#kbi_todo_view" data-toggle="tab">View (HTML)</a>
+        li <a href="#kbi_todo_view_model" data-toggle="tab">Controller (CS/JS)</a>
+        li <a href="#kbi_todo_css" data-toggle="tab">Styling (CSS)</a>
+      div.tab-content
+        div.tab-pane.active#kbi_todo_view
+          pre
+            include kbi_todo_view.html.txt
+        div.tab-pane#kbi_todo_view_model
+          pre(data-for='cs')
+            include kbi_todo_controller.coffee
+
+          pre(data-for='js')
+            include ../../../public/tutorials/inject/kbi_todo_controller.js
+
+        div.tab-pane#kbi_todo_css
+          pre
+            include kbi_todo.css
+
+    div.span4
+      h4 Live Result
+      div.demos_result_box
+        link(rel='stylesheet', href='tutorials/inject/kbi_todo.css')
+        script(type='application/javascript', src='tutorials/inject/kbi_todo_controller.js')
+        include kbi_todo_view.html
+
+    script(type='application/javascript').
+      kb.injectApps();
