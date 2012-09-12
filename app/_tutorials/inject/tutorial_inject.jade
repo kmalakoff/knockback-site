@@ -4,6 +4,7 @@ include ../../_layout/_layout_mixins
 
 block title
   title Tutorial: Application Injection (like Angular.js)
+  <>
 
 block includes
   link(rel='stylesheet', href='css/tutorial.css')
@@ -16,19 +17,51 @@ block content
   :markdown
     #Tutorial: Application Injection (like Angular.js)
 
-    [Knockback.js](index.html) provides an a few helpers to inject application code in a similar way to [Angular.js](http://angular.org) so you can build up an application by dynamically adding observables to your ViewModel directly from your HTML.
+    [Knockback.js](index.html) provides an a few helpers to inject application code in a similar way to [Angular.js](http://angularjs.org/) so you can build up an application by dynamically adding observables to your ViewModel directly from your HTML.
 
-    The following examples show how you might port Angular.js samples to Knockback to help you compare approaches. There's no magic here, just a kb-app attribute and a custom inject Knockout bindings to add observables to your ViewModel. Itis really a lot easier than memorizing or looking up a large number of custom 'ng-{something}' bindings!
+    The following examples show how you might port Angular.js samples to Knockback to help you compare approaches. There's nothing complicated here, just a 'kb-app' attribute and a custom 'inject' Knockout binding to add observables to your ViewModel.
+
+    The main way to bind an application when you page is loaded, is to use a 'kb-app' attribute on your HTML elements. You can optionally provide some hooks if you like:
+
+  pre.
+    <!-- BIND WITHOUT PARAMETERS - create a new view model and bind the hierachy -->
+    <html kb-app>
+      <!-- YOUR APP HERE !! -->
+    </html>
+
+    <!-- BIND WITH PARAMETERS - create a custom view model and callback after bind -->
+    <html kb-app="view_model: {name: ko.observable('')}, afterBinding: yourFunction">
+      <!-- YOUR APP HERE !! -->
+    </html>
+
+  :markdown
+    In addition to help you inject observables to your ViewModel, you can use the 'inject' custom binding. It accepts an object to extend your ViewModel or a function of the form yourFunction(view_model, element) to allow you to extend the view model by hand:
+
+  pre.
+    <!-- INJECT A TO EXTEND YOUR VIEW MODEL -->
+    <div data-bind="inject: {name: ko.observable('')}"></div>
+
+    <!-- INJECT A USING A CUSTOM FUNCTION -->
+    <div data-bind="inject: ProjectAppController"></div>
+
+  :markdown
+
+    That's basically it...it's really a lot easier than memorizing or looking up a large number of custom 'ng-{something}' bindings and you can reuse your knowledge of Knockback.js, Knockout.js, and Backbone.js!
+
+    ##Getting Started - Hello World!
 
     There are a few helpers to get us started:
 
-    pre(data-for='cs')
-      include kbi_helpers.coffee
+  pre(data-for='cs')
+    include kbi_helpers.coffee
 
-    pre(data-for='js')
-      include ../../../public/tutorials/inject/kbi_helpers.js
+  pre(data-for='js')
+    include ../../../public/tutorials/inject/kbi_helpers.js
 
+  :markdown
     ##Hello Example
+
+    This example uses the 'kb-app' attribute to seed the application view model with a yourName observable (sort of a more simple ng-model binding).
 
   div.row-fluid
     div.span8
@@ -42,7 +75,14 @@ block content
         include kbi_hello_view.html
 
   :markdown
+    You could have just as easily written the first line like:
+  pre.
+    <div data-bind="inject: {yourName: ko.observable('')}" kb-app>
+
+  :markdown
     ##Todo Example
+
+    The todo example uses a custom 'TodoCtrl' inject function to add some functions and observables to your view model. Then you can bind them to your HTML using standard Knockout bindings.
 
   div.row-fluid
     div.span8
@@ -75,7 +115,52 @@ block content
   :markdown
     ##Project Example
 
-    You can use knockback-navigators-0.1.0.css and knockback-page-navigator-panes-0.1.0.js and knockback-sample-transitions-0.1.0.js
+    Before we start the example, we'll explain the form validations. Currently the following is the best documentation on the Knockback form validations. We will improve the documentation after the library has been enhanced with more common functionality.
+
+    When you bind a form, Knockback will put '$' in front of the names of your inputs directly on your ViewModel or if you provide a form name, it will attached them to a '$' form observable without the '$'s.
+
+    **Variant 1: Named Form**
+
+  pre.
+    <form name="myForm">
+      <input name="input1", data-bind="value: input1" required>
+      <input type="url" name="input2", data-bind="value: input2">
+    </form>
+  :markdown
+    Because there is a form name, it will add the following property to your ViewModel (wrapped in an observable):
+
+  pre.
+    $myForm: {
+      input1: {required: boolean, valid: boolean, invalid: boolean},
+      input2: {url: boolean, valid: boolean, invalid: boolean},
+      valid: boolean,
+      invalid: boolean
+    }
+
+  :markdown
+    **Variant 2: Unnamed Form**
+
+  pre.
+    <form>
+      <input name="input1", data-bind="value: input1" required>
+      <input type="url" name="input2", data-bind="value: input2">
+    </form>
+
+  :markdown
+    Because there is not a form name, it will extend the following on your ViewModel (each wrapped in an observable):
+
+  pre.
+    {
+      $input1: {required: boolean, valid: boolean, invalid: boolean},
+      $input2: {url: boolean, valid: boolean, invalid: boolean}
+    }
+
+  :markdown
+    Now on with the example! This example shows:
+
+    * how you can set up a Backbone.Router to control an embedded page using the 'kb-app' afterBinding callback
+    * how to inject Knockback-Validation's kb.formValidator which will look for named inputs and other keywords to create an observable that will update when form state changes.
+
 
   script(type='application/javascript', src='tutorials/inject/kbi_helpers.js')
   script(type='application/javascript', src='tutorials/inject/kbi_project_model.js')
