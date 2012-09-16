@@ -1,4 +1,4 @@
-&lt;div kb-app&gt;
+&lt;div kb-inject&gt;
   &lt;h2&gt;Todo&lt;/h2&gt;
   &lt;div data-bind=&quot;inject: TodoCtrl&quot;&gt;
     &lt;span data-bind=&quot;text: remaining() + ' of ' + todos().length + ' remaining'&quot;&gt;&lt;/span&gt;

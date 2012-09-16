@@ -3,7 +3,7 @@ extends ../../_layout/_layout_template
 include ../../_layout/_layout_mixins
 
 block title
-  title Tutorial: Application Injection (like Angular.js)
+  title Tutorial: ViewModel Injection (like Angular.js)
   <>
 
 block includes
@@ -15,23 +15,23 @@ block navbar
 
 block content
   :markdown
-    #Tutorial: Application Injection (like Angular.js)
+    #Tutorial: ViewModel Injection (like Angular.js)
 
-    [Knockback.js](index.html) provides an a few helpers to inject application code in a similar way to [Angular.js](http://angularjs.org/) so you can build up an application by dynamically adding observables to your ViewModel directly from your HTML.
+    [Knockback.js](index.html) provides an a few helpers to inject ViewModels into your HTML Views in a similar way to [Angular.js's ng-app](http://angularjs.org/) so you can build up an application by dynamically binding observables directly from your HTML.
 
-    The following examples show how you might port Angular.js samples to Knockback to help you compare approaches. There's nothing complicated here, just a 'kb-app' attribute and a custom 'inject' Knockout binding to add observables to your ViewModel.
+    The following examples show how you might port Angular.js samples to Knockback to help you compare approaches. There's nothing complicated here, just a 'kb-inject' attribute and a custom 'inject' Knockout binding to add observables to your ViewModel.
 
-    The main way to bind an application when you page is loaded, is to use a 'kb-app' attribute on your HTML elements. You can optionally provide some hooks if you like:
+    The main way to bind a View when your page is loaded, is to use a 'kb-inject' attribute on your HTML elements. You can optionally provide some hooks if you like:
 
   pre.
     <!-- BIND WITHOUT PARAMETERS - create a new view model and bind the hierachy -->
-    <html kb-app>
-      <!-- YOUR APP HERE !! -->
+    <html kb-inject>
+      <!-- YOUR VIEW HERE !! -->
     </html>
 
     <!-- BIND WITH PARAMETERS - create a custom view model and callback after bind -->
-    <html kb-app="view_model: {name: ko.observable('')}, afterBinding: yourFunction">
-      <!-- YOUR APP HERE !! -->
+    <html kb-inject="view_model: {name: ko.observable('')}, afterBinding: yourFunction">
+      <!-- YOUR VIEW HERE !! -->
     </html>
 
   :markdown
@@ -61,7 +61,7 @@ block content
   :markdown
     ##Hello Example
 
-    This example uses the 'kb-app' attribute to seed the application view model with a yourName observable (sort of a more simple ng-model binding).
+    This example uses the 'kb-inject' attribute to seed a root application ViewModel with a yourName observable (like a more flexible ng-model binding).
 
   div.row-fluid
     div.span8
@@ -77,7 +77,7 @@ block content
   :markdown
     You could have just as easily written the first line like:
   pre.
-    <div data-bind="inject: {yourName: ko.observable('')}" kb-app>
+    <div data-bind="inject: {yourName: ko.observable('')}" kb-inject>
 
   :markdown
     ##Todo Example
@@ -158,7 +158,7 @@ block content
   :markdown
     Now on with the example! This example shows:
 
-    * how you can set up a Backbone.Router to control an embedded page using the 'kb-app' afterBinding callback
+    * how you can set up a Backbone.Router to control an embedded page using the 'kb-inject' afterBinding callback
     * how to inject Knockback-Validation's kb.formValidator which will look for named inputs and other keywords to create an observable that will update when form state changes.
 
 
@@ -220,4 +220,4 @@ block content
         include kbi_project_app_view.html
 
     script(type='application/javascript').
-      kb.injectApps();
+      kb.injectViewModels();

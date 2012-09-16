@@ -1,4 +1,4 @@
-&lt;div kb-app=&quot;view_model: {yourName: ko.observable('')}&quot;&gt;
+&lt;div kb-inject=&quot;yourName: ko.observable('')&quot;&gt;
   &lt;label&gt;Name:&lt;/label&gt;
   &lt;input type=&quot;text&quot; data-bind=&quot;value: yourName, valueUpdate: 'keyup'&quot; placeholder=&quot;Enter a name here&quot;&gt;
   &lt;hr&gt;

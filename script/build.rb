@@ -83,6 +83,7 @@ end
 # The Vendor Folder
 ####################################################
 `cd #{PROJECT_ROOT}; mkdir public/vendor` if !File.exists?('public/vendor')
+`cd #{PROJECT_ROOT}; mkdir public/vendor/bootstrap` if !File.exists?('public/vendor/bootstrap')
 Dir.entries(VENDOR_ROOT).each{|filename| recursiveFilteredCopy(VENDOR_ROOT, filename, 'public/vendor', ['.styl', '.coffee'])}
 
 ####################################################
