@@ -4,7 +4,7 @@ fred = new Backbone.Model({name: "Fred", friends: new Backbone.Collection([bob])
 FriendViewModel = (model) ->
   @name = kb.observable(model, 'name')
   @type = ko.observable('friend')
-  @
+  return
 
 class PersonViewModel extends kb.ViewModel
   constructor: (model, options) ->

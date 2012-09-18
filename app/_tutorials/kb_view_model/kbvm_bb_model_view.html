@@ -1,11 +1,11 @@
 <div id='kbvm_bb_model'>
   <p>
     <span>First Person: </span>
-    <input class='input-small pull-right' data-bind="value: name"/>
+    <input class='input-small pull-right' data-bind="value: name, valueUpdate: 'keyup'"/>
   </p>
   <p>
     <span>Second Person: </span>
-    <input class='input-small pull-right' data-bind="value: friend().name"/>
+    <input class='input-small pull-right' data-bind="value: friend().name, valueUpdate: 'keyup'"/>
   </p>
 
   <p>

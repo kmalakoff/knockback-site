@@ -17,5 +17,5 @@ ProjectViewModel = kb.ViewModel.extend({
       project.save()
       loadUrl('')
       return false
-    @
+    return
 })

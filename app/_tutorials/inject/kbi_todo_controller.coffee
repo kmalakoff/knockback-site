@@ -15,3 +15,4 @@ TodoCtrl = (view_model) ->
 
   view_model.archive = ->
     view_model.todos.remove((todo) -> return todo.done())
+  return

@@ -53,52 +53,31 @@ block content
         constructor: ->
           Backbone.Router.prototype.constructor.apply(@, arguments)
 
-          @route('', null, =>
-            ko.removeNode(@active_el) if @active_el # remove previous
+          loadPage = function(el) {
+            ko.removeNode(@active_el) if @active_el
+            $('body').append(@active_el = el)
+            $(el).addClass('active')
+          }
 
-            @active_el = kb.renderTemplate('home', new HomeViewModel())
-            $('body').append(@active_el)
-          )
-
-          @route('things', null, =>
-            ko.removeNode(@active_el) if @active_el # remove previous
-
-            @active_el = kb.renderTemplate('things_page', new ThingsPageViewModel())
-            $('body').append(@active_el)
-          )
-
-          @route('things/:id', null, (id) =>
-            ko.removeNode(@active_el) if @active_el # remove previous
-
-            @active_el = kb.renderTemplate('thing_page', new ThingCellViewModel(things_collection.get(id)))
-            $('body').append(@active_el)
-          )
+          @route('', null, -> loadPage(kb.renderTemplate('home', new HomeViewModel())))
+          @route('things', null, -> loadUrl(kb.renderTemplate('things_page', new ThingsPageViewModel())))
+          @route('things/:id', null, (id) -> loadPage(kb.renderTemplate('thing_page', new ThingCellViewModel(things_collection.get(id)))))
       })
     pre(data-for='js').
       window.RouterBackboneJS = Backbone.Router.extend({
 
         constructor: function() {
+          var _this = this;
           Backbone.Router.prototype.constructor.apply(this, arguments);
 
-          this.route('', null, function() {
-            if (this.active_el) { ko.removeNode(this.active_el); } // remove previous
+          var loadPage = function(el) {
+            if (_this.active_el) {ko.removeNode(this.active_el); }
+            $('body').append(_this.active_el = el);
+            $(el).addClass('active');
+          }
 
-            this.active_el = kb.renderTemplate('home', new HomeViewModel());
-            $('body').append(this.active_el);
-          });
-
-          this.route('things', null, function() {
-            if (this.active_el) { ko.removeNode(this.active_el); } // remove previous
-
-            this.active_el = kb.renderTemplate('things_page', new ThingsPageViewModel());
-            $('body').append(this.active_el);
-          });
-
-          this.route('things/:id', null, function(id) {
-            if (this.active_el) { ko.removeNode(this.active_el); } // remove previous
-
-            this.active_el = kb.renderTemplate('thing_page', new ThingCellViewModel(things_collection.get(id)));
-            $('body').append(this.active_el);
-          });
+          this.route('', null, function() { loadPage(kb.renderTemplate('home', new HomeViewModel())); });
+          this.route('things', null, function() { loadPage(kb.renderTemplate('things_page', new ThingsPageViewModel())); });
+          this.route('things/:id', null, function(id) { loadPage(kb.renderTemplate('thing_page', new ThingCellViewModel(things_collection.get(id)))); });
         }
       });

@@ -20,7 +20,7 @@ ProjectAppController = (view_model, element) ->
     (loadUrl(''); return) unless project = projects.get(project_id) # not a valid project
     loadPage(kb.renderTemplate('detail.html', new ProjectViewModel(project)))
   )
-  @
+  return
 
 # start outside of the binding loop
 projectAppStartRouting = ->

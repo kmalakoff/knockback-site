@@ -1,5 +1,5 @@
 <div id='kb_collection' data-bind="foreach: planets">
-  <p>First name: <input class='input-small pull-right' data-bind="value: first_name" /></p>
-  <p>Last name: <input class='input-small pull-right' data-bind="value: last_name" /></p>
+  <p>First name: <input class='input-small pull-right' data-bind="value: first_name, valueUpdate: 'keyup'" /></p>
+  <p>Last name: <input class='input-small pull-right' data-bind="value: last_name, valueUpdate: 'keyup'" /></p>
   <p>Hello, <span data-bind="text: ko.computed(function(){ return $data.first_name() + ' ' + $data.last_name(); })"> </span>!</p>
 </div>

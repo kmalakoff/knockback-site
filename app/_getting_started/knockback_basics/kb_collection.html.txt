@@ -1,5 +1,5 @@
 &lt;div id='kb_collection' data-bind=&quot;foreach: planets&quot;&gt;
-  &lt;p&gt;First name: &lt;input class='input-small pull-right' data-bind=&quot;value: first_name&quot; /&gt;&lt;/p&gt;
-  &lt;p&gt;Last name: &lt;input class='input-small pull-right' data-bind=&quot;value: last_name&quot; /&gt;&lt;/p&gt;
+  &lt;p&gt;First name: &lt;input class='input-small pull-right' data-bind=&quot;value: first_name, valueUpdate: 'keyup'&quot; /&gt;&lt;/p&gt;
+  &lt;p&gt;Last name: &lt;input class='input-small pull-right' data-bind=&quot;value: last_name, valueUpdate: 'keyup'&quot; /&gt;&lt;/p&gt;
   &lt;p&gt;Hello, &lt;span data-bind=&quot;text: ko.computed(function(){ return $data.first_name() + ' ' + $data.last_name(); })&quot;&gt; &lt;/span&gt;!&lt;/p&gt;
 &lt;/div&gt;

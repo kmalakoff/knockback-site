@@ -7,9 +7,8 @@ LongDateLocalizer = kb.LocalizedObservable.extend({
     return Globalize.format(value, 'dd MMMM yyyy', kb.locale_manager.getLocale())
 
   write: (localized_string, value) ->
-    new_value = Globalize.parseDate(localized_string, 'dd MMMM yyyy', kb.locale_manager.getLocale())
-
     # reset if invalid
+    new_value = Globalize.parseDate(localized_string, 'dd MMMM yyyy', kb.locale_manager.getLocale())
     if not (new_value and _.isDate(new_value))
       return kb.utils.wrappedObservable(this).resetToCurrent()
 

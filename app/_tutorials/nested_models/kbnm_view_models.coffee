@@ -6,7 +6,7 @@ FriendViewModel = (model, options) ->
   @type = 'friend'
   @name = kb.observable(model, 'name')
   @friends = kb.collectionObservable(model.get('friends'), kb.utils.optionsPathJoin(options, 'friends'))
-  @
+  return
 
 class PersonViewModel extends kb.ViewModel
   constructor: (model, options) ->

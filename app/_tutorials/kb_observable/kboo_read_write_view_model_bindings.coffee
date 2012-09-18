@@ -7,7 +7,7 @@ ViewModel = (model) ->
     read: -> return "#: #{@number()}"
     write: (value) -> @number(value.substring(3))
   }, @)
-  @
+  return
 
 view_model = new ViewModel(model)
 

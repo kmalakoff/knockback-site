@@ -3,7 +3,7 @@ extends ../../_layout/_layout_template
 include ../../_layout/_layout_mixins
 
 block title
-  title Tutorial: ViewModel Injection (like Angular.js)
+  title Tutorial: ViewModel Injection (like AngularJS)
   <>
 
 block includes
@@ -15,11 +15,11 @@ block navbar
 
 block content
   :markdown
-    #Tutorial: ViewModel Injection (like Angular.js)
+    #Tutorial: ViewModel Injection (like AngularJS)
 
-    [Knockback.js](index.html) provides an a few helpers to inject ViewModels into your HTML Views in a similar way to [Angular.js's ng-app](http://angularjs.org/) so you can build up an application by dynamically binding observables directly from your HTML.
+    [Knockback.js](index.html) provides an a few helpers to inject ViewModels into your HTML Views in a similar way to [AngularJS's ng-app](http://angularjs.org/) so you can build up an application by dynamically binding observables directly from your HTML.
 
-    The following examples show how you might port Angular.js samples to Knockback to help you compare approaches. There's nothing complicated here, just a 'kb-inject' attribute and a custom 'inject' Knockout binding to add observables to your ViewModel.
+    The following examples show how you might port AngularJS samples to Knockback to help you compare approaches. There's nothing complicated here, just a 'kb-inject' attribute and a custom 'inject' Knockout binding to add observables to your ViewModel.
 
     The main way to bind a View when your page is loaded, is to use a 'kb-inject' attribute on your HTML elements. You can optionally provide some hooks if you like:
 
@@ -218,6 +218,3 @@ block content
       h4 Live Result
       div.demos_result_box
         include kbi_project_app_view.html
-
-    script(type='application/javascript').
-      kb.injectViewModels();

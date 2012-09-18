@@ -6,11 +6,11 @@
     &lt;div class='row-fluid'&gt;
       &lt;div class='span5'&gt;
         &lt;span&gt;First: &lt;/span&gt;
-        &lt;input class='input-small' data-bind=&quot;value: first&quot;/&gt;
+        &lt;input class='input-small' data-bind=&quot;value: first, valueUpdate: 'keyup'&quot;/&gt;
       &lt;/div&gt;
       &lt;div class='offset1 span5'&gt;
         &lt;span&gt;Last: &lt;/span&gt;
-        &lt;input class='input-small' data-bind=&quot;value: last&quot;/&gt;
+        &lt;input class='input-small' data-bind=&quot;value: last, valueUpdate: 'keyup'&quot;/&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;

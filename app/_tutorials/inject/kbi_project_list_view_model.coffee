@@ -8,4 +8,4 @@ ProjectListViewModel = (projects) ->
       return false unless filter
       return (model.get('name').search(filter) < 0)
   })
-  @
+  return

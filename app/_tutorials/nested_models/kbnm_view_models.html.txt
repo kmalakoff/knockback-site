@@ -1,6 +1,6 @@
 &lt;div id='kbnm_view_models'&gt;
   &lt;p&gt;Type: &lt;span data-bind=&quot;text: type&quot;&gt;&lt;/span&gt;&lt;/p&gt;
-  &lt;p&gt;Name: &lt;input class='input-small pull-right' data-bind=&quot;value: name&quot;/&gt;&lt;/p&gt;
+  &lt;p&gt;Name: &lt;input class='input-small pull-right' data-bind=&quot;value: name, valueUpdate: 'keyup'&quot;/&gt;&lt;/p&gt;
 
   &lt;div data-bind=&quot;foreach: friends&quot;&gt;
     &lt;p&gt;Friend Type: &lt;span data-bind=&quot;text: type&quot;&gt;&lt;/span&gt; &lt;span class=&quot;pull-right&quot; &gt;Name: &lt;span data-bind=&quot;text: name&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;

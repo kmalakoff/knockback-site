@@ -108,7 +108,7 @@ block content
       # Form 1: Simple function-based class
       ViewModel = (model) ->
         @first_name = ko.observable(model.first_name)
-        @ # note: need to return this/@ since CoffeeScript returns the last argument automatically (which is not what we want)
+        return
 
       view_model = new ViewModel({first_name: "Hello"})
 
