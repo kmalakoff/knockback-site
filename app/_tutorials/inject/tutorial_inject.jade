@@ -3,7 +3,7 @@ extends ../../_layout/_layout_template
 include ../../_layout/_layout_mixins
 
 block title
-  title Tutorial: ViewModel Injection (like AngularJS)
+  title Tutorial: ViewModel Injection
   <>
 
 block includes
@@ -15,13 +15,15 @@ block navbar
 
 block content
   :markdown
-    #Tutorial: ViewModel Injection (like AngularJS)
+    #Tutorial: ViewModel Injection
 
-    [Knockback.js](index.html) provides an a few helpers to inject ViewModels into your HTML Views in a similar way to [AngularJS's ng-app](http://angularjs.org/) so you can build up an application by dynamically binding observables directly from your HTML.
+    [Knockback.js](index.html) provides an a few helpers to inject ViewModels into your HTML Views in a similar way to [AngularJS's](http://angularjs.org/) `ng-app` so you can build up an application by dynamically binding observables directly from your HTML.
 
-    The following examples show how you might port AngularJS samples to Knockback to help you compare approaches. There's nothing complicated here, just a 'kb-inject' attribute and a custom 'inject' Knockout binding to add observables to your ViewModel.
+    The following examples show how you might port AngularJS samples to Knockback to help you compare approaches. There's nothing complicated here, just a `kb-inject` attribute and a custom `inject` Knockout binding to add observables to your ViewModel.
 
-    The main way to bind a View when your page is loaded, is to use a 'kb-inject' attribute on your HTML elements. You can optionally provide some hooks if you like:
+    The main way to bind a View when your page is loaded, is to use a `kb-inject` attribute on your HTML elements. You can optionally provide some hooks if you like:
+
+    For more examples and information, please see the [API Documentation](doc/classes/kb.html#injectViewModels-class).
 
   pre.
     <!-- BIND WITHOUT PARAMETERS - create a new view model and bind the hierachy -->
@@ -46,7 +48,7 @@ block content
 
   :markdown
 
-    That's basically it...it's really a lot easier than memorizing or looking up a large number of custom 'ng-{something}' bindings and you can reuse your knowledge of Knockback.js, Knockout.js, and Backbone.js!
+    That's basically it...it's really a lot easier than memorizing or looking up a large number of custom `ng-{something}` bindings and you can reuse your knowledge of Knockback.js, Knockout.js, and Backbone.js!
 
     ##Getting Started - Hello World!
 
