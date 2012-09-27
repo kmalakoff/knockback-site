@@ -117,47 +117,7 @@ block content
   :markdown
     ##Project Example
 
-    Before we start the example, we'll explain the form validations. Currently the following is the best documentation on the Knockback form validations. We will improve the documentation after the library has been enhanced with more common functionality.
-
-    When you bind a form, Knockback will put '$' in front of the names of your inputs directly on your ViewModel or if you provide a form name, it will attached them to a '$' form observable without the '$'s.
-
-    **Variant 1: Named Form**
-
-  pre.
-    <form name="myForm">
-      <input name="input1", data-bind="value: input1" required>
-      <input type="url" name="input2", data-bind="value: input2">
-    </form>
-  :markdown
-    Because there is a form name, it will add the following property to your ViewModel (wrapped in an observable):
-
-  pre.
-    $myForm: {
-      input1: {required: boolean, valid: boolean, invalid: boolean},
-      input2: {url: boolean, valid: boolean, invalid: boolean},
-      valid: boolean,
-      invalid: boolean
-    }
-
-  :markdown
-    **Variant 2: Unnamed Form**
-
-  pre.
-    <form>
-      <input name="input1", data-bind="value: input1" required>
-      <input type="url" name="input2", data-bind="value: input2">
-    </form>
-
-  :markdown
-    Because there is not a form name, it will extend the following on your ViewModel (each wrapped in an observable):
-
-  pre.
-    {
-      $input1: {required: boolean, valid: boolean, invalid: boolean},
-      $input2: {url: boolean, valid: boolean, invalid: boolean}
-    }
-
-  :markdown
+    Before we start the example, you should review the [validations documentation](doc/classes/kb/Validation.html).
     Now on with the example! This example shows:
 
     * how you can set up a Backbone.Router to control an embedded page using the 'kb-inject' afterBinding callback

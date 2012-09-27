@@ -1,13 +1,13 @@
 <script type="text/x-jquery-tmpl" id="detail.html">
   <form name="myForm" data-bind="inject: kb.formValidator">
-    <div class="control-group" data-bind="classes: {error: $myForm.name().invalid}">
+    <div class="control-group" data-bind="classes: {error: $myForm.name().$error_count}">
       <label>Name</label>
       <input type="text" name="name" data-bind="value: name, valueUpdate: 'keyup'" required>
       <span data-bind="visible: $myForm.name().required" class="help-inline">
           Required</span>
     </div>
 
-    <div class="control-group" data-bind="classes: {error: $myForm.site().invalid}">
+    <div class="control-group" data-bind="classes: {error: $myForm.site().$error_count}">
       <label>Website</label>
       <input type="url" name="site" data-bind="value: site, valueUpdate: 'keyup'" required>
       <span data-bind="visible: $myForm.site().required" class="help-inline">
@@ -21,7 +21,7 @@
 
     <br>
     <a class="btn" data-bind="click: loadUrlFn('')">Cancel</a>
-    <button data-bind="click: save, disable: isClean() || $myForm.invalid()"
+    <button data-bind="click: save, disable: isClean() || $myForm.$error_count()"
             class="btn btn-primary">Save</button>
     <button data-bind="click: onDelete"
             class="btn btn-danger">Delete</button>
