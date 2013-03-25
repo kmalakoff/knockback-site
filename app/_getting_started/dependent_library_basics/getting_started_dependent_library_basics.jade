@@ -114,7 +114,7 @@ block content
 
       # Form 2: CoffeeScript class (allows for inheritance)
       class ViewModel
-        constructor: (mode) ->
+        constructor: (model) ->
           @first_name = ko.observable(model.first_name)
 
       view_model = new ViewModel({first_name: "Hello"})
