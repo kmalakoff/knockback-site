@@ -3,11 +3,11 @@ mixin pageNavbarWriteItem(label, url, active_label)
     li.dropdown
       a(href='#', data-toggle='dropdown').dropdown-toggle #{label}
         b.caret
-      ul.dropdown-menu
+      ul.dropdown-menu(role="menu")
         li
-        each dropdown_item in url
-          each dropdown_url, dropdown_label in dropdown_item
-            a(href='#{dropdown_url}') #{dropdown_label}
+          each dropdown_item in url
+            each dropdown_url, dropdown_label in dropdown_item
+              a(href='#{dropdown_url}') #{dropdown_label}
 
   else if (label == active_label)
     li.active
