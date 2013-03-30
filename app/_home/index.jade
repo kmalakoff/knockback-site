@@ -52,6 +52,8 @@ block content
             li
               a(href='https://github.com/PaulUithol/Backbone-relational/') Backbone-Relational
             li
+              a(href='https://www.parse.com/') Parse <strong>(new!)</strong>
+            li
               a(href='https://github.com/kmalakoff/backbone-modelref') Backbone-ModelRef
             li
               a(href='https://github.com/kmalakoff/knockback-inspector') Knockback-Inspector
@@ -130,7 +132,7 @@ block content
             td.yes Bullet-proof ORM
             td.done &#9754;
             td.no Weak ORM
-            td.hidden
+            td.skip-cell
           tr
             td.yes Built-in Serialization / Deserialization
             td.done &#9754;
@@ -140,17 +142,17 @@ block content
             td.no: abbr(title="Model/View/Controller') MVC
             td.done &#9755;
             td.yes: abbr(title="Model/View/ViewModel') MVVM
-            td.hidden
+            td.skip-cell
           tr
             td.no Low level DOM maninulation
             td.done &#9755;
             td.yes Reduced jQuery effort
-            td.hidden
+            td.skip-cell
           tr
             td.no Manual view updating
             td.done &#9755;
             td.yes <code>data-bind</code> based sorcery
-            td.hidden
+            td.skip-cell
           tr
             td.yes Routing and history support
             td.done &#9754;
@@ -162,25 +164,25 @@ block content
             td.no Blurred separation between: <br> Models | Controllers (ViewModels)
             td.ref!= ref(descr, refer, 3)
           tr
-            td.hidden
+            td.skip-cell
             td.own.dependent Cross-view Model state synchronization
-            td.hidden
-            td.hidden
+            td.skip-cell
+            td.skip-cell
           tr
             td.no Messy collection/view updating
             td.own Fully sorted and updated collection views
-            td.hidden
-            td.hidden
+            td.skip-cell
+            td.skip-cell
           tr
-            td.hidden
+            td.skip-cell
             td.own View settings and control properties
-            td.hidden
+            td.skip-cell
             td.ref!= ref(descr, refer, 4)
           tr
-            td.hidden
+            td.skip-cell
             td.own.dependent Localization
-            td.hidden
-            td.hidden
+            td.skip-cell
+            td.skip-cell
     .content.notes
       h2 Notes
       section
