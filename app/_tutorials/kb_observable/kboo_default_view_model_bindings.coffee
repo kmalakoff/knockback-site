@@ -7,4 +7,4 @@ ViewModel = (model) ->
 
 view_model = new ViewModel(model)
 
-ko.applyBindings(view_model, $('#kboo_default')[0])
+ko.applyBindings(view_model, $('#kboo_default_view_model')[0])

@@ -53,10 +53,10 @@ block content
               include kb_view_model_inheritance.html.txt
           div.tab-pane#kb_view_model_inheritance_view_model
             pre(data-for='cs')
-              include kb_view_model_inheritance.coffee
+              include kb_view_model_inheritance.coffee.txt
 
             pre(data-for='js')
-              include ../../../public/getting_started/knockback_important_details/kb_view_model_inheritance.js
+              include kb_view_model_inheritance.js.txt
 
       div.span4
         h4 Live Result
@@ -70,10 +70,10 @@ block content
       Because Backbone.Models can have attributes than contain nested Backbone.Models or Backbone.Collections, there are times where you need to specialize the ViewModel you want to use; for example, in a model/collection hierachy with relationships. When you do need to, you can use the `factories` option when creating a [kb.ViewModel](doc/classes/kb/ViewModel.html) or [kb.CollectionObservable](doc/classes/kb/CollectionObservable.html)
 
     pre(data-for='cs')
-      include kbgs_collection_observables.coffee
+      include kbgs_collection_observables.coffee.txt
 
     pre(data-for='js')
-      include ../../../public/getting_started/knockback_important_details/kbgs_collection_observables.js
+      include kbgs_collection_observables.js.txt
 
     :markdown
       Please take a look at the [Nested Model Tutorial](tutorial_nested_models.html) for more details.

@@ -39,7 +39,8 @@ def recursiveHTMLToEscapedText(path, filename, dest)
     filename = 'js' if filename == 'js'
     Dir.entries(pathed_source_file).each{|child_filename| recursiveHTMLToEscapedText(pathed_source_file, child_filename, "#{dest}/#{filename}")}
   else
-    return unless (File.extname(pathed_source_file).downcase == '.html')    # only .html files
+    extension = File.extname(pathed_source_file).downcase
+    return if (extension != '.html') and (extension != '.coffee') and (extension != '.js')   # only .html, .coffee, .js files
 
     `cd #{PROJECT_ROOT}; mkdir #{dest}` if !File.exists?(dest)
 
