@@ -3,9 +3,9 @@ ProjectListViewModel = (projects) ->
   @projects = kb.collectionObservable(projects, {
     view_model: ProjectViewModel
     sort_attribute: 'name'
-    filters: (model) =>
-      filter = @filter()
-      return false unless filter
-      return (model.get('name').search(filter) < 0)
+    filters: [(model) =>
+      return true unless filter = @filter()
+      return (model.get('name').search(filter) >= 0)
+    ]
   })
   return
