@@ -1,0 +1,34 @@
+<!doctype html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+  <title class='inspector_title' data-bind="text: title"></title>
+
+  <!-- DEPENDENCIES -->
+  <script src='vendor/jquery-1.9.1.js'></script>
+  <script src='vendor/knockback-core-stack-0.18.5.js'></script>
+  <script src='vendor/backbone-relational-0.8.6.js'></script>
+
+  <!-- KNOCKBACK-INSPECTOR LIBRARY -->
+  <script src='js/lib/kbi_core.js'></script>
+
+  <!-- APPLICATION STYLING -->
+  <style type='text/css'>
+  #content {width: 800px; margin: 0 auto; background-color: #F5E0FF; border-radius: 5px;}
+  h1 {text-align: center; font-size: 2em; color: #fff; background-color: #CC66FF; border-radius: 5px;}
+  </style>
+
+</head>
+<body>
+  <div id='content'>
+    <h1 class='inspector_title' data-bind="text: title"></h1>
+
+    <!-- Step 1: Setting up the Project -->
+    <script type='text/javascript'>
+      var   app_model = new Backbone.Model({title: 'Knockback Inspector (' + kbi.VERSION + ')'});
+      $('.inspector_title').each(function(){ ko.applyBindings(kb.viewModel(app_model), this); });
+    </script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!-- Step 3: Rendering a BackboneRelational using kb.CollectionObservable -->
+<ul id='backbone_relational' class='kbi root' data-bind="template: {name: 'kbi_collection_node', data: kbi.nvm('root', true, $data)}"></ul>
+<script type='text/javascript'>
+  var Person = Backbone.RelationalModel.extend({});
+  var House = Backbone.RelationalModel.extend({
+    relations: [{
+      type: Backbone.HasMany,
+      key: 'occupants',
+      relatedModel: 'Person',
+      reverseRelation: {
+        key: 'livesIn'
+      }
+    }]
+  });
+
+  var bob = new Person({id: 'person-1', name: 'Bob'});
+  var fred = new Person({id: 'person-2', name: 'Fred'});
+  var house = new House({
+    location: 'In the middle of our street',
+    occupants: ['person-1', 'person-2']
+  });
+
+  ko.applyBindings(kb.collectionObservable(house.get('occupants'), {view_model: kb.ViewModel}), $('#backbone_relational')[0]);
+</script>

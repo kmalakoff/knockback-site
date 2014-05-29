@@ -68,7 +68,7 @@ block content
 
       .content.row
         div.span7.wrapped
-          h2 Download Latest <small>0.18.2</small>
+          h2 Download Latest <small>0.18.5</small>
           table.table
             thead
               tr
@@ -80,22 +80,22 @@ block content
                 td Full
                 td
                   ul
-                    li <a href='https://raw.github.com/kmalakoff/knockback/0.18.2/knockback.js'>Development</a> <small>(dev, 82k)</small>
-                    li <a href='https://raw.github.com/kmalakoff/knockback/0.18.2/knockback.min.js'>Production</a> <small>(min+gzip, 13k)</small>
+                    li <a href='https://raw.github.com/kmalakoff/knockback/0.18.5/knockback.js'>Development</a> <small>(dev, 82k)</small>
+                    li <a href='https://raw.github.com/kmalakoff/knockback/0.18.5/knockback.min.js'>Production</a> <small>(min+gzip, 13k)</small>
                 td
                   ul
-                    li <a href='https://raw.github.com/kmalakoff/knockback/0.18.2/knockback-full-stack.js'>Development</a> <small>(dev, 363k)</small>
-                    li <a href='https://raw.github.com/kmalakoff/knockback/0.18.2/knockback-full-stack.min.js'>Production</a> <small>(min+gzip, 39k)</small>
+                    li <a href='https://raw.github.com/kmalakoff/knockback/0.18.5/knockback-full-stack.js'>Development</a> <small>(dev, 363k)</small>
+                    li <a href='https://raw.github.com/kmalakoff/knockback/0.18.5/knockback-full-stack.min.js'>Production</a> <small>(min+gzip, 39k)</small>
               tr
                 td Core
                 td
                   ul
-                    li <a href='https://raw.github.com/kmalakoff/knockback/0.18.2/knockback-core.js'>Development</a> <small>(dev, 62k)</small>
-                    li <a href='https://raw.github.com/kmalakoff/knockback/0.18.2/knockback-core.min.js'>Production</a> <small>(min+gzip, 10k)</small>
+                    li <a href='https://raw.github.com/kmalakoff/knockback/0.18.5/knockback-core.js'>Development</a> <small>(dev, 62k)</small>
+                    li <a href='https://raw.github.com/kmalakoff/knockback/0.18.5/knockback-core.min.js'>Production</a> <small>(min+gzip, 10k)</small>
                 td
                   ul
-                    li <a href='https://raw.github.com/kmalakoff/knockback/0.18.2/knockback-core-stack.js'>Development</a> <small>(dev, 343k)</small>
-                    li <a href='https://raw.github.com/kmalakoff/knockback/0.18.2/knockback-core-stack.min.js'>Production</a> <small>(min+gzip, 36k)</small>
+                    li <a href='https://raw.github.com/kmalakoff/knockback/0.18.5/knockback-core-stack.js'>Development</a> <small>(dev, 343k)</small>
+                    li <a href='https://raw.github.com/kmalakoff/knockback/0.18.5/knockback-core-stack.min.js'>Production</a> <small>(min+gzip, 36k)</small>
 
           p
             div <strong>*Stack</strong> provides Underscore.js + Backbone.js + Knockout.js + Knockback.js in a single file. It is meant for getting up and running quickly in non-require, client side versions (if you use require, just require each module separately).
@@ -131,7 +131,7 @@ block content
           th Backbone.js
           th.kb.mid Knockback.js
           th Knockout.js
-          th.ref(title="Notes') !
+          th.ref(title='Notes') !
         - var count = 0;
         - var refer = 'comparison-';
         - var descr = 'View description';
@@ -147,9 +147,9 @@ block content
             td.no Manual serialization
             td.ref!= ref(descr, refer, 1)
           tr
-            td.no: abbr(title="Model/View/Controller') MVC
+            td.no: abbr(title='Model/View/Controller') MVC
             td.done &#9755;
-            td.yes: abbr(title="Model/View/ViewModel') MVVM
+            td.yes: abbr(title='Model/View/ViewModel') MVVM
             td.skip-cell
           tr
             td.no Low level DOM maninulation

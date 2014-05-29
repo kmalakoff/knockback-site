@@ -1,0 +1,5 @@
+<!-- Step 1: Setting up the Project -->
+<script type='text/javascript'>
+  var   app_model = new Backbone.Model({title: 'Knockback Inspector (' + kbi.VERSION + ')'});
+  $('.inspector_title').each(function(){ ko.applyBindings(kb.viewModel(app_model), this); });
+</script>

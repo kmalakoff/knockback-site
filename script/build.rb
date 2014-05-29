@@ -9,6 +9,7 @@ ASSETS_ROOT = "#{PROJECT_ROOT}/app/assets"
 VENDOR_ROOT = "#{PROJECT_ROOT}/vendor"
 TUTORIALS_ROOT = "#{PROJECT_ROOT}/app/_tutorials"
 GETTING_STARTED_ROOT = "#{PROJECT_ROOT}/app/_getting_started"
+SAMPLE_APPLICATIONS = "#{PROJECT_ROOT}/app/_sample_applications"
 
 # set up structure
 `cd #{PROJECT_ROOT}; mkdir public` if !File.exists?('public')
@@ -100,5 +101,6 @@ Dir.entries(ASSETS_ROOT).each{|filename| recursiveFilteredCopy(ASSETS_ROOT, file
 
 setupDemo(TUTORIALS_ROOT, 'public/tutorials')
 setupDemo(GETTING_STARTED_ROOT, 'public/getting_started')
+setupDemo(SAMPLE_APPLICATIONS, 'public/sample_applications')
 
 `cd #{PROJECT_ROOT}; node_modules/.bin/jade --pretty --out public app`

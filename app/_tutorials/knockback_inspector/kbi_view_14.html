@@ -1,0 +1,22 @@
+<!-- Step 4: Rendering a Twitter Query using kb.CollectionObservable -->
+<ul class='kbi root' id='fetched_collection'>
+  <li class='kbi'>
+    <fieldset class='kbi'>
+      <label>URL</label>
+      <input type='text' data-bind="value: url">
+    </fieldset>
+    <ul class='kbi' data-bind="template: {name: 'kbi_collection_node', data: kbi.nvm('root', true, collection)}"></ul>
+  </li>
+</ul>
+
+<script type='text/javascript'>
+  var   custom_url_model = new Backbone.Model({url: '', collection: new kbi.FetchedCollection()});
+  var   view_model = kb.viewModel(custom_url_model);
+  view_model.url.subscribe(function(url){
+    custom_url_model.get(kb.TYPE_COLLECTION).url = url;
+    custom_url_model.get(kb.TYPE_COLLECTION).fetch();
+  });
+
+  ko.applyBindings(view_model, $('#fetched_collection')[0]);
+  view_model.url('http://search.twitter.com/search.json?q=knockbackjs&callback=?');
+</script>

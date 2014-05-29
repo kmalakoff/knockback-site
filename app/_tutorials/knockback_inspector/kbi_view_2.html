@@ -1,0 +1,9 @@
+<li data-bind="css: {opened: opened, closed: !opened()}">
+  <div data-bind="click: function(){ opened(!opened()) }">
+    <span data-bind="text: (opened() ? '- ' : '+ ' )"></span>
+    <span data-bind="text: name"></span>
+  </div>
+
+  <!-- FOREACH MODEL -->
+    <!-- RENDER MODEL NODE -->
+</li>

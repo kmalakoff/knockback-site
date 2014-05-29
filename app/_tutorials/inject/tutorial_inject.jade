@@ -25,26 +25,14 @@ block content
 
     For more examples and information, please see the [API Documentation](doc/classes/kb.html#injectViewModels-class).
 
-  pre.
-    <!-- BIND WITHOUT PARAMETERS - create a new view model and bind the hierachy -->
-    <html kb-inject>
-      <!-- YOUR VIEW HERE !! -->
-    </html>
-
-    <!-- BIND WITH PARAMETERS - create a custom view model and callback after bind -->
-    <html kb-inject="view_model: {name: ko.observable('')}, afterBinding: yourFunction">
-      <!-- YOUR VIEW HERE !! -->
-    </html>
+  pre
+    include kbi_view_1.html.txt
 
   :markdown
     In addition to help you inject observables to your ViewModel, you can use the 'inject' custom binding. It accepts an object to extend your ViewModel or a function of the form yourFunction(view_model, element) to allow you to extend the view model by hand:
 
-  pre.
-    <!-- INJECT A TO EXTEND YOUR VIEW MODEL -->
-    <div data-bind="inject: {name: ko.observable('')}"></div>
-
-    <!-- INJECT A USING A CUSTOM FUNCTION -->
-    <div data-bind="inject: ProjectAppController"></div>
+  pre
+    include kbi_view_2.html.txt
 
   :markdown
 
@@ -78,8 +66,8 @@ block content
 
   :markdown
     You could have just as easily written the first line like:
-  pre.
-    <div data-bind="inject: {yourName: ko.observable('')}" kb-inject>
+  pre
+    include kbi_view_3.html.txt
 
   :markdown
     ##Todo Example
