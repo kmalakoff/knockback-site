@@ -1,4 +1,4 @@
-&lt;div id='kboo_read_write'&gt;
-  &lt;input class='input-small pull-right' data-bind=&quot;value: formatted_number, valueUpdate: 'keyup'&quot;/&gt;
+&lt;div id=&#39;kboo_read_write&#39;&gt;
+  &lt;input class=&#39;input-small pull-right&#39; data-bind=&quot;value: formatted_number, valueUpdate: &#39;keyup&#39;&quot;/&gt;
   &lt;label data-bind=&quot;text: number&quot;&gt;&lt;/label&gt;
 &lt;/div&gt;

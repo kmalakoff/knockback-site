@@ -1,12 +1,12 @@
 &lt;script type=&quot;text/x-jquery-tmpl&quot; id=&quot;list.html&quot;&gt;
   &lt;div&gt;
-    &lt;input type=&quot;text&quot; class=&quot;search-query&quot; placeholder=&quot;Search&quot; data-bind=&quot;value: filter, valueUpdate: 'keyup'&quot;&gt;
+    &lt;input type=&quot;text&quot; class=&quot;search-query&quot; placeholder=&quot;Search&quot; data-bind=&quot;value: filter, valueUpdate: &#39;keyup&#39;&quot;&gt;
     &lt;table&gt;
       &lt;thead&gt;
       &lt;tr&gt;
         &lt;th&gt;Project&lt;/th&gt;
         &lt;th&gt;Description&lt;/th&gt;
-        &lt;th&gt;&lt;a data-bind=&quot;click: loadUrlFn('new')&quot;&gt;&lt;i class=&quot;icon-plus-sign&quot;&gt;&lt;/i&gt;&lt;/a&gt;&lt;/th&gt;
+        &lt;th&gt;&lt;a data-bind=&quot;click: loadUrlFn(&#39;new&#39;)&quot;&gt;&lt;i class=&quot;icon-plus-sign&quot;&gt;&lt;/i&gt;&lt;/a&gt;&lt;/th&gt;
       &lt;/tr&gt;
       &lt;/thead&gt;
       &lt;tbody&gt;
@@ -15,7 +15,7 @@
           &lt;td&gt;&lt;a data-bind=&quot;attr: {href: site}, text: name&quot;target=&quot;_blank&quot;&gt;&lt;/a&gt;&lt;/td&gt;
           &lt;td data-bind=&quot;text: description&quot;&gt;&lt;/td&gt;
           &lt;td&gt;
-            &lt;a data-bind=&quot;click: loadUrlFn('edit/' + id())&quot;&gt;&lt;i class=&quot;icon-pencil&quot;&gt;&lt;/i&gt;&lt;/a&gt;
+            &lt;a data-bind=&quot;click: loadUrlFn(&#39;edit/&#39; + id())&quot;&gt;&lt;i class=&quot;icon-pencil&quot;&gt;&lt;/i&gt;&lt;/a&gt;
           &lt;/td&gt;
         &lt;/tr&gt;
       &lt;!-- /ko --&gt;
