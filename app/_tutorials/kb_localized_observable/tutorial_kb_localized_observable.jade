@@ -22,12 +22,12 @@ block content
       span  tutorial for usage examples).
     p
       span The
-      a(href='doc/classes/kb/LocalizedObservable.html')  kb.LocalizedObservable
+      a(href='doc/class/kb/LocalizedObservable.html')  kb.LocalizedObservable
       span  watches the 'kb.locale_manager' instance for changes and updates itself accordingly.
 
     p
       span <span class='label label-important'>warning</span> This is one of the few cases where you are likely to derive from a Knockback class and where you need to know about <span class='label label-warning'>observable returned</span>. Basically, when you derive your own type of kb.LocalizedObservable, you need to return the wrapped observable rather than the instance itself from the constructor using
-      a(href='doc/classes/kb/utils.html#wrapped_observable') kb.utils.wrappedObservable
+      a(href='doc/class/kb/utils.html#wrapped_observable') kb.utils.wrappedObservable
 
     p
       span We'll use the following Locale Manager for these examples:

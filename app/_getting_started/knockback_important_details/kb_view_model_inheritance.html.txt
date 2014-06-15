@@ -1,5 +1,5 @@
-&lt;div id=&#39;kb_view_model_inheritance&#39;&gt;
-  &lt;p&gt;First name: &lt;input class=&#39;input-small pull-right&#39; data-bind=&quot;value: first_name, valueUpdate: &#39;keyup&#39;&quot; /&gt;&lt;/p&gt;
-  &lt;p&gt;Last name: &lt;input class=&#39;input-small pull-right&#39; data-bind=&quot;value: last_name, valueUpdate: &#39;keyup&#39;&quot; /&gt;&lt;/p&gt;
+&lt;div id='kb_view_model_inheritance'&gt;
+  &lt;p&gt;First name: &lt;input class='input-small pull-right' data-bind=&quot;value: first_name, valueUpdate: 'keyup'&quot; /&gt;&lt;/p&gt;
+  &lt;p&gt;Last name: &lt;input class='input-small pull-right' data-bind=&quot;value: last_name, valueUpdate: 'keyup'&quot; /&gt;&lt;/p&gt;
   &lt;p&gt;Hello, &lt;span data-bind=&quot;text: full_name&quot;&gt; &lt;/span&gt;!&lt;/p&gt;
 &lt;/div&gt;

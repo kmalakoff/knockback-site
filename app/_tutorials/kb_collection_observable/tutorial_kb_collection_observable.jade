@@ -16,11 +16,11 @@ block content
   :markdown
     #Tutorial: kb.CollectionObservable
 
-    [Knockback.js](index.html) provides an [kb.CollectionObservable](doc/classes/kb/CollectionObservable.html) that watches Backbone.Collections when models are added, removed, and changed. In addition, kb.CollectionObservables can be used to sort models independently from the Backbone.Collection order, to bind HTML select elements, to render/edit [model relationships](tutorial_relational_models.html), and to filter collections.
+    [Knockback.js](index.html) provides an [kb.CollectionObservable](doc/class/kb/CollectionObservable.html) that watches Backbone.Collections when models are added, removed, and changed. In addition, kb.CollectionObservables can be used to sort models independently from the Backbone.Collection order, to bind HTML select elements, to render/edit [model relationships](tutorial_relational_models.html), and to filter collections.
 
     ##Sorting Models
 
-    You can sort models using an [attribute name](doc/classes/kb/CollectionObservable.html#sortAttribute-instance) or by providing a [sorted_index function](doc/classes/kb/CollectionObservable.html#sortedIndex-instance).
+    You can sort models using an [attribute name](doc/class/kb/CollectionObservable.html#sortAttribute-dynamic) or by providing a [sorted_index function](doc/class/kb/CollectionObservable.html#sortedIndex-dynamic).
 
   div.row-fluid
     div.span8
@@ -99,7 +99,7 @@ block content
         script(type='application/javascript', src='tutorials/kb_collection_observable/kbco_html_select_view_model_bindings.js')
 
   :markdown
-    One important constraint is that in order for [Knockout.js select bindings](http://knockoutjs.com/documentation/selectedOptions-binding.html) to work, the same ViewModel instance needs to be included in each kb.CollectionObservable. You can use [shareOptions](doc/classes/kb/CollectionObservable.html#shareOptions-instance) to share the kb.Store and hence ViewModels between kb.CollectionObservables.
+    One important constraint is that in order for [Knockout.js select bindings](http://knockoutjs.com/documentation/selectedOptions-binding.html) to work, the same ViewModel instance needs to be included in each kb.CollectionObservable. You can use [shareOptions](doc/class/kb/CollectionObservable.html#shareOptions-dynamic) to share the kb.Store and hence ViewModels between kb.CollectionObservables.
 
     Here is an adapted sample from [Knockback Reference App](http://kmalakoff.github.com/knockback-reference-app).
 

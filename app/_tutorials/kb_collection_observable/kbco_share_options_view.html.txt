@@ -1,6 +1,6 @@
-&lt;div id=&#39;kbco_share_options&#39;&gt;
+&lt;div id='kbco_share_options'&gt;
   &lt;div data-bind=&quot;text: name&quot;&gt;&lt;/div&gt;
-  &lt;select multiple=&quot;multiple&quot; data-bind=&quot;options: available_things, optionsText: &#39;name&#39;, selectedOptions: my_things&quot;&gt;&lt;/select&gt;
+  &lt;select multiple=&quot;multiple&quot; data-bind=&quot;options: available_things, optionsText: 'name', selectedOptions: my_things&quot;&gt;&lt;/select&gt;
 
   &lt;p&gt;
     &lt;span&gt;My Things:&lt;/span&gt;

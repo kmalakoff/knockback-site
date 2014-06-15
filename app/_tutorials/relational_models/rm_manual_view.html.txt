@@ -1,14 +1,14 @@
-&lt;div id=&#39;rm_manual&#39;&gt;
+&lt;div id='rm_manual'&gt;
   &lt;p&gt;First Person:
-    &lt;input class=&#39;input-small pull-right&#39; data-bind=&quot;value: occupants()[0].name, valueUpdate: &#39;keyup&#39;&quot;/&gt;
+    &lt;input class='input-small pull-right' data-bind=&quot;value: occupants()[0].name, valueUpdate: 'keyup'&quot;/&gt;
     &lt;div&gt;(home: &lt;span data-bind=&quot;text: occupants()[0].livesIn().location&quot;&gt;&lt;/span&gt;)&lt;/div&gt;
   &lt;/p&gt;
   &lt;p&gt;Second Person:
-    &lt;input class=&#39;input-small pull-right&#39; data-bind=&quot;value: occupants()[1].name, valueUpdate: &#39;keyup&#39;&quot;/&gt;
+    &lt;input class='input-small pull-right' data-bind=&quot;value: occupants()[1].name, valueUpdate: 'keyup'&quot;/&gt;
     &lt;div&gt;(home: &lt;span data-bind=&quot;text: occupants()[1].livesIn().location&quot;&gt;&lt;/span&gt;)&lt;/div&gt;
   &lt;/p&gt;
 
-  &lt;p&gt;Location: &lt;input class=&#39;input-small pull-right&#39; data-bind=&quot;value: location, valueUpdate: &#39;keyup&#39;&quot;/&gt;&lt;/p&gt;
+  &lt;p&gt;Location: &lt;input class='input-small pull-right' data-bind=&quot;value: location, valueUpdate: 'keyup'&quot;/&gt;&lt;/p&gt;
   &lt;p&gt;
     Has these people living there:
     &lt;ul data-bind=&quot;foreach: occupants&quot;&gt;

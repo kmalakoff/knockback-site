@@ -16,9 +16,9 @@ block content
   :markdown
     #Tutorial: kb.ViewModel
 
-    [Knockback.js](index.html) has a helper called [kb.ViewModel](doc/classes/kb/ViewModel.html) to automatically generate observables for each attribute. Most likely you will use the [kb.viewModel(model) factory method](doc/classes/kb.html#viewModel-class) to create a kb.ViewModel.
+    [Knockback.js](index.html) has a helper called [kb.ViewModel](doc/class/kb/ViewModel.html) to automatically generate observables for each attribute. Most likely you will use the [kb.viewModel(model) factory method](doc/class/kb/ViewModel.html#extend-static) to create a kb.ViewModel.
 
-    Unless you specify otherwise, a kb.ViewModel creates an observable for every attribute (including the id) which can cause performance issues on a page with many models. It is recommended to get started quickly with kb.ViewModels and then optimize them using [constructor options](doc/classes/kb/ViewModel.html#constructor-instance) like 'keys' or 'excludes' to limit the attributes which have kb.Observables for them or 'requires' to ensure that observables are created consistently irregardless of the Model.
+    Unless you specify otherwise, a kb.ViewModel creates an observable for every attribute (including the id) which can cause performance issues on a page with many models. It is recommended to get started quickly with kb.ViewModels and then optimize them using [constructor options](doc/class/kb/ViewModel.html#constructor-dynamic) like 'keys' or 'excludes' to limit the attributes which have kb.Observables for them or 'requires' to ensure that observables are created consistently irregardless of the Model.
 
     In this case, Knockback will skip creating an observable for the 'id' attribute:
   pre(data-for='cs').

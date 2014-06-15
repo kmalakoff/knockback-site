@@ -1,5 +1,5 @@
-&lt;div id=&#39;lm_bulk_labels&#39;&gt;
-  &lt;!-- ko foreach:[&#39;name&#39;, &#39;start_date&#39;, &#39;end_date&#39;] --&gt;
+&lt;div id='lm_bulk_labels'&gt;
+  &lt;!-- ko foreach:['name', 'start_date', 'end_date'] --&gt;
   &lt;p&gt;
     &lt;span data-bind=&quot;text: $parent.labels[$data]&quot;&gt;&lt;/span&gt;
     &lt;span data-bind=&quot;text: $parent[$data]&quot;&gt;&lt;/span&gt;

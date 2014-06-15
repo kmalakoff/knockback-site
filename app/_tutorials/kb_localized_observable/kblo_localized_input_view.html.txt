@@ -1,5 +1,5 @@
-&lt;div id=&#39;kblo_read_write&#39;&gt;
-  &lt;input class=&#39;input-small pull-right&#39; data-bind=&quot;value: date, valueUpdate: &#39;keyup&#39;&quot;/&gt;
+&lt;div id='kblo_read_write'&gt;
+  &lt;input class='input-small pull-right' data-bind=&quot;value: date, valueUpdate: 'keyup'&quot;/&gt;
 
   &lt;p&gt;
     &lt;span&gt;Current Locale: &lt;span&gt;

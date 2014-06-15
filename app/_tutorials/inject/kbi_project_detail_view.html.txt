@@ -2,14 +2,14 @@
   &lt;form name=&quot;myForm&quot; data-bind=&quot;inject: kb.formValidator&quot;&gt;
     &lt;div class=&quot;control-group&quot; data-bind=&quot;classes: {error: $myForm.name().$error_count}&quot;&gt;
       &lt;label&gt;Name&lt;/label&gt;
-      &lt;input type=&quot;text&quot; name=&quot;name&quot; data-bind=&quot;value: name, valueUpdate: &#39;keyup&#39;&quot; required&gt;
+      &lt;input type=&quot;text&quot; name=&quot;name&quot; data-bind=&quot;value: name, valueUpdate: 'keyup'&quot; required&gt;
       &lt;span data-bind=&quot;visible: $myForm.name().required&quot; class=&quot;help-inline&quot;&gt;
           Required&lt;/span&gt;
     &lt;/div&gt;
 
     &lt;div class=&quot;control-group&quot; data-bind=&quot;classes: {error: $myForm.site().$error_count}&quot;&gt;
       &lt;label&gt;Website&lt;/label&gt;
-      &lt;input type=&quot;url&quot; name=&quot;site&quot; data-bind=&quot;value: site, valueUpdate: &#39;keyup&#39;&quot; required&gt;
+      &lt;input type=&quot;url&quot; name=&quot;site&quot; data-bind=&quot;value: site, valueUpdate: 'keyup'&quot; required&gt;
       &lt;span data-bind=&quot;visible: $myForm.site().required&quot; class=&quot;help-inline&quot;&gt;
           Required&lt;/span&gt;
       &lt;span data-bind=&quot;visible: $myForm.site().url&quot; class=&quot;help-inline&quot;&gt;
@@ -20,7 +20,7 @@
     &lt;textarea name=&quot;description&quot; data-bind=&quot;value: description&quot;&gt;&lt;/textarea&gt;
 
     &lt;br&gt;
-    &lt;a class=&quot;btn&quot; data-bind=&quot;click: loadUrlFn(&#39;&#39;)&quot;&gt;Cancel&lt;/a&gt;
+    &lt;a class=&quot;btn&quot; data-bind=&quot;click: loadUrlFn('')&quot;&gt;Cancel&lt;/a&gt;
     &lt;button data-bind=&quot;click: save, disable: isClean() || $myForm.$error_count()&quot;
             class=&quot;btn btn-primary&quot;&gt;Save&lt;/button&gt;
     &lt;button data-bind=&quot;click: onDelete&quot;

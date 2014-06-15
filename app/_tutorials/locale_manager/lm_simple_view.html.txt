@@ -1,4 +1,4 @@
-&lt;div id=&#39;lm_simple&#39;&gt;
+&lt;div id='lm_simple'&gt;
   &lt;p&gt;
     &lt;span data-bind=&quot;text: label_name&quot;&gt;&lt;/span&gt;
     &lt;span data-bind=&quot;text: name&quot;&gt;&lt;/span&gt;

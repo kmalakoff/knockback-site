@@ -22,9 +22,9 @@ block content
       #Inheritance
       Some Knockback classes are meant to be inherited from. Specifically:
 
-      * [kb.ViewModel](doc/classes/kb/ViewModel.html)
-      * [kb.CollectionObservable](doc/classes/kb/CollectionObservable.html)
-      * [kb.LocalizedObservable](doc/classes/kb/LocalizedObservable.html)
+      * [kb.ViewModel](doc/class/kb/ViewModel.html)
+      * [kb.CollectionObservable](doc/class/kb/CollectionObservable.html)
+      * [kb.LocalizedObservable](doc/class/kb/LocalizedObservable.html)
 
       When using CoffeeScript, you can derive from a super class using:
 
@@ -67,7 +67,7 @@ block content
     :markdown
       #Specifying Mappings Paths for Nested Models
 
-      Because Backbone.Models can have attributes than contain nested Backbone.Models or Backbone.Collections, there are times where you need to specialize the ViewModel you want to use; for example, in a model/collection hierachy with relationships. When you do need to, you can use the `factories` option when creating a [kb.ViewModel](doc/classes/kb/ViewModel.html) or [kb.CollectionObservable](doc/classes/kb/CollectionObservable.html)
+      Because Backbone.Models can have attributes than contain nested Backbone.Models or Backbone.Collections, there are times where you need to specialize the ViewModel you want to use; for example, in a model/collection hierachy with relationships. When you do need to, you can use the `factories` option when creating a [kb.ViewModel](doc/class/kb/ViewModel.html) or [kb.CollectionObservable](doc/class/kb/CollectionObservable.html)
 
     pre(data-for='cs')
       include kbgs_collection_observables.coffee.txt
@@ -84,12 +84,12 @@ block content
 
       These classes return a ko.observable instead of 'this':
 
-      * [kb.CollectionObservable](doc/classes/kb/CollectionObservable.html)
-      * [kb.Observable](doc/classes/kb/Observable.html)
-      * [kb.DefaultWrapper](doc/classes/kb/DefaultWrapper.html)
-      * [kb.FormattedObservable](doc/classes/kb/FormattedObservable.html)
-      * [kb.LocalizedObservable](doc/classes/kb/LocalizedObservable.html)
-      * [kb.TriggeredObservable](doc/classes/kb/TriggeredObservable.html)
+      * [kb.CollectionObservable](doc/class/kb/CollectionObservable.html)
+      * [kb.Observable](doc/class/kb/Observable.html)
+      * [kb.DefaultWrapper](doc/class/kb/DefaultWrapper.html)
+      * [kb.FormattedObservable](doc/class/kb/FormattedObservable.html)
+      * [kb.LocalizedObservable](doc/class/kb/LocalizedObservable.html)
+      * [kb.TriggeredObservable](doc/class/kb/TriggeredObservable.html)
 
       Use ko.utils.wrappedObservable(this) or return the constructor result if you dervive from them:
 
@@ -114,11 +114,11 @@ block content
 
       These classes return 'this':
 
-      * [kb.Factory](doc/classes/kb/Factory.html)
-      * [kb.ModelWatcher](doc/classes/kb/ModelWatcher.html)
-      * [kb.Store](doc/classes/kb/Store.html)
-      * [kb.ViewModel](doc/classes/kb/ViewModel.html)
-      * [kb.Statistics](doc/classes/kb/Statistics.html)
+      * [kb.Factory](doc/class/kb/Factory.html)
+      * [kb.ModelWatcher](doc/class/kb/ModelWatcher.html)
+      * [kb.Store](doc/class/kb/Store.html)
+      * [kb.ViewModel](doc/class/kb/ViewModel.html)
+      * [kb.Statistics](doc/class/kb/Statistics.html)
 
       #Backbone.Model Signatures
 

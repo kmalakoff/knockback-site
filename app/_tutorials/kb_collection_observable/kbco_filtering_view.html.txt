@@ -1,16 +1,16 @@
-&lt;div id=&#39;kbco_filtering&#39; &gt;
+&lt;div id='kbco_filtering' &gt;
   &lt;legend&gt;Filter Name
    &lt;select data-bind=&quot;options: available_names, selectedOptions: filtered_names&quot;&gt;&lt;/select&gt;
   &lt;/legend&gt;
   &lt;div data-bind=&quot;foreach: people&quot;&gt;
-    &lt;div class=&#39;row-fluid&#39;&gt;
-      &lt;div class=&#39;span5&#39;&gt;
+    &lt;div class='row-fluid'&gt;
+      &lt;div class='span5'&gt;
         &lt;span&gt;First: &lt;/span&gt;
-        &lt;input class=&#39;input-small&#39; data-bind=&quot;value: first, valueUpdate: &#39;keyup&#39;&quot;/&gt;
+        &lt;input class='input-small' data-bind=&quot;value: first, valueUpdate: 'keyup'&quot;/&gt;
       &lt;/div&gt;
-      &lt;div class=&#39;offset1 span5&#39;&gt;
+      &lt;div class='offset1 span5'&gt;
         &lt;span&gt;Last: &lt;/span&gt;
-        &lt;input class=&#39;input-small&#39; data-bind=&quot;value: last, valueUpdate: &#39;keyup&#39;&quot;/&gt;
+        &lt;input class='input-small' data-bind=&quot;value: last, valueUpdate: 'keyup'&quot;/&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;

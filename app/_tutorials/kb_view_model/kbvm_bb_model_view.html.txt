@@ -1,11 +1,11 @@
-&lt;div id=&#39;kbvm_bb_model&#39;&gt;
+&lt;div id='kbvm_bb_model'&gt;
   &lt;p&gt;
     &lt;span&gt;First Person: &lt;/span&gt;
-    &lt;input class=&#39;input-small pull-right&#39; data-bind=&quot;value: name, valueUpdate: &#39;keyup&#39;&quot;/&gt;
+    &lt;input class='input-small pull-right' data-bind=&quot;value: name, valueUpdate: 'keyup'&quot;/&gt;
   &lt;/p&gt;
   &lt;p&gt;
     &lt;span&gt;Second Person: &lt;/span&gt;
-    &lt;input class=&#39;input-small pull-right&#39; data-bind=&quot;value: friend().name, valueUpdate: &#39;keyup&#39;&quot;/&gt;
+    &lt;input class='input-small pull-right' data-bind=&quot;value: friend().name, valueUpdate: 'keyup'&quot;/&gt;
   &lt;/p&gt;
 
   &lt;p&gt;
