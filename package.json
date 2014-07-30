@@ -9,7 +9,7 @@
     "url": "http://github.com/yuchi/knockback-site.git"
   },
   "devDependencies": {
-    "jade": "*",
+    "jade": "1.3.x",
     "stylus": "*",
     "marked": "*",
     "nib": "*",
