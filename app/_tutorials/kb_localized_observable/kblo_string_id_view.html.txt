@@ -1,4 +1,4 @@
-&lt;div id='kblo_read_only'&gt;
+&lt;div id=&#39;kblo_read_only&#39;&gt;
   &lt;p data-bind=&quot;text: main_text&quot;&gt;&lt;/p&gt;
 
   &lt;p&gt;

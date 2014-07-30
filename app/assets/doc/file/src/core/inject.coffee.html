@@ -55,14 +55,7 @@
   </dt>
   <dd>
     <pre><code class='coffeescript'>true</code></pre>
-    <div class='docstring'>
-  <p>knockback-inject.js
-(c) 2011-2013 Kevin Malakoff.
-Knockback.Inject is freely distributable under the MIT license.
-See the following for full license details: <a href="https://github.com/kmalakoff/knockback/blob/master/LICENSE">https://github.com/kmalakoff/knockback/blob/master/LICENSE</a></p>
-</div>
-<div class='tags'>
-</div>
+    
   </dd>
   <dt id='ko.bindingHandlers-variable'>
     ko.bindingHandlers
@@ -71,7 +64,7 @@ See the following for full license details: <a href="https://github.com/kmalakof
   <dd>
     <pre><code class='coffeescript'>{
   &#39;init&#39;: function(element, value_accessor, all_bindings_accessor, view_model) {
-    return kb.Inject.inject(_unwrapObservable(value_accessor()), view_model, element, value_accessor, all_bindings_accessor);
+    return kb.Inject.inject(ko.utils.unwrapObservable(value_accessor()), view_model, element, value_accessor, all_bindings_accessor);
   }
 }</code></pre>
     
@@ -130,7 +123,7 @@ See the following for full license details: <a href="https://github.com/kmalakof
 </div>
     </div>
     <div id='footer'>
-  June 15, 14 13:52:15 by
+  July 29, 14 20:37:15 by
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>
