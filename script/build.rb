@@ -12,8 +12,8 @@ GETTING_STARTED_ROOT = "#{PROJECT_ROOT}/app/_getting_started"
 SAMPLE_APPLICATIONS = "#{PROJECT_ROOT}/app/_sample_applications"
 
 # set up structure
-`rm -rf public` if File.exists?('public')
-`cd #{PROJECT_ROOT}; mkdir public` if !File.exists?('public')
+`rm -rf dist` if File.exists?('dist')
+`cd #{PROJECT_ROOT}; mkdir dist` if !File.exists?('dist')
 
 def recursiveFilteredCopy(path, filename, dest, skipped_endings)
   return if ['.', '..'].index{|ending| filename.end_with?(ending)} # skip current and up directories
@@ -85,25 +85,25 @@ end
 ####################################################
 # The Vendor Folder
 ####################################################
-`cd #{PROJECT_ROOT}; mkdir public/vendor` if !File.exists?('public/vendor')
-`cd #{PROJECT_ROOT}; mkdir public/vendor/bootstrap` if !File.exists?('public/vendor/bootstrap')
-Dir.entries(VENDOR_ROOT).each{|filename| recursiveFilteredCopy(VENDOR_ROOT, filename, 'public/vendor', ['.styl', '.coffee'])}
+`cd #{PROJECT_ROOT}; mkdir dist/vendor` if !File.exists?('dist/vendor')
+`cd #{PROJECT_ROOT}; mkdir dist/vendor/bootstrap` if !File.exists?('dist/vendor/bootstrap')
+Dir.entries(VENDOR_ROOT).each{|filename| recursiveFilteredCopy(VENDOR_ROOT, filename, 'dist/vendor', ['.styl', '.coffee'])}
 
 ####################################################
 # The Web Site
 ####################################################
-`cd #{PROJECT_ROOT}; mkdir public/css` if !File.exists?('public/css')
-`cd #{PROJECT_ROOT}; node_modules/.bin/stylus --use nib --out public/css app/assets/css &`
+`cd #{PROJECT_ROOT}; mkdir dist/css` if !File.exists?('dist/css')
+`cd #{PROJECT_ROOT}; node_modules/.bin/stylus --use nib --out dist/css app/assets/css &`
 
-`cd #{PROJECT_ROOT}; mkdir public/js` if !File.exists?('public/js')
-`cd #{PROJECT_ROOT}; node_modules/.bin/coffee --output public/js app/assets/js`
+`cd #{PROJECT_ROOT}; mkdir dist/js` if !File.exists?('dist/js')
+`cd #{PROJECT_ROOT}; node_modules/.bin/coffee --output dist/js app/assets/js`
 
-Dir.entries(ASSETS_ROOT).each{|filename| recursiveFilteredCopy(ASSETS_ROOT, filename, 'public', ['.styl', '.coffee'])}
+Dir.entries(ASSETS_ROOT).each{|filename| recursiveFilteredCopy(ASSETS_ROOT, filename, 'dist', ['.styl', '.coffee'])}
 
-setupDemo(TUTORIALS_ROOT, 'public/tutorials')
-setupDemo(GETTING_STARTED_ROOT, 'public/getting_started')
-setupDemo(SAMPLE_APPLICATIONS, 'public/sample_applications')
+setupDemo(TUTORIALS_ROOT, 'dist/tutorials')
+setupDemo(GETTING_STARTED_ROOT, 'dist/getting_started')
+setupDemo(SAMPLE_APPLICATIONS, 'dist/sample_applications')
 
-`cd #{PROJECT_ROOT}; node_modules/.bin/pug --pretty --out public/app app`
-`find public/app/ -type f -name *.html -exec mv -i '{}' public/ ';'`
-`rm -rf public/app`
+`cd #{PROJECT_ROOT}; node_modules/.bin/pug --pretty --out dist/app app`
+`find dist/app/ -type f -name *.html -exec mv -i '{}' dist/ ';'`
+`rm -rf dist/app`

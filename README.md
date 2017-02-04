@@ -31,7 +31,4 @@ Installing:
 
 Commands:
 
-1. 'rake clean' - cleans the project of all compiled files
-2. 'rake build' - performs a single build
-3. 'rake watch' - automatically scans for and builds the project when changes are detected
-4. 'rake package' - cleans the project of all compiled files and builds
+1. 'rake build' - performs a single build

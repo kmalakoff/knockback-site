@@ -29,7 +29,7 @@ block content
 
     In order to filter loading of page URLs (eg. not reloading the active page if the URL hasn't changed) and to manage history (eg. going back if the previous page matches the URL), kb.PageNavigatorPanes provides a 'dispatcher(callback)' that is only called when a cached page is not available.
 
-    ###Basic Usage (Static Pages)
+    ### Basic Usage (Static Pages)
 
     If you want to bind  to a static page, you should provide the '{no_remove: true}' option so if only hides, but does not detach elements when a page is deactivated.
 
@@ -55,7 +55,7 @@ block content
     Path.dispatch(window.location.hash);
     ```
 
-    ###Dynamic Pages using Knockback.js
+    ### Dynamic Pages using Knockback.js
 
     You can dynamic pages either by hand or using Knockback.js's 'kb.renderTemplate(template_name, view_model, options)' function.
 

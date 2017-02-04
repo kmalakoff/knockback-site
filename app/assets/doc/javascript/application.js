@@ -843,7 +843,7 @@ hljs.LANGUAGES.coffeescript = function() {
 
   var COFFEE_HERECOMMENT_MODE = {
     className: 'comment',
-    begin: '###', end: '###'
+    begin: '### ', end: '### '
   };
 
   var COFFEE_HEREGEX_MODE = {

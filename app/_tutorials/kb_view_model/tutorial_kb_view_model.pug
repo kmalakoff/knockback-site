@@ -35,7 +35,7 @@ block content
     var view_model = kb.viewModel(new Backbone.Model({name: 'Bob'}), {requires: ['name', 'date']});
 
   :markdown-it
-    ##Attribute Type: Backbone.Model
+    ### Attribute Type: Backbone.Model
 
     If Knockback encounters a attribute that is a Backbone.Model, it automatically creates a kb.ViewModel for it. Because the model can change behind the scenes, you must access the view model using the 'attribute_name()' syntax rather than as a simple property such as 'friend().name' below.
 
@@ -61,7 +61,7 @@ block content
         include kbvm_bb_model_view.html
         script(type='application/javascript', src='tutorials/kb_view_model/kbvm_bb_model_view_model_bindings.js')
   :markdown-it
-    ##Attribute Type: Backbone.Collection
+    ### Attribute Type: Backbone.Collection
 
     If Knockback encounters a attribute that is a Backbone.Collection, it automatically creates a kb.CollectionObservable for it and a kb.ViewModel for each of it's models. Because the collection can change behind the scenes, you must access the collection observable using the 'attribute_name()' syntax rather than as a simple property.
 
