@@ -12,6 +12,7 @@ GETTING_STARTED_ROOT = "#{PROJECT_ROOT}/app/_getting_started"
 SAMPLE_APPLICATIONS = "#{PROJECT_ROOT}/app/_sample_applications"
 
 # set up structure
+`rm -rf public` if File.exists?('public')
 `cd #{PROJECT_ROOT}; mkdir public` if !File.exists?('public')
 
 def recursiveFilteredCopy(path, filename, dest, skipped_endings)
@@ -103,4 +104,6 @@ setupDemo(TUTORIALS_ROOT, 'public/tutorials')
 setupDemo(GETTING_STARTED_ROOT, 'public/getting_started')
 setupDemo(SAMPLE_APPLICATIONS, 'public/sample_applications')
 
-`cd #{PROJECT_ROOT}; node_modules/.bin/pug --pretty --out public app`
+`cd #{PROJECT_ROOT}; node_modules/.bin/pug --pretty --out public/app app`
+`find public/app/ -type f -name *.html -exec mv -i '{}' public/ ';'`
+`rm -rf public/app`
