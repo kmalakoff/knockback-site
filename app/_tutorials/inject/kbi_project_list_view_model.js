@@ -1,3 +1,5 @@
+var ko = kb.ko;
+
 var ProjectListViewModel = function(projects) {
   var _this = this;
   this.filter = ko.observable('');
