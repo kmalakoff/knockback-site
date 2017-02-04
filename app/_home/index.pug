@@ -11,7 +11,7 @@ block includes
 block navbar
   div.page.github_fork_me
     include ../_layout/_layout_github_fork_me
-  mixin pageNavbar('Home', false)
+  +pageNavbar('Home', false)
 
 block header
   include ../_layout/_layout_knockback_logo
@@ -103,7 +103,7 @@ block content
             div <strong>*Core</strong> removes advanced features that can be included separately: localization, formatting, triggering, defaults, validation, and statistics.
 
         div.span3
-          :markdown
+          :markdown-it
             Distributions
             ---------
             * [npm registry](https://npmjs.org/package/knockback)
@@ -195,7 +195,7 @@ block content
       h2 Notes
       section
         #comparison-1
-          :markdown
+          :markdown-it
             Serialization
             =============
 
@@ -211,7 +211,7 @@ block content
             serialization features we all love are still there!
 
         #comparison-2
-          :markdown
+          :markdown-it
             Routing
             =======
 
@@ -220,7 +220,7 @@ block content
 
       section
         #comparison-3
-          :markdown
+          :markdown-it
             (Im)proper use of tools
             =======================
 
@@ -244,7 +244,7 @@ block content
 
       section
         #comparison-4
-          :markdown
+          :markdown-it
             Views' settings
             ===============
 
@@ -263,20 +263,20 @@ block content
     .wrapped
       .row-fluid
         .span4
-          :markdown
+          :markdown-it
             ##Projects
             * [Vidigami](http://www.vidigami.com/)
             * [Submit yours now](https://github.com/kmalakoff/knockback-site/issues)!
 
         .span3
-          :markdown
+          :markdown-it
             ##Frameworks
             * [django-knockback](https://github.com/thedrow/django-knockback)
             * [js.knockback](http://pypi.python.org/pypi/js.knockback)
             * [CakePHP-Knockback-Plugin](https://github.com/skie/CakePHP-Knockback-Plugin)
 
         .span4
-          :markdown
+          :markdown-it
             ##Community Extensions
             [Submit yours now](https://github.com/kmalakoff/knockback-site/issues)!
 

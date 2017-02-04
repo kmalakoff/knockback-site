@@ -34,7 +34,7 @@ mixin pageNavbar(active_label, include_code_language_selector)
           ul.nav
             each item in ITEMS
               each url, label in item
-                mixin pageNavbarWriteItem(label, url, active_label)
+                +pageNavbarWriteItem(label, url, active_label)
           if (include_code_language_selector)
             div#script_language
               .separator

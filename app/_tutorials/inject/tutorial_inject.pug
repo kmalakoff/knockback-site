@@ -11,10 +11,10 @@ block includes
   include ../../_layout/_layout_include_demo_scripts
 
 block navbar
-  mixin pageNavbar('Tutorials', true)
+  +pageNavbar('Tutorials', true)
 
 block content
-  :markdown
+  :markdown-it
     #Tutorial: ViewModel Injection
 
     [Knockback.js](index.html) provides an a few helpers to inject ViewModels into your HTML Views in a similar way to [AngularJS's](http://angularjs.org/) `ng-app` so you can build up an application by dynamically binding observables directly from your HTML.
@@ -28,13 +28,13 @@ block content
   pre
     include kbi_view_1.html.txt
 
-  :markdown
+  :markdown-it
     In addition to help you inject observables to your ViewModel, you can use the 'inject' custom binding. It accepts an object to extend your ViewModel or a function of the form yourFunction(view_model, element) to allow you to extend the view model by hand:
 
   pre
     include kbi_view_2.html.txt
 
-  :markdown
+  :markdown-it
 
     That's basically it...it's really a lot easier than memorizing or looking up a large number of custom `ng-{something}` bindings and you can reuse your knowledge of Knockback.js, Knockout.js, and Backbone.js!
 
@@ -48,7 +48,7 @@ block content
   pre(data-for='js')
     include kbi_helpers.js.txt
 
-  :markdown
+  :markdown-it
     ##Hello Example
 
     This example uses the 'kb-inject' attribute to seed a root application ViewModel with a yourName observable (like a more flexible ng-model binding).
@@ -64,12 +64,12 @@ block content
       div.demos_result_box
         include kbi_hello_view.html
 
-  :markdown
+  :markdown-it
     You could have just as easily written the first line like:
   pre
     include kbi_view_3.html.txt
 
-  :markdown
+  :markdown-it
     ##Todo Example
 
     The todo example uses a custom 'TodoCtrl' inject function to add some functions and observables to your view model. Then you can bind them to your HTML using standard Knockout bindings.
@@ -102,7 +102,7 @@ block content
         script(type='application/javascript', src='tutorials/inject/kbi_todo_controller.js')
         include kbi_todo_view.html
 
-  :markdown
+  :markdown-it
     ##Project Example
 
     Before we start the example, you should review the [validations documentation](doc/class/kb/Validation.html).

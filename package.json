@@ -8,11 +8,12 @@
     "type": "git",
     "url": "http://github.com/yuchi/knockback-site.git"
   },
-  "devDependencies": {
-    "jade": "1.3.x",
-    "stylus": "*",
-    "marked": "*",
+  "dependencies": {
+    "coffee-script": "*",
+    "jstransformer-markdown-it": "^2.0.0",
     "nib": "*",
-    "coffee-script": "*"
+    "pug": "2.0.0-beta10",
+    "pug-cli": "^1.0.0-alpha6",
+    "stylus": "*"
   }
 }

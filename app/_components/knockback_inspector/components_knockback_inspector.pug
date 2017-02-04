@@ -9,10 +9,10 @@ block includes
   link(rel='stylesheet', href='css/tutorial.css')
 
 block navbar
-  mixin pageNavbar('Components', false)
+  +pageNavbar('Components', false)
 
 block content
-  :markdown
+  :markdown-it
     Compatible Components: Knockback-Inspector.js
     ====================
 
@@ -21,7 +21,7 @@ block content
   h3 Try out the Knockback-Inspector:
   iframe(style='width: 100%; height: 450px', src='http://jsfiddle.net/kmalakoff/FRhEV/embedded/result,js,html,resources/', allowfullscreen='allowfullscreen', frameborder='0')
 
-  :markdown
+  :markdown-it
 
 
     You should take a look at the [Knockback-Inspector Tutorial](tutorial_knockback_inspector.html) which provides an advanced, step-by-step tutorial showing how the inspector was built.

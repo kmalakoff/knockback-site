@@ -25,7 +25,7 @@ def recursiveFilteredCopy(path, filename, dest, skipped_endings)
     filename = 'js' if filename == 'js'
     Dir.entries(pathed_source_file).each{|child_filename| recursiveFilteredCopy(pathed_source_file, child_filename, "#{dest}/#{filename}", skipped_endings)}
   else
-    `cd #{PROJECT_ROOT}; mkdir #{dest}` if !File.exists?(dest)
+    `cd #{PROJECT_ROOT}; mkdir -p #{dest}` if !File.exists?(dest)
     `cd #{PROJECT_ROOT}; cp #{pathed_source_file} #{dest}/`
   end
 end
@@ -77,7 +77,7 @@ end
 def setupDemo(root, public_target)
   # first generate the javascript and then copy any files in the TUTORIALS_ROOT over top so they can be hand crafted
   `cd #{PROJECT_ROOT}; node_modules/.bin/coffee --bare --output #{public_target} #{root}`
-  Dir.entries(root).each{|filename| recursiveFilteredCopy(root, filename, public_target, ['.styl', '.coffee', '.html', '.txt', '.jade'])}
+  Dir.entries(root).each{|filename| recursiveFilteredCopy(root, filename, public_target, ['.styl', '.coffee', '.html', '.txt', '.pug'])}
   Dir.entries(root).each{|filename| recursiveHTMLToEscapedText(root, filename, root)}
 end
 
@@ -103,4 +103,4 @@ setupDemo(TUTORIALS_ROOT, 'public/tutorials')
 setupDemo(GETTING_STARTED_ROOT, 'public/getting_started')
 setupDemo(SAMPLE_APPLICATIONS, 'public/sample_applications')
 
-`cd #{PROJECT_ROOT}; node_modules/.bin/jade --pretty --out public app`
+`cd #{PROJECT_ROOT}; node_modules/.bin/pug --pretty --out public app`

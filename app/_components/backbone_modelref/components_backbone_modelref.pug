@@ -9,10 +9,10 @@ block includes
   link(rel='stylesheet', href='css/tutorial.css')
 
 block navbar
-  mixin pageNavbar('Components', false)
+  +pageNavbar('Components', false)
 
 block content
-  :markdown
+  :markdown-it
     Compatible Components: Backbone-ModelRef.js
     =================
 

@@ -10,10 +10,10 @@ block includes
   include ../../_layout/_layout_include_demo_scripts
 
 block navbar
-  mixin pageNavbar('Tutorials', true)
+  +pageNavbar('Tutorials', true)
 
 block content
-  :markdown
+  :markdown-it
     #Tutorial: kb.CollectionObservable
 
     [Knockback.js](index.html) provides an [kb.CollectionObservable](doc/class/kb/CollectionObservable.html) that watches Backbone.Collections when models are added, removed, and changed. In addition, kb.CollectionObservables can be used to sort models independently from the Backbone.Collection order, to bind HTML select elements, to render/edit [model relationships](tutorial_relational_models.html), and to filter collections.
@@ -44,7 +44,7 @@ block content
         include kbco_sorting_view.html
         script(type='application/javascript', src='tutorials/kb_collection_observable/kbco_sorting_view_model_bindings.js')
 
-  :markdown
+  :markdown-it
     ##Filtering Models
 
     You can use kb.CollectionObservables to filter both ViewModels or Models (using the 'models_only' option) using the filters constructor option. Filters can be individual ids (observable or simple) or arrays of ids, functions, or arrays of functions.
@@ -71,7 +71,7 @@ block content
         include kbco_filtering_view.html
         script(type='application/javascript', src='tutorials/kb_collection_observable/kbco_filtering_view_model_bindings.js')
 
-  :markdown
+  :markdown-it
     ##HTML Select Statements
 
     You can use kb.CollectionObservables to bind HTML select statements using [Knockout.js selectOptions](http://knockoutjs.com/).
@@ -98,7 +98,7 @@ block content
         include kbco_html_select_view.html
         script(type='application/javascript', src='tutorials/kb_collection_observable/kbco_html_select_view_model_bindings.js')
 
-  :markdown
+  :markdown-it
     One important constraint is that in order for [Knockout.js select bindings](http://knockoutjs.com/documentation/selectedOptions-binding.html) to work, the same ViewModel instance needs to be included in each kb.CollectionObservable. You can use [shareOptions](doc/class/kb/CollectionObservable.html#shareOptions-dynamic) to share the kb.Store and hence ViewModels between kb.CollectionObservables.
 
     Here is an adapted sample from [Knockback Reference App](http://kmalakoff.github.com/knockback-reference-app).

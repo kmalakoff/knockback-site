@@ -10,10 +10,10 @@ block includes
   include ../../_layout/_layout_include_demo_scripts
 
 block navbar
-  mixin pageNavbar('Tutorials', true)
+  +pageNavbar('Tutorials', true)
 
 block content
-  :markdown
+  :markdown-it
     #Tutorial: kb.Observable
 
     [Knockback.js](index.html) provides ways to customize a kb.Observable when it is created. This tutorial provides working examples of using these options.
@@ -45,7 +45,7 @@ block content
         include kboo_read_write_view.html
         script(type='application/javascript', src='tutorials/kb_observable/kboo_read_write_view_model_bindings.js')
 
-  :markdown
+  :markdown-it
     ##Create Options: {localizer: constructor(value)}
 
     Instead of a read and/or write option, you can provide a kb.LocalizedObservable derived class for custom localized of an attribute. Please see the [kb.LocalizedObservable tutorial](tutorial_kb_localized_observable.html#localized_input) an explanation of the following:
@@ -58,7 +58,7 @@ block content
   pre(data-for='js')
     include kboo_localizer_view_model_bindings.js.txt
 
-  :markdown
+  :markdown-it
     ##Create Options: {default: value or observable}
 
     You can pass a default function or parameter to provide a value when there is no value available.
@@ -85,7 +85,7 @@ block content
         include kboo_default_view.html
         script(type='application/javascript', src='tutorials/kb_observable/kboo_default_view_model_bindings.js')
 
-  :markdown
+  :markdown-it
     ##Dynamic Attribute Types
 
     Since Knockback.js version 0.16.0, a kb.Observable can be created using the correct type before the attribute is loaded using the [factories options](doc/class/kb/ViewModel.html#constructor-dynamic) and change types when the attribute value changes.

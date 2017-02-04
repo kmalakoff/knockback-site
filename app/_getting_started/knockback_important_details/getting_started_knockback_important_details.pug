@@ -10,15 +10,15 @@ block includes
   include ../../_layout/_layout_include_demo_scripts
 
 block navbar
-  mixin pageNavbar('Getting Started', true)
+  +pageNavbar('Getting Started', true)
 
 block content
   section
-    :markdown
+    :markdown-it
       Getting Started with Knockback.js: Knockback.js Important Details
       ============================
 
-    :markdown
+    :markdown-it
       #Inheritance
       Some Knockback classes are meant to be inherited from. Specifically:
 
@@ -64,7 +64,7 @@ block content
           include kb_view_model_inheritance.html
           script(type='application/javascript', src='getting_started/knockback_important_details/kb_view_model_inheritance.js')
 
-    :markdown
+    :markdown-it
       #Specifying Mappings Paths for Nested Models
 
       Because Backbone.Models can have attributes than contain nested Backbone.Models or Backbone.Collections, there are times where you need to specialize the ViewModel you want to use; for example, in a model/collection hierachy with relationships. When you do need to, you can use the `factories` option when creating a [kb.ViewModel](doc/class/kb/ViewModel.html) or [kb.CollectionObservable](doc/class/kb/CollectionObservable.html)
@@ -75,7 +75,7 @@ block content
     pre(data-for='js')
       include kbgs_collection_observables.js.txt
 
-    :markdown
+    :markdown-it
       Please take a look at the [Nested Model Tutorial](tutorial_nested_models.html) for more details.
 
       #Knockout Observables Foundations

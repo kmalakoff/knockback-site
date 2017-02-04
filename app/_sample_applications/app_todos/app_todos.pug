@@ -10,10 +10,10 @@ block includes
   include ../../_layout/_layout_include_demo_scripts
 
 block navbar
-  mixin pageNavbar('Tutorials', true)
+  +pageNavbar('Tutorials', true)
 
 block content
-  :markdown
+  :markdown-it
     #Tutorial: Knockback Todos App
 
     [Try the demo](http://kmalakoff.github.com/knockback-todos-app/) or [Look at the Code](https://github.com/kmalakoff/knockback-todos-app)
@@ -35,7 +35,7 @@ block content
   pre
     include kbt_view_1.html.txt
 
-  :markdown
+  :markdown-it
 
     Please look at the [API Documentation](doc/class/kb/Inject.html#injectViewModels-static) or the [ViewModel Injection Tutorial](tutorial_inject.html) for more information and examples.
 
@@ -88,7 +88,7 @@ block content
       this.trigger("change:\#{key}", this.translations_by_locale[this.locale_identifier][key]);
     }
 
-  :markdown
+  :markdown-it
 
     Register your custom locale manager like:
 
@@ -98,7 +98,7 @@ block content
   pre(data-for='js').
     kb.locale_manager = new MyLocaleManager();
 
-  :markdown
+  :markdown-it
 
     Also, if you want to perform some specialized formatting above and beyond a string lookup, you can provide custom localizer classes derived from kb.LocalizedObservable:
 
@@ -128,7 +128,7 @@ block content
       }
     });
 
-  :markdown
+  :markdown-it
 
     **Note:** kb.LocalizedObservable's constructor actually returns a ko.computed (not the instance itself) so you either need to return super result or if you have custom initialization, return the underlying observable using the following helper: 'kb.wrappedObservable(this)'
 
@@ -145,7 +145,7 @@ block content
       this.input_placeholder_text = kb.observable(kb.locale_manager, {key: 'placeholder_create'});
     };
 
-  :markdown
+  :markdown-it
 
     Or model attributes can be localized automatically when your locale manager triggers a change:
 
@@ -160,7 +160,7 @@ block content
       this.completed = kb.observable(model, {key: 'completed', localizer: LongDateLocalizer});
     };
 
-  :markdown
+  :markdown-it
 
     ## Lazy Loading
 
@@ -188,7 +188,7 @@ block content
       new Backbone.ModelRef(priorities, 'low')
     ]);
 
-  :markdown
+  :markdown-it
 
     and then lazy fetching them (which creates them if they don't exist):
 

@@ -9,11 +9,11 @@ block includes
   link(rel='stylesheet', href='css/tutorial.css')
 
 block navbar
-  mixin pageNavbar('Tutorials', false)
+  +pageNavbar('Tutorials', false)
 
 block content
   section
-    :markdown
+    :markdown-it
       #Knockback.js Tutorials
 
       We have prepared some tutorials to help explain introduct Knockback.js concepts and to provide solutions to common problems.

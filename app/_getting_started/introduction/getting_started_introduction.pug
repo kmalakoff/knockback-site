@@ -10,11 +10,11 @@ block includes
   include ../../_layout/_layout_include_demo_scripts
 
 block navbar
-  mixin pageNavbar('Getting Started', true)
+  +pageNavbar('Getting Started', true)
 
 block content
   section
-    :markdown
+    :markdown-it
       #Getting Started with Knockback.js
 
       In essence, [Knockback.js](index.html) bridges the dynamic DOM bindings of [Knockout.js](http://knockoutjs.com/) with the models, computeds, and routers of [Backbone.js](http://documentcloud.github.com/backbone/). It also brings some other cool features like localization, default values, and nested view models!
@@ -38,7 +38,7 @@ block content
     pre(data-for='js').
       Knockback.viewModel = function(model, options) { return new Knockback.ViewModel(model, options); };
 
-    :markdown
+    :markdown-it
       #Useful Resources
 
       Before you start with Knockback.js, we recommend you first get acquainted with Backbone.js and Knockout.js by reviewing their websites (above) and you could also look at these resources:

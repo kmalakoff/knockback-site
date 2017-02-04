@@ -10,11 +10,10 @@ block includes
   include ../../_layout/_layout_include_demo_scripts
 
 block navbar
-  mixin pageNavbar('Tutorials', false)
+  +pageNavbar('Tutorials', false)
 
-////////////////
-// Overview
-////////////////
+//-
+  Overview
 
 block overview
   p Let's start with the goals of a simple model and collection inspector...
@@ -63,9 +62,9 @@ block overview
     li Use a div tag to wrap a +/- state indicator, the name of the node, and a click handler to toggle the opened/closed state of the node
     li The collection's models are wrapped in an unordered list tag and each model can be rendered using the model node template
 
-////////////////
-// Control Flow
-////////////////
+//-
+  Control Flow
+
 block control_flow
   p
     span Using Knockback.js, we can implement an inspector by:
@@ -107,9 +106,9 @@ block control_flow
       li In the case of models, the templates are rendered in a closed state to break potential cycles; whereas, collections are rendered in an open state so we are presented with the indices of the contained models.
       li When the node is closed, only the HTML that displays the name of the node and allows for a click to open the node is generated.
 
-////////////////
-// Library Architecture
-////////////////
+//-
+  Library Architecture
+
 block library_architecture
   p Knockback-Inspector will be designed as a library with the following characteristics:
     ol
@@ -160,9 +159,9 @@ block library_architecture
         p Provides kbi.ModelNodeView which holds an HTML string that is used by the kbi.TemplateEngine whenever Knockout.js requests the 'kbi_model_node' template.
     p OK. Let's start...
 
-////////////////
-// Step 1
-////////////////
+//-
+  Step 1
+
 block step1
   p This tutorial demonstrates how to use Knockback to create a tree view to inspect Backbone.Model attributes and Backbone.Collection models including potentially recursive relationships between models.
   p
@@ -306,9 +305,9 @@ block step1
       img.screen_shot(src='img/tutorial_inspector/screen_shot_step1.png')
       br
 
-////////////////
-// Step 2
-////////////////
+//-
+  Step 2
+
 block step2
   p
     span This step shows how to render a Backbone.Model with a relations in a collection-typed attribute named friends. First, let's put the following in index.html inside the content div:
@@ -510,9 +509,9 @@ block step2
     img.screen_shot(src='img/tutorial_inspector/screen_shot_step2.png')
     br
 
-////////////////
-// Step 3
-////////////////
+//-
+  Step 3
+
 block step3
   p
     span Because we already have an implementation for 'kbi_collection_node' and kbi.NodeViewModel can be used with both kb.ViewModels and kb.CollectionObservables, we should be able to render a tree starting with a kb.CollectionObservable as follows:
@@ -530,9 +529,9 @@ block step3
     img.screen_shot(src='img/tutorial_inspector/screen_shot_step3.png')
     br
 
-////////////////
-// Step 4
-////////////////
+//-
+  Step 4
+
 block step4
   p To provide a general purpose way to inspect JSON data returned from a Backbone.Model or Backbone.Collection fetch call, we will implement kbi.FetchedModel and kbi.FetchedCollection that are generated when we traverse the returned JSON.
   div(data-for='cs')
@@ -613,9 +612,9 @@ block step4
     img.screen_shot(src='img/tutorial_inspector/screen_shot_step4.png')
     br
 
-////////////////
-// Step 5
-////////////////
+//-
+  Step 5
+
 block step5
 
   p The last step is to turn the library into a single file named 'knockback-inspector.min.js', wrap it in an anonymous function, and to minimize it. For CoffeeScript, this can be achieved by updating the Cakefile as follows:
@@ -649,9 +648,9 @@ block step5
   p <strong>Note:</strong> if you are using JavaScript, you can use the scripting language of your choice to concatenate and minimize the individual JavaScript files into 'knockback-inspector.min.js'.
 
 
-////////////////
-// Future Enhancements
-////////////////
+//-
+  Future Enhancements
+
 block future_enhancements
   p
     span The inspector works for the most part, but as with anything it can always be improved! Here are some ideas:

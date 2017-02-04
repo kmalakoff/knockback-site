@@ -10,11 +10,11 @@ block includes
   include ../../_layout/_layout_include_demo_scripts
 
 block navbar
-  mixin pageNavbar('Getting Started', false)
+  +pageNavbar('Getting Started', false)
 
 block content
   section
-    :markdown
+    :markdown-it
       Knockback.js Reference App
       ==========================
 

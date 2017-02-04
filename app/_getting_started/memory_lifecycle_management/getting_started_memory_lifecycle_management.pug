@@ -10,11 +10,11 @@ block includes
   include ../../_layout/_layout_include_demo_scripts
 
 block navbar
-  mixin pageNavbar('Getting Started', true)
+  +pageNavbar('Getting Started', true)
 
 block content
   section
-    :markdown
+    :markdown-it
       # Auto-Releasing View Models
       When an element is created, Knockback provides functions to auto-release ViewModels using Knockout's dispose node callback:
 
@@ -24,7 +24,7 @@ block content
     pre(data-for='js').
       // binds a callback to the node that releases the view model when the node is removed using ko.removeNode
       ko.utils.domNodeDisposal.addDisposeCallback(node, function() { kb.release(view_model)} );
-    :markdown
+    :markdown-it
       There are three ways to do this in Knockback:
 
     pre(data-for='cs').
@@ -45,7 +45,7 @@ block content
 
       // OR: Manually
       kb.releaseOnNodeRemove(view_model, el);
-    :markdown
+    :markdown-it
       This means you can use a Backbone.Router as follows and not need to explicitly call kb.release() because ko.removeNode calls it for you:
 
     pre(data-for='cs').
