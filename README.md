@@ -31,4 +31,4 @@ Installing:
 
 Commands:
 
-1. 'rake build' - performs a single build
+1. 'ruby scripts/build.rb' - cleanly generate distribution files
