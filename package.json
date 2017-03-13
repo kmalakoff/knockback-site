@@ -12,8 +12,8 @@
     "coffee-script": "*",
     "jstransformer-markdown-it": "^2.0.0",
     "nib": "*",
-    "pug": "2.0.0-beta10",
-    "pug-cli": "^1.2.0-alpha6",
+    "pug": "2.0.0-beta11",
+    "pug-cli": "1.0.0-alpha6",
     "stylus": "*"
   }
 }
